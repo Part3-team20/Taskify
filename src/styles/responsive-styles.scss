@@ -1,0 +1,12 @@
+//Tablet 사이즈
+@mixin tablet {
+  @media (max-width: 1199px) {
+    @content;
+  }
+}
+//모바일 사이즈
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
