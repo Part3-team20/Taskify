@@ -1,0 +1,30 @@
+.labelChip {
+  padding: 8px 16px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  &.large {
+    // large 사이즈에 대한 스타일
+  }
+
+  &.small {
+    // small 사이즈에 대한 스타일
+  }
+
+  &.columns {
+    // columns 타입에 대한 스타일
+  }
+
+  &.tag {
+    // tag 타입에 대한 스타일
+  }
+
+  .iconCircle {
+    // columns 타입에서 사용될 원 아이콘 스타일
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
+}
