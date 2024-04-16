@@ -3,6 +3,8 @@ import React from 'react';
 import LabelChip from '@/components/common/chip/LabelChip';
 // eslint-disable-next-line import/extensions
 import PlusChip from '@/components/common/chip/PlusChip';
+// eslint-disable-next-line import/extensions
+import NumberChip from '@/components/common/chip/NumberChip';
 
 export default function Home() {
   return (
@@ -13,6 +15,7 @@ export default function Home() {
       <LabelChip size="large" label="일반" type="tag" />
       <PlusChip type="small" />
       <PlusChip type="large" />
+      <NumberChip number={10} />
     </div>
   );
 }
