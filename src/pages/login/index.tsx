@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import axios from '../../api/axios';
+import { useRouter } from 'next/router';
+import axios from '@/api/axios';
 import logo from '../../../public/images/mainLogo.svg';
-import styles from './signup.module.scss';
+import styles from './login.module.scss';
 
-export default function SignUpPage() {
+export default function LoginPage() {
+  const router = useRouter();
+
   const [values, setValues] = useState({
     email: '',
-    nickname: '',
     password: '',
   });
 
@@ -24,14 +26,18 @@ export default function SignUpPage() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const { email, nickname, password } = values;
+    const { email, password } = values;
 
     try {
-      await axios.post('/users', {
-        email,
-        nickname,
-        password,
-      });
+      await axios.post(
+        '/auth/login',
+        {
+          email,
+          password,
+        }
+        // { withCredentials: true }
+      );
+      router.push('/');
     } catch (err) {
       console.log('Error submitting data:', err);
     }
@@ -42,7 +48,7 @@ export default function SignUpPage() {
       <Link href="/">
         <Image className={styles.logo} src={logo} alt="logo" />
       </Link>
-      <p className={styles.greetingText}>첫 방문을 환영합니다!</p>
+      <p className={styles.greetingText}>오늘도 만나서 반가워요!</p>
       <form className={styles.form} onSubmit={handleSubmit}>
         <label htmlFor="user_email">이메일</label>
         <input
@@ -54,28 +60,24 @@ export default function SignUpPage() {
           placeholder="이메일을 입력해 주세요"
         />
         <br />
-        <label htmlFor="user_nickname">닉네임</label>
-        <input
-          id="user_nickname"
-          type="text"
-          name="nickname"
-          required
-          onChange={handleChange}
-          placeholder="닉네임을 입력해 주세요"
-        />
-        <br />
         <label htmlFor="user_pw">비밀번호</label>
         <input
           id="user_pw"
           type="password"
           name="password"
-          placeholder="8자 이상 입력해 주세요"
+          placeholder="비밀번호를 입력해 주세요"
           required
           onChange={handleChange}
         />
         <br />
-        <input type="submit" value="가입하기" />
+        <input type="submit" value="로그인" />
       </form>
+      <p>
+        회원이 아니신가요?
+        <Link href="/signup">
+          <span>회원가입하기</span>
+        </Link>
+      </p>
     </div>
   );
 }
