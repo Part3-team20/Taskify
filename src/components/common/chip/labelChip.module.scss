@@ -5,25 +5,31 @@
     align-items: center;
     gap: 6px;
     border-radius: 11px;
-    // columns 타입에 대한 스타일
-    &.large {
-      // large 사이즈에 대한 스타일
-    }
-
-    &.small {
-      // small 사이즈에 대한 스타일
-    }
+    text-align: center;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 
   &.tag {
-    // tag 타입에 대한 스타일
-    &.large {
-      // large 사이즈에 대한 스타일
-    }
+    display: inline-flex;
+    padding: 4px 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 
-    &.small {
-      // small 사이즈에 대한 스타일
-    }
+  &.large {
+    font-size: 12px;
+  }
+
+  &.small {
+    font-size: 10px;
   }
 
   .iconCircle {

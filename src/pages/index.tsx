@@ -5,8 +5,10 @@ import LabelChip from '@/components/common/chip/LabelChip';
 export default function Home() {
   return (
     <div>
-      <LabelChip size="small" label="Tag Label" type="tag" />
-      <LabelChip size="small" label="column Label" type="columns" />
+      <LabelChip size="small" label="To Do" type="columns" />
+      <LabelChip size="large" label="On Progress" type="columns" />
+      <LabelChip size="small" label="프로젝트" type="tag" />
+      <LabelChip size="large" label="일반" type="tag" />
     </div>
   );
 }
