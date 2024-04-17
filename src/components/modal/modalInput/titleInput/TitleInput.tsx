@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ChangeEvent, useState } from 'react';
 import styles from './TitleInput.module.scss';
 import ModalInput from '../ModalInput';

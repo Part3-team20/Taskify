@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import Image from 'next/image';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ChangeEvent, useState } from 'react';
 import ModalInput from '../ModalInput';
 import styles from './CommentInput.module.scss';
