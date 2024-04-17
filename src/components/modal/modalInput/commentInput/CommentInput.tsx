@@ -11,18 +11,21 @@ export default function CommentInput() {
     setComment(e.target.value);
   };
 
+  const handlePostComment = () => {
+    /* TODO : POST comment */
+  };
   return (
-    <div className={styles.container}>
+    <form className={styles.container}>
       <ModalInput
         placeholder="댓글 작성하기"
         value={comment}
         onChange={handleChange}
         style={{ width: '416px', height: '110px' }}
       >
-        <button className={styles.postComment} type="button">
+        <button className={styles.postComment} type="button" onClick={handlePostComment}>
           입력
         </button>
       </ModalInput>
-    </div>
+    </form>
   );
 }
