@@ -16,13 +16,38 @@ export default function Home() {
   return (
     <div>
       <LabelChip size="small" label="To Do" type="columns" />
+      <div>
+        <br />
+      </div>
       <LabelChip size="large" label="On Progress" type="columns" />
+      <div>
+        <br />
+      </div>
       <LabelChip size="small" label="프로젝트" type="tag" />
+      <div>
+        <br />
+      </div>
       <LabelChip size="large" label="일반" type="tag" />
+      <div>
+        <br />
+      </div>
       <PlusChip type="small" />
+      <div>
+        <br />
+      </div>
       <PlusChip type="large" />
+      <div>
+        <br />
+      </div>
       <NumberChip number={10} />
+      <div>
+        <br />
+      </div>
       <ColorChip size="large" onSelect={handleColorSelect} />
+      <div>
+        <br />
+      </div>
+      <ColorChip size="small" onSelect={handleColorSelect} />
     </div>
   );
 }

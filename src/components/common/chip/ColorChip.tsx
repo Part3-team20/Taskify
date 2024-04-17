@@ -49,20 +49,20 @@ export default function ColorChip({ size, onSelect }: ColorChipProps): JSX.Eleme
           style={{ backgroundColor: color }}
           onClick={() => handleColorClick(color)}
         >
-          {selectedColor === color && <Image src="/images/check_icon.svg" alt="Selected" width={16} height={16} />}
+          {selectedColor === color && <Image src="/images/check_icon.svg" alt="Selected" width={24} height={24} />}
         </button>
       ))}
 
       <button
         type="button"
-        className={`${styles.colorChip} ${styles[size]} ${selectedColor && !COLORS.includes(selectedColor) ? '' : styles.colorPicker}`}
+        className={`${styles.colorChip} ${styles[size]} ${selectedColor && !COLORS.includes(selectedColor) ? '' : styles.picker}`}
         onClick={() => setIsPickerOpen(true)}
         style={{ backgroundColor: selectedColor && !COLORS.includes(selectedColor) ? selectedColor : 'transparent' }}
       >
         {selectedColor && !COLORS.includes(selectedColor) ? (
-          <Image src="/images/check_icon.svg" alt="Selected" width={16} height={16} />
+          <Image src="/images/check_icon.svg" alt="Selected" width={24} height={24} />
         ) : (
-          <Image src="/images/add_btn.svg" alt="Add color" width={16} height={16} />
+          <Image src="/images/add_btn.svg" alt="Add color" width={24} height={24} />
         )}
       </button>
 
