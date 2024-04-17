@@ -5,8 +5,14 @@ import LabelChip from '@/components/common/chip/LabelChip';
 import PlusChip from '@/components/common/chip/PlusChip';
 // eslint-disable-next-line import/extensions
 import NumberChip from '@/components/common/chip/NumberChip';
+// eslint-disable-next-line import/extensions
+import ColorChip from '@/components/common/chip/ColorChip';
 
 export default function Home() {
+  const handleColorSelect = (color: any) => {
+    console.log('Selected color:', color);
+  };
+
   return (
     <div>
       <LabelChip size="small" label="To Do" type="columns" />
@@ -16,6 +22,7 @@ export default function Home() {
       <PlusChip type="small" />
       <PlusChip type="large" />
       <NumberChip number={10} />
+      <ColorChip size="large" onSelect={handleColorSelect} />
     </div>
   );
 }
