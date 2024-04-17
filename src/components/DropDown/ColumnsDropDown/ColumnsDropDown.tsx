@@ -38,8 +38,9 @@ export default function ColumnsDropDown() {
     setIsOpen((prev) => !prev);
   };
 
-  const handleSelect = (e: any) => {
-    setSelectedValue(e.target.innerText);
+  const handleSelect: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    const target = e.target as HTMLElement;
+    setSelectedValue(target.innerText);
   };
 
   const options = data.map((item) => (

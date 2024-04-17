@@ -37,8 +37,9 @@ export default function MembersDropDown() {
     setIsOpen((prev) => !prev);
   };
 
-  const handleSelect = (e: any) => {
-    setSelectedValue(e.target.innerText);
+  const handleSelect: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    const target = e.target as HTMLElement;
+    setSelectedValue(target.innerText);
   };
 
   const options = members.map((item) => (
