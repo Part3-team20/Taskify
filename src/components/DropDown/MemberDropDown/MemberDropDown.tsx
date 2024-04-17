@@ -4,7 +4,7 @@ import styles from './MemberDropDown.module.scss';
 import arrowDown from '../../../../public/images/dropdown_icon.svg';
 import check from '../../../../public/images/check.svg';
 
-export default function ColumnsDropDown() {
+export default function MembersDropDown() {
   // 일단 mock 데이터로 작업함
   // 이후에 props로 members data 받아야 할 듯
   const members = [
