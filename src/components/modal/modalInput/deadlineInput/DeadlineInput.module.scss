@@ -1,0 +1,30 @@
+@import '@/styles/color.scss';
+.container {
+  .deadline {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 78px;
+    .calendarIcon {
+      position: absolute;
+      z-index: 2;
+      left: 14px;
+    }
+    .datePicker {
+      width: 356px;
+      height: 48px;
+      border: 1px solid var(--gray-gray_D9D9D9, $gray_D9D9D9);
+      background: var(--white-white_FFFFFF, $white_FFFFFF);
+      border-radius: 6px;
+      padding: 14px 46px;
+      &:focus {
+        border-color: $violet_5534DA;
+        outline: none;
+      }
+    }
+  }
+}
