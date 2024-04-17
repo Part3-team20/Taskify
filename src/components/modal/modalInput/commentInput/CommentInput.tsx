@@ -13,7 +13,12 @@ export default function CommentInput() {
 
   return (
     <div className={styles.container}>
-      <ModalInput placeholder="댓글 작성하기" value={comment} onChange={handleChange}>
+      <ModalInput
+        placeholder="댓글 작성하기"
+        value={comment}
+        onChange={handleChange}
+        style={{ width: '416px', height: '110px' }}
+      >
         <button className={styles.postComment} type="button">
           입력
         </button>
