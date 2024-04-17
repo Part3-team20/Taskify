@@ -5,7 +5,7 @@ import styles from './Profile.module.scss';
 const BASE_PROFILE_IMG = '/images/profile.svg';
 
 export default function Profile() {
-  const [profileImg, setProfileImg] = useState(BASE_PROFILE_IMG);
+  const [profileImg] = useState(BASE_PROFILE_IMG);
 
   return (
     <div className={styles.profile}>
