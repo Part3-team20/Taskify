@@ -15,7 +15,6 @@ interface LabelChipProps {
 }
 
 export default function LabelChip({ size, label, type }: LabelChipProps) {
-  // 컴포넌트가 생성될 때마다 색상 인덱스 업데이트
   const backgroundColor = BACKGROUNDCOLORS[colorIndex % BACKGROUNDCOLORS.length];
   const textColor = TEXTCOLORS[colorIndex % TEXTCOLORS.length];
   colorIndex += 1;

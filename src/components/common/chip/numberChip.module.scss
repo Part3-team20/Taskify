@@ -1,3 +1,5 @@
+@import '@/styles/color.scss';
+
 .numberChip {
   display: inline-flex;
   padding: 3px 6px;
@@ -5,11 +7,11 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  color: #787486;
+  color: $gray_787486;
   text-align: center;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  background-color: #eeeeee;
+  background-color: $gray_EEEEEE;
 }

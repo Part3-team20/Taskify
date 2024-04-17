@@ -1,4 +1,4 @@
-@import '../../../styles/color.scss';
+@import '@/styles/color.scss';
 
 .plusChip {
   display: flex;
@@ -6,8 +6,7 @@
   align-items: center;
   flex-shrink: 0;
   border-radius: 4px;
-  background-color: #f1effd;
-  // background-color: $violet_8;
+  background-color: $violet_8;
 }
 
 .small {
