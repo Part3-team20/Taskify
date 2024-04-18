@@ -1,0 +1,21 @@
+@import '@/styles/color.scss';
+
+.plusChip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background-color: $violet_8;
+}
+
+.small {
+  width: 20px;
+  height: 20px;
+  padding: 2.727px;
+}
+.large {
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+}
