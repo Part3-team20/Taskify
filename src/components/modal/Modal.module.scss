@@ -1,0 +1,20 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #000000b2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .modal {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    width: 400px;
+    height: 200px;
+  }
+}
