@@ -128,6 +128,30 @@ table {
   border-spacing: 0;
 }
 
+/* additional reset style */
 * {
+  box-sizing: border-box;
+  word-break: keep-all;
   font-family: 'Pretendard';
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+input {
+  border: none;
+  padding: none;
+}
+input:focus {
+  outline: none;
+}
+button {
+  border: none;
+  padding: unset;
+  background-color: unset;
+  cursor: pointer;
+  &:disabled {
+    cursor: default;
+  }
 }

@@ -1,0 +1,48 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  @include flex-center;
+  gap: 0.5rem;
+  width: 5.25rem;
+  height: 2rem;
+  padding: 0.4375rem 1.8125rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  &.white {
+    @include solid-line($gray_D9D9D9);
+    background-color: $white_FFFFFF;
+    color: $violet_5534DA;
+  }
+
+  &.violet {
+    background-color: $violet_5534DA;
+    color: $white_FFFFFF;
+  }
+
+  @include mobile {
+    width: 6.8125rem;
+    height: 1.75rem;
+    font-size: 0.75rem;
+  }
+
+  &.invite {
+    width: 6.5625rem;
+
+    @include mobile {
+      gap: 0.375rem;
+      width: 5.375rem;
+    }
+  }
+
+  &.cancel {
+    @include mobile {
+      width: 3.25rem;
+      height: 1.75rem;
+      padding: 0.5625rem 0.4375rem;
+    }
+  }
+}
