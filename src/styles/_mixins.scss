@@ -1,0 +1,9 @@
+@mixin solid-line($color, $stroke: 1px) {
+  border: $stroke solid $color;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

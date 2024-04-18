@@ -1,0 +1,28 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  display: flex;
+
+  .button {
+    @include flex-center;
+    @include solid-line($gray_D9D9D9);
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.75rem;
+
+    &.left {
+      transform: rotate(-180deg);
+    }
+
+    .icon {
+      display: inline-block;
+      position: relative;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
