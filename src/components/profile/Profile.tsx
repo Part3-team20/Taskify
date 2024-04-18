@@ -5,7 +5,6 @@ import styles from './Profile.module.scss';
 const BASE_PROFILE_IMG = '/images/profile.svg';
 
 interface ProfileProps {
-  // eslint-disable-next-line react/require-default-props
   profileImageUrl?: string;
 }
 
