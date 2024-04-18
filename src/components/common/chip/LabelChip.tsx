@@ -9,17 +9,16 @@ const TEXTCOLORS = ['#7ac555', '#760dde', '#ffa500', '#76a5ea', '#e876ea', '#4b4
 let colorIndex = 0;
 
 interface LabelChipProps {
-  size: 'large' | 'small';
   label: string;
   type: 'columns' | 'tag';
 }
 
-export default function LabelChip({ size, label, type }: LabelChipProps) {
+export default function LabelChip({ label, type }: LabelChipProps) {
   const backgroundColor = BACKGROUNDCOLORS[colorIndex % BACKGROUNDCOLORS.length];
   const textColor = TEXTCOLORS[colorIndex % TEXTCOLORS.length];
   colorIndex += 1;
 
-  const classNames = `${styles.labelChip} ${styles[size]} ${styles[type]}`;
+  const classNames = `${styles.labelChip} ${styles[type]}`;
 
   return (
     <div className={classNames} style={{ backgroundColor, color: textColor }}>

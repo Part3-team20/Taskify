@@ -7,15 +7,15 @@
   flex-shrink: 0;
   border-radius: 4px;
   background-color: $violet_8;
-}
-
-.small {
-  width: 20px;
-  height: 20px;
-  padding: 2.727px;
-}
-.large {
   width: 22px;
   height: 22px;
   padding: 3px;
+}
+
+@include mobile {
+  .plusChip {
+    width: 20px;
+    height: 20px;
+    padding: 2.727px;
+  }
 }
