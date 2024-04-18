@@ -1,1 +1,26 @@
-//추후 작업
+@import '@/styles/color.scss';
+.container {
+  position: relative;
+  .tagInput {
+    width: 442px;
+    height: 48px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-gray_D9D9D9, #d9d9d9);
+    background: var(--white-white_FFFFFF, #fff);
+    &:focus {
+      border-color: $violet_5534DA;
+      outline: none;
+    }
+  }
+  .tagList {
+    position: absolute;
+    top: 14px;
+    left: 258px;
+    display: flex;
+    .tagItem {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+  }
+}
