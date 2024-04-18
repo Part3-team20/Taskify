@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import Image from 'next/image';
-import styles from './colorChip.module.scss';
+import styles from './ColorChip.module.scss';
 
 const COLORS = ['#7ac555', '#760dde', '#ffa500', '#76a5ea', '#e876ea'];
 

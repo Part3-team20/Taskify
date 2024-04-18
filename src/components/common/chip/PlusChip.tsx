@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from './plusChip.module.scss';
+import styles from './PlusChip.module.scss';
 
 export default function PlusChip(): JSX.Element {
   return (
