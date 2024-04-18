@@ -1,11 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './SideBar.module.scss';
 import IconTextButton from '../button/IconTextButton';
 import SideBarListItem from './SideBarListItem';
 import PaginationButton from '../button/PaginationButton';
+import Modal from '../modal/Modal';
 
 // mock data
 const dashboardData = [
@@ -39,8 +41,14 @@ const dashboardData = [
 ];
 
 export default function SideBar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   // 추후 데이터로 받아올 부분
   const totalCount = 11;
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <aside className={styles.container}>
@@ -53,12 +61,7 @@ export default function SideBar() {
       <div className={styles.dashboardList}>
         <div className={styles.titleBox}>
           <span className={styles.title}>Dash Boards</span>
-          <IconTextButton
-            className=""
-            handleClick={() => {
-              console.log('모달 오픈');
-            }}
-          >
+          <IconTextButton className="" handleClick={() => setIsOpen(true)}>
             <Image width="20" height="20" src="/images/add_box.svg" alt="대시보드 추가 아이콘" />
           </IconTextButton>
         </div>
@@ -69,6 +72,9 @@ export default function SideBar() {
         </ul>
         {totalCount > 10 && <PaginationButton className={styles.pagination} hasNext={false} />}
       </div>
+      <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '540px', height: '334px' }}>
+        <div>새로운 대시보드</div>
+      </Modal>
     </aside>
   );
 }
