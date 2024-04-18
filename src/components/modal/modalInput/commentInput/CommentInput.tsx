@@ -22,7 +22,7 @@ export default function CommentInput() {
           placeholder="댓글 작성하기"
           value={comment}
           onChange={handleChange}
-          style={{ width: '416px', height: '110px' }}
+          style={{ width: '26rem', height: '6.875rem' }}
         >
           <button className={styles.postComment} type="button" onClick={handlePostComment}>
             입력
