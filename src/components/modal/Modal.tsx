@@ -5,7 +5,6 @@ interface ModalProps {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
-  // eslint-disable-next-line react/require-default-props
   style?: React.CSSProperties;
 }
 

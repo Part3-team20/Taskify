@@ -13,6 +13,7 @@ export default function CommentInput() {
 
   const handlePostComment = () => {
     /* TODO : POST comment */
+    /* TODO : POST comment */
   };
   return (
     <div>
