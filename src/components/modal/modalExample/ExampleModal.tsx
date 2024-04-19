@@ -16,7 +16,7 @@ export default function ExampleModal() {
         모달열기
       </button>
       <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '500px', height: '900px' }}>
-        <div>modal내용</div>
+        <div>modal 내용</div>
       </Modal>
     </div>
   );

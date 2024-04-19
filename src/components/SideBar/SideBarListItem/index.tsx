@@ -14,6 +14,7 @@ interface SideBarListItemProps {
   };
 }
 
+// sidebar
 export default function SideBarListItem({ data }: SideBarListItemProps) {
   const { id, title, color, createdByMe } = data;
   return (
