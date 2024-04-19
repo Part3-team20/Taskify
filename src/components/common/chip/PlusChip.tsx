@@ -1,16 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from './plusChip.module.scss';
+import styles from './PlusChip.module.scss';
 
-interface PlusChipProps {
-  type: 'small' | 'large';
-}
-
-export default function PlusChip({ type }: PlusChipProps): JSX.Element {
-  const chipClass = type === 'small' ? styles.small : styles.large;
-
+// to plusBtn
+export default function PlusChip(): JSX.Element {
   return (
-    <div className={`${styles.plusChip} ${chipClass}`}>
+    <div className={`${styles.plusChip}`}>
       <Image src="/images/add_btn.svg" alt="추가 버튼" width={16} height={16} />
     </div>
   );

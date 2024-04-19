@@ -9,9 +9,10 @@ const cx = classNames.bind(styles);
 
 interface PaginationButtonProps {
   hasNext: boolean; // 받아오는 데이터와 로직에 따라 이 부분은 추후 변경
+  className: string;
 }
 
-export default function PaginationButton({ hasNext }: PaginationButtonProps) {
+export default function PaginationButton({ hasNext, className }: PaginationButtonProps) {
   const [page, setPage] = useState(1);
 
   // 페이지네이션 관련 로직 추후 변경 필요
@@ -26,7 +27,7 @@ export default function PaginationButton({ hasNext }: PaginationButtonProps) {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={cx('container', className)}>
       <button type="button" className={cx('button', 'left')} disabled={page === 1} onClick={onClickPrev}>
         <span className={styles.icon}>
           <Image

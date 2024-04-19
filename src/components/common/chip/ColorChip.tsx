@@ -1,16 +1,17 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import Image from 'next/image';
-import styles from './colorChip.module.scss';
+import styles from './ColorChip.module.scss';
 
 const COLORS = ['#7ac555', '#760dde', '#ffa500', '#76a5ea', '#e876ea'];
 
 interface ColorChipProps {
-  size: 'small' | 'large';
   onSelect: (color: string) => void;
 }
 
-export default function ColorChip({ size, onSelect }: ColorChipProps): JSX.Element {
+export default function ColorChip({ onSelect }: ColorChipProps): JSX.Element {
   const [selectedColor, setSelectedColor] = useState<string>(COLORS[0]);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -21,6 +22,7 @@ export default function ColorChip({ size, onSelect }: ColorChipProps): JSX.Eleme
     onSelect(color);
   };
 
+  // 컬러 피커
   const handleCustomColor = (color: string) => {
     setSelectedColor(color);
     onSelect(color);
@@ -45,7 +47,7 @@ export default function ColorChip({ size, onSelect }: ColorChipProps): JSX.Eleme
         <button
           key={color}
           type="button"
-          className={`${styles.colorChip} ${styles[size]} `}
+          className={`${styles.colorChip} `}
           style={{ backgroundColor: color }}
           onClick={() => handleColorClick(color)}
         >
@@ -55,7 +57,7 @@ export default function ColorChip({ size, onSelect }: ColorChipProps): JSX.Eleme
 
       <button
         type="button"
-        className={`${styles.colorChip} ${styles[size]} ${selectedColor && !COLORS.includes(selectedColor) ? '' : styles.picker}`}
+        className={`${styles.colorChip} ${selectedColor && !COLORS.includes(selectedColor) ? '' : styles.picker}`}
         onClick={() => setIsPickerOpen(true)}
         style={{ backgroundColor: selectedColor && !COLORS.includes(selectedColor) ? selectedColor : 'transparent' }}
       >

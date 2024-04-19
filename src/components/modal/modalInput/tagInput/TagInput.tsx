@@ -16,8 +16,8 @@ export default function TagInput() {
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && tag.trim() !== '') {
       // Enter 입력 event
-      if (tagList.length >= 3) {
-        // 태그 3개 까지 적용
+      if (tagList.length >= 5) {
+        // 태그 5개 까지 적용
         setTag('');
         return;
       }
@@ -37,19 +37,22 @@ export default function TagInput() {
 
   return (
     <div className={styles.container}>
-      <input
-        placeholder="입력 후 Enter"
-        value={tag}
-        onChange={handleChangeTag}
-        onKeyDown={handleKeyPress}
-        className={styles.tagInput}
-      />
-      <div className={styles.tagList}>
-        {tagList?.map((tagItem) => (
-          <button type="button" className={styles.tagItem} onClick={() => handleDeleteTag(tagItem)}>
-            <LabelChip key={tagItem} size="large" label={tagItem} type="tag" />
-          </button>
-        ))}
+      <p className={styles.tagText}>태그</p>
+      <div className={styles.inputContainer}>
+        <div className={styles.tagList}>
+          {tagList?.map((tagItem) => (
+            <button type="button" className={styles.tagItem} onClick={() => handleDeleteTag(tagItem)}>
+              <LabelChip key={tagItem} size="large" label={tagItem} type="tag" />
+            </button>
+          ))}
+        </div>
+        <input
+          placeholder="입력 후 Enter"
+          value={tag}
+          onChange={handleChangeTag}
+          onKeyDown={handleKeyPress}
+          className={styles.tagInput}
+        />
       </div>
     </div>
   );
