@@ -22,6 +22,7 @@ export default function ColorChip({ onSelect }: ColorChipProps): JSX.Element {
     onSelect(color);
   };
 
+  // 컬러 피커
   const handleCustomColor = (color: string) => {
     setSelectedColor(color);
     onSelect(color);

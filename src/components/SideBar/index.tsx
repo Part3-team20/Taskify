@@ -4,10 +4,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './SideBar.module.scss';
-import IconTextButton from '../button/IconTextButton';
+import IconTextButton from '../common/Button/IconTextButton';
 import SideBarListItem from './SideBarListItem';
-import PaginationButton from '../button/PaginationButton';
-import Modal from '../modal/Modal';
+import PaginationButton from '../common/Button/PaginationButton';
+import Modal from '../Modal/Modal';
 
 // mock data
 const dashboardData = [

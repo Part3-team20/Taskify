@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './PlusChip.module.scss';
 
+// to plusBtn
 export default function PlusChip(): JSX.Element {
   return (
     <div className={`${styles.plusChip}`}>
