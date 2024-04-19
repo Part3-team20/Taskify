@@ -32,7 +32,7 @@ export default function PaginationButton({ hasNext, className }: PaginationButto
         <span className={styles.icon}>
           <Image
             fill
-            src={page !== 1 ? '/images/arrow_icon.svg' : 'images/arrow_icon_disabled.svg'}
+            src={page !== 1 ? '/images/arrow_icon.svg' : '/images/arrow_icon_disabled.svg'}
             alt="이전 페이지"
             priority
           />
@@ -42,7 +42,7 @@ export default function PaginationButton({ hasNext, className }: PaginationButto
         <span className={styles.icon}>
           <Image
             fill
-            src={hasNext ? '/images/arrow_icon.svg' : 'images/arrow_icon_disabled.svg'}
+            src={hasNext ? '/images/arrow_icon.svg' : '/images/arrow_icon_disabled.svg'}
             alt="다음 페이지"
             priority
           />
