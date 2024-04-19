@@ -32,7 +32,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@include mobile {
   .colorChipContainer {
     .colorChip {
       width: 28px;
