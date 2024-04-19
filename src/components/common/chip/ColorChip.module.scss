@@ -6,7 +6,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
 
   .colorChip {
     display: flex;
@@ -14,8 +14,8 @@
     align-items: center;
     border-radius: 50%;
     border: none;
-    width: 30px;
-    height: 30px;
+    width: 1.875rem;
+    height: 1.875rem;
 
     &.picker {
       border: 1.5px solid $violet_5534DA;
@@ -27,7 +27,7 @@
     z-index: 10;
     top: 100%;
     //추후 사용하는 곳에 따라서 right 값 수정
-    right: -180px;
+    right: -11.25rem;
     transform: translateX(0%);
   }
 }
@@ -35,8 +35,8 @@
 @include mobile {
   .colorChipContainer {
     .colorChip {
-      width: 28px;
-      height: 28px;
+      width: 1.75rem;
+      height: 1.75rem;
     }
   }
 }
