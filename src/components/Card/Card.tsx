@@ -25,9 +25,7 @@ export default function Card({ title, tags, profileImageUrl, imageUrl, dueDate }
         <h2>{title}</h2>
       </div>
       <div className={styles.tags}>
-        <div className={styles.tags}>
-          {tags?.map((tag) => <LabelChip key={tag} size="large" label={tag} type="tag" />)}
-        </div>
+        <div className={styles.tags}>{tags?.map((tag) => <LabelChip key={tag} label={tag} type="tag" />)}</div>
       </div>
       {dueDate && (
         <div className={styles.time}>
@@ -35,7 +33,7 @@ export default function Card({ title, tags, profileImageUrl, imageUrl, dueDate }
           <time dateTime={dueDate}>{dueDate}</time>
         </div>
       )}
-      <Profile url={profileImageUrl} />
+      <Profile profileImageUrl={profileImageUrl} />
     </div>
   );
 }
