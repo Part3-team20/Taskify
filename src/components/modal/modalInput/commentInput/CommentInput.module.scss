@@ -1,18 +1,19 @@
+@import '@/styles/color.scss';
 .comment {
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 .container {
   .postComment {
     cursor: pointer;
     position: absolute;
-    top: 100px;
-    right: 30px;
-    border-radius: 4px;
-    border: 1px solid var(--gray-gray_D9D9D9, #d9d9d9);
-    background: var(--white-white_FFFFFF, #fff);
-    width: 84px;
-    height: 28px;
-    color: #5534da;
+    top: 6.25rem;
+    right: 1.875rem;
+    border-radius: 0.25rem;
+    border: 0.0625rem solid var(--gray-gray_D9D9D9, $gray_D9D9D9);
+    background: var(--white-white_FFFFFF, $white_FFFFFF);
+    width: 5.25rem;
+    height: 1.75rem;
+    color: $violet_5534DA;
   }
 }
