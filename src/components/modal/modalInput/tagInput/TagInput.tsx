@@ -42,7 +42,7 @@ export default function TagInput() {
         <div className={styles.tagList}>
           {tagList?.map((tagItem) => (
             <button type="button" className={styles.tagItem} onClick={() => handleDeleteTag(tagItem)}>
-              <LabelChip key={tagItem} size="large" label={tagItem} type="tag" />
+              <LabelChip key={tagItem} label={tagItem} type="tag" />
             </button>
           ))}
         </div>
