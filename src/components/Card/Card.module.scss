@@ -1,1 +1,52 @@
-//card component module scss
+@import '@/styles/color.scss';
+@import '@/styles/responsive-styles.scss';
+
+.card {
+  width: 314px;
+  border-radius: 6px;
+  border: 1px solid $gray_D9D9D9;
+  background: $white_FFFFFF;
+  padding: 20px;
+
+  .image {
+    display: flex;
+    width: 274px;
+    height: 160px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .title {
+    color: $black_333236;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .tags {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+  }
+  .bottom {
+    margin-top: 10px;
+    display: flex;
+    width: 274px;
+    height: 24px;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: auto;
+
+    .time {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile {
+      margin-left: auto;
+    }
+  }
+}
