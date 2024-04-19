@@ -6,6 +6,7 @@ import Image from 'next/image';
 import styles from './DeadlineInput.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
+// dueDate
 export default function DeadLineInput() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 

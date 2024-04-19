@@ -1,4 +1,5 @@
 @import '@/styles/color.scss';
+@import '@/styles/responsive-styles.scss';
 
 .colorChipContainer {
   position: relative;
@@ -13,16 +14,8 @@
     align-items: center;
     border-radius: 50%;
     border: none;
-
-    &.large {
-      width: 30px;
-      height: 30px;
-    }
-
-    &.small {
-      width: 28px;
-      height: 28px;
-    }
+    width: 30px;
+    height: 30px;
 
     &.picker {
       border: 1.5px solid $violet_5534DA;
@@ -36,5 +29,14 @@
     //추후 사용하는 곳에 따라서 right 값 수정
     right: -180px;
     transform: translateX(0%);
+  }
+}
+
+@media (max-width: 767px) {
+  .colorChipContainer {
+    .colorChip {
+      width: 28px;
+      height: 28px;
+    }
   }
 }
