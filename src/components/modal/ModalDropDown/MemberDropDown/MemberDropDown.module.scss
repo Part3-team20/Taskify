@@ -5,26 +5,26 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
-    width: 217px;
-    height: 48px;
-    border-radius: 6px;
+    padding: 0 1.25rem;
+    width: 13.5625rem;
+    height: 3rem;
+    border-radius: 0.375rem;
     border: 2px solid #5534da;
     background-color: white;
   }
 
   .selectList {
-    width: 217px;
-    border-radius: 6px;
+    width: 13.5625rem;
+    border-radius: 0.375rem;
     border: 1px solid #d9d9d9;
-    box-shadow: 0px 4px 20px 0px #00000014;
+    box-shadow: 0rem 0.25rem 1.25rem 0rem #00000014;
 
     .selectItem {
-      padding-left: 20px;
+      padding-left: 1.25rem;
       .itemBtn {
         width: 100%;
-        padding: 20px;
-        padding-left: 25px;
+        padding: 1.25rem;
+        padding-left: 1.5625rem;
         background-color: white;
         border: none;
         text-align: left;
@@ -36,7 +36,7 @@
 
         .checkIcon {
           position: absolute;
-          left: 0px;
+          left: 0rem;
         }
       }
     }
