@@ -5,7 +5,7 @@ import styles from './LandingPageHeader.module.scss';
 export default function LandingPageHeader() {
   return (
     <header className={styles.header}>
-      <div className={styles.inner}>
+      <div className={styles.container}>
         <Link href={'/'} className={styles.logo}>
           <Image src="/images/mainLogo.svg" alt="logo" className={styles.logoImg} width={28.8} height={33.1} />
           <Image src="/images/Taskify.svg" alt="taskify" className={styles.taskify} width={80} height={22} />
