@@ -1,11 +1,13 @@
 @import '@/styles/color.scss';
 @import '@/styles/_mixins.scss';
 @import '@/styles/_responsive-styles.scss';
+@import '@/styles/_variables.scss';
 
 .rightSide {
   padding-left: 18.75rem;
 
   .header {
+    z-index: $z-5;
     position: sticky;
     top: 0;
     height: 4.375rem;
