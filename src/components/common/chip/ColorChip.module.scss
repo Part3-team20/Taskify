@@ -1,0 +1,40 @@
+@import '@/styles/color.scss';
+
+.colorChipContainer {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  .colorChip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+
+    &.large {
+      width: 30px;
+      height: 30px;
+    }
+
+    &.small {
+      width: 28px;
+      height: 28px;
+    }
+
+    &.picker {
+      border: 1.5px solid $violet_5534DA;
+    }
+  }
+
+  .colorPicker {
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    //추후 사용하는 곳에 따라서 right 값 수정
+    right: -180px;
+    transform: translateX(0%);
+  }
+}

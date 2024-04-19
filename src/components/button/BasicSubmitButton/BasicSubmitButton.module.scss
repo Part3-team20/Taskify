@@ -1,0 +1,38 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  @include flex-center;
+  width: 5.25rem;
+  height: 2rem;
+  padding: 0.4375rem 1.8125rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  &.white {
+    @include solid-line($gray_D9D9D9);
+    width: 4.875rem;
+    background-color: $white_FFFFFF;
+    color: $gray_787486;
+
+    @include mobile {
+      width: 5.25rem;
+    }
+  }
+
+  &.violet {
+    background-color: $violet_5534DA;
+    color: $white_FFFFFF;
+
+    &:disabled {
+      background-color: $gray_9FA6B2;
+    }
+  }
+
+  @include mobile {
+    height: 1.75rem;
+    font-size: 0.75rem;
+  }
+}

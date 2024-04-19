@@ -1,0 +1,52 @@
+.selectContainer {
+  width: 217px;
+  color: #5534da;
+
+  .btnText {
+    color: #5534da;
+    border-radius: 20px;
+    background-color: #f1effd;
+    padding: 5px 10px;
+  }
+
+  .selectBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    width: 217px;
+    height: 48px;
+    border-radius: 6px;
+    border: 2px solid #5534da;
+    background-color: white;
+  }
+
+  .selectList {
+    width: 217px;
+    border-radius: 6px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0px 4px 20px 0px #00000014;
+
+    .selectItem {
+      padding-left: 20px;
+      .itemBtn {
+        width: 100%;
+        padding: 20px;
+        padding-left: 25px;
+        background-color: white;
+        border: none;
+        text-align: left;
+        position: relative;
+
+        :hover {
+          background-color: lightgray;
+        }
+
+        .checkIcon {
+          position: absolute;
+          left: 0px;
+        }
+      }
+    }
+  }
+}
