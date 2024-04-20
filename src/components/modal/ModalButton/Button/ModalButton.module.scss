@@ -1,0 +1,30 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  @include flex-center;
+  width: 7.5rem;
+  height: 3rem;
+  padding: 0.875rem 2.875rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+
+  &.white {
+    @include solid-line($gray_D9D9D9);
+    background-color: $white_FFFFFF;
+    color: $gray_787486;
+  }
+
+  &.violet {
+    background-color: $violet_5534DA;
+    color: $white_FFFFFF;
+  }
+
+  @include mobile {
+    width: 8.625rem;
+    height: 2.625rem;
+    font-size: 0.875rem;
+  }
+}

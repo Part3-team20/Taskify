@@ -1,0 +1,19 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  @include flex-center;
+  gap: 0.375rem;
+  color: $black_333236;
+  font-size: 1rem;
+  font-weight: 500;
+
+  @include mobile {
+    font-size: 0.875rem;
+  }
+
+  svg {
+    height: 100%;
+  }
+}

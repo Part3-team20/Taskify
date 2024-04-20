@@ -1,0 +1,19 @@
+@import '@/styles/color.scss';
+.container {
+  position: relative;
+  width: 28.125rem;
+  height: 3rem;
+  .modalInput {
+    width: 26rem;
+    height: 3rem;
+    border: 0.0625rem solid var(--gray-gray_D9D9D9, $gray_D9D9D9);
+    background: var(--white-white_FFFFFF, $white_FFFFFF);
+    border-radius: 0.375rem;
+    padding: 0.875rem 1rem;
+
+    &:focus {
+      border-color: $violet_5534DA;
+      outline: none;
+    }
+  }
+}

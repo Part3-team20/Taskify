@@ -1,0 +1,25 @@
+@import '@/styles/_variables.scss';
+
+.container {
+  z-index: $z-2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #000000b2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal {
+    z-index: $z-1;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    width: 25rem;
+    height: 12.5rem;
+  }
+}
