@@ -1,0 +1,64 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  @include solid-line($gray_D9D9D9);
+  border-radius: 0.5rem;
+  background-color: $white_FFFFFF;
+  padding: 1.5625rem 1.25rem;
+  width: 20.75rem;
+  height: 4.375rem;
+
+  .color {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $black_333236;
+
+    .icon {
+      display: inline-block;
+      position: relative;
+      width: 1.25rem;
+      height: 1rem;
+    }
+  }
+
+  @include tablet {
+    width: 15.4375rem;
+    height: 4.25rem;
+
+    .icon {
+      width: 1.1rem;
+      height: 0.875rem;
+    }
+  }
+
+  @include mobile {
+    width: 100%;
+    height: 3.625rem;
+    padding: 1.25rem;
+
+    .title {
+      font-size: 0.875rem;
+
+      .icon {
+        width: 0.9375rem;
+        height: 0.75rem;
+      }
+    }
+  }
+}

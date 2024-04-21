@@ -1,0 +1,48 @@
+@import '@/styles/responsive-styles.scss';
+
+.labelChip {
+  &.columns {
+    display: inline-flex;
+    padding: 4px 8px;
+    align-items: center;
+    gap: 6px;
+    border-radius: 11px;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  &.tag {
+    display: inline-flex;
+    padding: 4px 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .iconCircle {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+}
+
+// mobile
+@include mobile {
+  .labelChip {
+    &.columns {
+      font-size: 10px;
+    }
+    &.tag {
+      font-size: 10px;
+    }
+  }
+}
