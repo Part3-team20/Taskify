@@ -7,8 +7,29 @@
   gap: 30px;
 
   .form {
+    width: 520px;
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    .label {
+      padding-bottom: 10px;
+    }
+
+    .input {
+      margin-top: 8px;
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid #5534da;
+      border-radius: 8px;
+    }
+  }
+
+  .signupText {
+    span {
+      color: #5534da;
+      text-decoration: underline;
+      padding-left: 10px;
+    }
   }
 }

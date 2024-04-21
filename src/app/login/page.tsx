@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchPost from '@/hooks/useFetchPost';
+import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import styles from './Login.module.scss';
 import logo from '../../../public/images/mainLogo.svg';
-import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 
 export default function LoginPage() {
   const { fetchPost } = useFetchPost();
@@ -54,10 +54,11 @@ export default function LoginPage() {
       </Link>
       <p className={styles.greetingText}>오늘도 만나서 반가워요!</p>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label htmlFor="user_email">
+        <label htmlFor="user_email" className={styles.label}>
           이메일
           <br />
           <input
+            className={styles.input}
             id="user_email"
             type="email"
             name="email"
@@ -66,10 +67,11 @@ export default function LoginPage() {
             placeholder="이메일을 입력해 주세요"
           />
         </label>
-        <label htmlFor="user_pw">
+        <label htmlFor="user_pw" className={styles.label}>
           비밀번호
           <br />
           <input
+            className={styles.input}
             id="user_pw"
             type="password"
             name="password"
@@ -79,10 +81,9 @@ export default function LoginPage() {
           />
         </label>
         <br />
-        {/* <input type="submit" value="로그인" /> */}
         <LoginSubmitButton isActive={isBtnActive}>로그인</LoginSubmitButton>
       </form>
-      <p>
+      <p className={styles.signupText}>
         회원이 아니신가요?
         <Link href="/signup">
           <span>회원가입하기</span>
