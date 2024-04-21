@@ -1,3 +1,5 @@
+@import '@/styles/color.scss';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -20,8 +22,12 @@
       margin-top: 8px;
       width: 100%;
       padding: 15px 16px;
-      border: 1px solid #5534da;
+      border: 1px solid $violet_5534DA;
       border-radius: 8px;
+    }
+
+    .errorMessage {
+      color: $red_D6173A;
     }
   }
 
