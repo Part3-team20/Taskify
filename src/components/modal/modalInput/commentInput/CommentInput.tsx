@@ -3,7 +3,6 @@
 'use client';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import ModalInput from '../ModalInput';
 import styles from './CommentInput.module.scss';
 
 interface CommentInputProps {
@@ -14,7 +13,7 @@ interface CommentInputProps {
 export default function CommentInput({ onCommentSubmit, initialContent = '' }: CommentInputProps) {
   const [comment, setComment] = useState(initialContent);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
@@ -28,18 +27,18 @@ export default function CommentInput({ onCommentSubmit, initialContent = '' }: C
   }, [initialContent]);
 
   return (
-    <div>
-      <form className={styles.container}>
-        <ModalInput
+    <div className={styles.commentForm}>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <textarea
+          className={styles.textarea}
           placeholder="댓글 작성하기"
           value={comment}
           onChange={handleChange}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <button type="button" className={styles.postComment} onClick={handleSubmit}>
-            입력
-          </button>
-        </ModalInput>
+          rows={3}
+        />
+        <button type="button" className={styles.postComment} onClick={handleSubmit}>
+          입력
+        </button>
       </form>
     </div>
   );
