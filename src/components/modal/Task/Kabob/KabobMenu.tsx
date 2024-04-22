@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './KabobMenu.module.scss';
+import DeleteTask from '../../DeleteTask';
 
 type MenuOption = '수정하기' | '삭제하기';
 
 export default function KabobMenu() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   // 메뉴 바깥을 클릭하면 메뉴를 숨기는 로직
   useEffect(() => {
@@ -29,6 +31,10 @@ export default function KabobMenu() {
   const handleOptionClick = (option: MenuOption) => {
     console.log(`Option selected: ${option}`);
     setMenuVisible(false);
+
+    if (option === '삭제하기') {
+      setIsDeleteModalOpen(true); // 삭제 모달 열기
+    }
   };
 
   return (
@@ -47,6 +53,8 @@ export default function KabobMenu() {
           </button>
         </div>
       )}
+
+      <DeleteTask isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} />
     </div>
   );
 }

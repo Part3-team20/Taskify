@@ -32,6 +32,7 @@ export default function Task({ title, description, tags, dueDate, assignee, imag
 
   return (
     <div>
+      {/* 카드와 추후 연결 */}
       <button type="button" onClick={() => setIsOpen(true)}>
         모달열기
       </button>

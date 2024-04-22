@@ -119,7 +119,7 @@ export default function Comments() {
   return (
     <div className={styles.comments}>
       <p className={styles.commentTitle}>댓글</p>
-      <CommentInput onCommentSubmit={handleCommentSubmit} initialContent="" />
+      <CommentInput onCommentSubmit={handleCommentSubmit} initialContent="" style={{ width: '450px' }} />
 
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
@@ -131,8 +131,14 @@ export default function Comments() {
             </div>
             {editingCommentId === comment.id ? (
               <div className={styles.commentBody}>
-                <CommentInput onCommentSubmit={handleCommentSubmit} initialContent={comment.content} />
-                <div className={styles.BtnBox}>
+                <div>
+                  <CommentInput
+                    onCommentSubmit={handleCommentSubmit}
+                    initialContent={comment.content}
+                    style={{ width: '400px' }}
+                  />
+                </div>
+                <div className={styles.btnBox}>
                   <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(null)}>
                     취소
                   </button>
@@ -141,7 +147,7 @@ export default function Comments() {
             ) : (
               <div className={styles.commentBody}>
                 <p className={styles.commentText}>{comment.content}</p>
-                <div className={styles.BtnBox}>
+                <div className={styles.btnBox}>
                   <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                     수정
                   </button>
