@@ -8,12 +8,22 @@ import styles from './Task.module.scss';
 import Profile from '@/components/common/Profile/Profile';
 import Comments from './Comment/Comments';
 import KabobMenu from './Kabob/KabobMenu';
+// eslint-disable-next-line import/extensions
+import LabelChip from '@/components/common/Chip/LabelChip';
 
 interface TaskProps {
   title: string;
+  description: string;
+  tags?: string[];
+  dueDate?: string;
+  assignee: {
+    nickname: string;
+    profileImageUrl?: string;
+  };
+  imageUrl?: string;
 }
 
-export default function Task({ title }: TaskProps) {
+export default function Task({ title, description, tags, dueDate, assignee, imageUrl }: TaskProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCloseModal = () => {
@@ -41,23 +51,38 @@ export default function Task({ title }: TaskProps) {
           <div>
             <article className={styles.modalContainer}>
               <div className={styles.contentArea}>
-                <div className={styles.labels}>tag</div>
-                <div className={styles.contents}>content</div>
-                <div className={styles.commentsArea}>comment</div>
-                <Comments />
+                <div className={styles.labels}>
+                  <LabelChip type="columns" label="progress" />
+                  {/* eslint-disable-next-line react/self-closing-comp */}
+                  <span className={styles.divide}></span>
+                  {/* 컬럼은 다른 props와 달리 컬럼 id로 find를 해야해서 임의로 값 생성 */}
+                  <div className={styles.tags}>
+                    {tags && tags.map((tag) => <LabelChip key={tag} type="tag" label={tag} />)}
+                  </div>
+                </div>
+                <div className={styles.contents}>{description}</div>
+                <div className={styles.imgBox}>
+                  <img src={imageUrl} alt="본문 첨부 이미지" />
+                  {/* <Image src={imageUrl} alt="본문 첨부 이미지" className={styles.img} /> */}
+                </div>
+                <div className={styles.comments}>
+                  <Comments />
+                </div>
               </div>
               <div className={styles.information}>
                 <ul>
-                  <li className={styles.manager}>
-                    <span className={styles.subtitle}>담당자</span>
-                    <div>
-                      <Profile />
-                      <span className={styles.name}>담당자 이름</span>
-                    </div>
-                  </li>
-                  <li>
+                  {assignee && (
+                    <li className={styles.infoBox}>
+                      <span className={styles.subtitle}>담당자</span>
+                      <div className={styles.assignee}>
+                        <Profile profileImageUrl={assignee.profileImageUrl} />
+                        <span className={styles.name}>{assignee.nickname}</span>
+                      </div>
+                    </li>
+                  )}
+                  <li className={styles.infoBox}>
                     <span className={styles.subtitle}>마감일</span>
-                    <span className={styles.dueDate}>dueDate</span>
+                    <span className={styles.dueDate}>{dueDate}</span>
                   </li>
                 </ul>
               </div>
