@@ -1,0 +1,150 @@
+@import '@/styles/color.scss';
+@import '@/styles/_responsive-styles.scss';
+@import '@/styles/_mixins.scss';
+
+.header {
+  background-color: $white_FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  margin-left: 300px;
+  padding-left: 40px;
+  padding-right: 80px;
+  border-bottom: 1px solid $gray_D9D9D9;
+
+  @include tablet {
+    margin-left: 160px;
+    padding-right: 40px;
+  }
+
+  @include mobile {
+    margin-left: 67px;
+    padding-left: 24px;
+    padding-right: 12px;
+    height: 60px;
+  }
+}
+
+.dashBoardTitle {
+  color: $black_333236;
+  font-size: 20px;
+  font-weight: 700;
+
+  @include tablet {
+    visibility: hidden;
+    width: 0;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  @include mobile {
+    gap: 12px;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  margin-right: 8px;
+
+  @include tablet {
+    gap: 12px;
+  }
+
+  @include mobile {
+    gap: 6px;
+    margin-right: 4px;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid $gray_D9D9D9;
+  padding: 10px 16px;
+  font-weight: 500;
+  height: 40px;
+  cursor: pointer;
+
+  & img {
+    @include mobile {
+      display: none;
+    }
+  }
+
+  @include tablet {
+    padding: 8px 16px;
+    font-size: 14px;
+    height: 36px;
+  }
+
+  @include mobile {
+    height: 30px;
+    padding: 7px 12px;
+  }
+}
+
+.members {
+  display: flex;
+  align-items: center;
+}
+
+.member {
+  position: relative;
+
+  &.onlyVisibleOnPC {
+    @include tablet {
+      display: none;
+    }
+  }
+}
+
+.excess {
+  background-color: #f4d7da;
+  color: #d25b68;
+  font-weight: 500;
+  position: relative;
+  border: 2px solid $white_FFFFFF;
+  border-radius: 50%;
+  width: 2.375rem;
+  height: 2.375rem;
+  flex-shrink: 0;
+  left: -28px;
+
+  @include flex-center;
+
+  @include tablet {
+    left: -14px;
+  }
+}
+
+.boundary {
+  margin: 0;
+  height: 38px;
+  border-color: $gray_FAFAFA;
+
+  @include mobile {
+    height: 34px;
+  }
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.nickname {
+  @include mobile {
+    display: none;
+  }
+}
