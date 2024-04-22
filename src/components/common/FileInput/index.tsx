@@ -4,20 +4,30 @@ import { InputHTMLAttributes, useRef, useState } from 'react';
 import styles from './FileInput.module.scss';
 import Image from 'next/image';
 
-interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  setFile: React.Dispatch<React.SetStateAction<File | null>>;
+}
 
-export default function FileInput({ name, onChange }: FileInputProps) {
-  const [image, setImage] = useState<File | null>(null);
+export default function FileInput({ className, setFile, ...props }: FileInputProps) {
+  const [preview, setPreview] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    setImage(file);
+    setPreview(file ? URL.createObjectURL(file) : null);
+    setFile(file);
   };
 
   return (
-    <div>
-      {/* <img src={image ? image : '/images/add_btn.svg'} /> */}
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-    </div>
+    <label className={`${styles.previewContainer} ${className}`}>
+      <Image
+        src={preview ? preview : '/images/add_btn.svg'}
+        alt="preview"
+        fill={preview ? true : false}
+        width={preview ? undefined : 28}
+        height={preview ? undefined : 28}
+        className={styles.preview}
+      />
+      <input {...props} type="file" accept="image/*" onChange={handleFileChange} className={styles.fileInput} />
+    </label>
   );
 }
