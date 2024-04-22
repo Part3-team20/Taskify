@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchPost from '@/hooks/useFetchPost';

@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useFetchPost from '@/hooks/useFetchPost';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
+import PasswordInput from '@/components/common/input/PasswordInput';
+import Input from '@/components/common/input';
 import styles from './Login.module.scss';
 import logo from '../../../public/images/mainLogo.svg';
 
@@ -16,6 +18,7 @@ export default function LoginPage() {
     password: '',
   });
   const [isBtnActive, setIsBtnActive] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
 
   function handleChange(e: any) {
     const { name, value } = e.target;
@@ -43,8 +46,13 @@ export default function LoginPage() {
 
   useEffect(() => {
     const { email, password } = values;
-    const isValid = email.trim() !== '' && password.trim() !== '' && password.trim().length >= 8;
-    setIsBtnActive(isValid);
+    const isLoginValid = email.trim() !== '' && password.trim() !== '' && password.trim().length >= 8;
+    if (password.trim().length < 8 && password.trim().length > 0) {
+      setIsPasswordError(true);
+    } else {
+      setIsPasswordError(false);
+    }
+    setIsBtnActive(isLoginValid);
   }, [values]);
 
   return (
@@ -54,33 +62,24 @@ export default function LoginPage() {
       </Link>
       <p className={styles.greetingText}>오늘도 만나서 반가워요!</p>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label htmlFor="user_email" className={styles.label}>
-          이메일
-          <br />
-          <input
-            className={styles.input}
-            id="user_email"
-            type="email"
-            name="email"
-            required
-            onChange={handleChange}
-            placeholder="이메일을 입력해 주세요"
-          />
-        </label>
-        <label htmlFor="user_pw" className={styles.label}>
-          비밀번호
-          <br />
-          <input
-            className={styles.input}
-            id="user_pw"
-            type="password"
-            name="password"
-            placeholder="비밀번호를 입력해 주세요"
-            required
-            onChange={handleChange}
-          />
-        </label>
-        <br />
+        <Input
+          labelName="이메일"
+          type="email"
+          placeholder="이메일을 입력해주세요"
+          name="email"
+          onChange={handleChange}
+          required
+        />
+        <PasswordInput
+          labelName="비밀번호"
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          name="password"
+          onChange={handleChange}
+          error={isPasswordError}
+          errorMessage="비밀번호를 8자 이상 입력해주세요"
+          required
+        />
         <LoginSubmitButton isActive={isBtnActive}>로그인</LoginSubmitButton>
       </form>
       <p className={styles.signupText}>
