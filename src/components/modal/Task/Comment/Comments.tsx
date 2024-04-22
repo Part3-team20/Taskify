@@ -4,6 +4,7 @@ import CommentInput from '../../ModalInput/commentInput/CommentInput';
 // eslint-disable-next-line import/extensions
 import Profile from '@/components/common/Profile/Profile';
 import styles from './Comments.module.scss';
+import DeleteTask from '../../DeleteTask';
 
 interface CommentData {
   id: number;
@@ -31,6 +32,8 @@ function formatDate(dateString: string) {
 export default function Comments() {
   const [comments, setComments] = useState<CommentData[]>([]);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState<number | null>(null);
 
   // 목 데이터
   useEffect(() => {
@@ -67,8 +70,18 @@ export default function Comments() {
     console.log('Submit comment:', content);
   };
 
-  const handleCommentDelete = async (id: number) => {
-    console.log('Delete comment ID:', id);
+  // const handleCommentDelete = async (id: number) => {
+  //   console.log('Delete comment ID:', id);
+  // };
+
+  const openDeleteModal = (id: number) => {
+    setCommentToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setCommentToDelete(null);
   };
 
   // 이후 수정 예정
@@ -151,7 +164,7 @@ export default function Comments() {
                   <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                     수정
                   </button>
-                  <button className={styles.commentBtn} type="button" onClick={() => handleCommentDelete(comment.id)}>
+                  <button className={styles.commentBtn} type="button" onClick={() => openDeleteModal(comment.id)}>
                     삭제
                   </button>
                 </div>
@@ -160,6 +173,7 @@ export default function Comments() {
           </div>
         </div>
       ))}
+      <DeleteTask isOpen={isDeleteModalOpen} onClose={closeDeleteModal} />
     </div>
   );
 }
