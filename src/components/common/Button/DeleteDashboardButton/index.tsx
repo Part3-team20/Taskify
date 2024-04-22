@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
 import styles from './DeleteDashboardButton.module.scss';
 
 interface DeleteDashboardButtonProps {
@@ -6,8 +6,8 @@ interface DeleteDashboardButtonProps {
 }
 
 export default function DeleteDashboardButton({ handleDelete }: DeleteDashboardButtonProps) {
-  const router = useRouter();
-  const id = router.query.id as string;
+  const param = useParams();
+  const id = param.boardId as string;
 
   const onDelete = () => {
     // 해당 페이지의 id값을 handleDelete 함수에 전달
