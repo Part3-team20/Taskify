@@ -7,6 +7,7 @@
   align-items: center;
   margin: 100px auto 0;
   gap: 30px;
+  padding-bottom: 100px;
 
   .form {
     width: 520px;
@@ -16,14 +17,24 @@
 
     .label {
       padding-bottom: 10px;
+
+      .input {
+        margin-top: 8px;
+        width: 100%;
+        padding: 15px 16px;
+        border: 1px solid $violet_5534DA;
+        border-radius: 8px;
+      }
     }
 
-    .input {
-      margin-top: 8px;
-      width: 100%;
-      padding: 15px 16px;
-      border: 1px solid $violet_5534DA;
-      border-radius: 8px;
+    .labelPw {
+      position: relative;
+
+      .togglePw {
+        position: absolute;
+        right: 12px;
+        top: 37px;
+      }
     }
 
     .errorMessage {
