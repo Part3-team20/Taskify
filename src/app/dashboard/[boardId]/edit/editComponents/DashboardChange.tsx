@@ -1,14 +1,31 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import ColorChip from '@/components/common/chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import styles from './DashboardChange.module.scss';
 
-export default function DashboaradChange() {
+// const mockData = [
+//   {
+//     id: 1,
+//     title: 'first',
+//     color: '#FF0000',
+//   },
+//   {
+//     id: 2,
+//     title: 'second',
+//     color: '#0000FF',
+//   },
+//   {
+//     id: 3,
+//     title: 'third',
+//     color: '#00FF00',
+//   },
+// ];
+
+export default function DashboaradChange(id: any) {
   const [selectedColor, setSelectedColor] = useState('');
   const [dashboardName, setDashboardName] = useState('');
-
   const handleSelectColor = (color: any) => {
     /* TODO */
     setSelectedColor(color);
@@ -22,11 +39,24 @@ export default function DashboaradChange() {
   const isInput = dashboardName !== ''; // input 값 있는지 확인
 
   /* TODO 현재 id의 정보 불러오기 + 대쉬보드 수정 요청 보내기 */
+  const handlePutDashboard = () => {
+    /* PUT 대시보드 정보 변경 */
+    console.log('전송 값 : ', id, selectedColor, dashboardName);
+  };
+
+  useEffect(() => {
+    console.log('현재 페이지의 id', id);
+    /* 현재 페이지의 id로 현재 대시보드의 이름,색상을 가져오기 (placeholder)
+        [ /{teamId}/dashboards/{dashboardId} ]
+      */
+    // setDashboardName(mockData[parseInt(id, 10)].title);
+  });
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.title}>비브리지</p>
+        {/* 현재 대시보드 이름. 임시로 비브리지로 설정 */}
         <ColorChip onSelect={handleSelectColor} />
       </div>
       <p className={styles.dashboardName}>대시보드 이름</p>
@@ -37,7 +67,7 @@ export default function DashboaradChange() {
         onChange={handleChangeDashboardName}
       />
       <div className={styles.buttonConatienr}>
-        <BasicSubmitButton color="violet" isActive={isInput}>
+        <BasicSubmitButton color="violet" isActive={isInput} handleClick={handlePutDashboard}>
           변경
         </BasicSubmitButton>
       </div>
