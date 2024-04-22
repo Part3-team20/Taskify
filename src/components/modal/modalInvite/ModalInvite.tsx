@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@/components/button/Button';
+import Button from '@/components/common/Button/Button';
+import Image from 'next/image';
 import Modal from '../Modal';
 
 import styles from './ModalInvite.module.scss';
@@ -19,9 +20,10 @@ export default function ModalInvite() {
 
   return (
     <div>
-      <button type="button" onClick={() => setIsOpen(true)}>
-        모달클릭
-      </button>
+      <Button color="violet" handleClick={() => setIsOpen(true)}>
+        <Image className={styles.inviteIcon} src="/images/add_box.svg" width={16} height={16} alt="invite" />
+        초대하기
+      </Button>
       <Modal isOpen={isOpen} onClose={handleClickCancel} style={{ width: '33.75rem', height: '17.25rem' }}>
         <div className={styles.modalContainer}>
           <p className={styles.invite}>초대하기</p>
