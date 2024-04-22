@@ -1,0 +1,54 @@
+.container {
+  width: 620px;
+  height: 404px;
+  border-radius: 8px;
+  background: var(--white-white_FFFFFF, #fff);
+  padding: 31.5px 28px;
+  margin: 12px 0;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32.5px;
+    p {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      p {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+  .name {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-gray_9FA6B2, #9fa6b2);
+    margin-bottom: 24px;
+  }
+
+  .member {
+    .memberSection {
+      .memberList {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        .profile {
+          gap: 12px;
+          display: flex;
+          align-items: center;
+        }
+      }
+      .contour {
+        border: none;
+        height: 1px;
+        background-color: #d9d9d9;
+      }
+    }
+  }
+}
