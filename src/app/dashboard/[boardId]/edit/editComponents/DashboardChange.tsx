@@ -5,23 +5,15 @@ import ColorChip from '@/components/common/chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import styles from './DashboardChange.module.scss';
 
-// const mockData = [
-//   {
-//     id: 1,
-//     title: 'first',
-//     color: '#FF0000',
-//   },
-//   {
-//     id: 2,
-//     title: 'second',
-//     color: '#0000FF',
-//   },
-//   {
-//     id: 3,
-//     title: 'third',
-//     color: '#00FF00',
-//   },
-// ];
+const mockData = {
+  id: 1,
+  title: 'Task for Today',
+  color: '#ff0000',
+  createdAt: '2024-04-22T15:22:12.569Z',
+  updatedAt: '2024-04-22T15:22:12.569Z',
+  createdByMe: true,
+  userId: 456,
+};
 
 export default function DashboaradChange(id: any) {
   const [selectedColor, setSelectedColor] = useState('');
@@ -50,12 +42,13 @@ export default function DashboaradChange(id: any) {
         [ /{teamId}/dashboards/{dashboardId} ]
       */
     // setDashboardName(mockData[parseInt(id, 10)].title);
+    setDashboardName(mockData.title);
   });
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <p className={styles.title}>비브리지</p>
+        <p className={styles.title}>{dashboardName}</p>
         {/* 현재 대시보드 이름. 임시로 비브리지로 설정 */}
         <ColorChip onSelect={handleSelectColor} />
       </div>
