@@ -29,13 +29,12 @@ export default function CommentInput({ onCommentSubmit, initialContent = '' }: C
 
   return (
     <div>
-      <p className={styles.comment}>댓글</p>
       <form className={styles.container}>
         <ModalInput
           placeholder="댓글 작성하기"
           value={comment}
           onChange={handleChange}
-          style={{ width: '26rem', height: '6.875rem' }}
+          style={{ width: '100%', height: '100%' }}
         >
           <button type="button" className={styles.postComment} onClick={handleSubmit}>
             입력

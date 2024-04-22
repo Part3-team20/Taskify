@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import CommentInput from '../../ModalInput/commentInput/CommentInput';
+// import useFormattedDate from '../../../../hook/useFormattedDate';
+// eslint-disable-next-line import/extensions
+import Profile from '@/components/common/Profile/Profile';
+import styles from './Comments.module.scss';
 
 interface CommentData {
   id: number;
@@ -9,130 +13,145 @@ interface CommentData {
   author: {
     id: number;
     nickname: string;
-    profileImageUrl: string;
+    profileImageUrl?: string;
   };
 }
 
-const teamId = 20;
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 
 export default function Comments() {
   const [comments, setComments] = useState<CommentData[]>([]);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
 
+  // 목 데이터
   useEffect(() => {
-    // 댓글 조회
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(`/api/${teamId}/comments`, {
-          headers: {
-            // 'Authorization': 'Bearer your-token-here', // 인증 헤더 필요 시 추가
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setComments(data.comments);
-      } catch (error) {
-        console.error('댓글 조회에 실패했습니다.', error);
-      }
-    };
+    const mockComments = [
+      {
+        id: 1,
+        content: 'This is a mock comment',
+        createdAt: '2024-04-21T21:46:35.646Z',
+        cardId: 101,
+        author: {
+          id: 1,
+          nickname: 'User One',
+          profileImageUrl:
+            'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/3-7_1520_1712645279291.png',
+        },
+      },
+      {
+        id: 2,
+        content: 'Another example comment',
+        createdAt: '2024-03-21T21:46:35.646Z',
+        cardId: 102,
+        author: { id: 2, nickname: 'User Two' },
+      },
+    ];
+    const formattedComments = mockComments.map((comment) => ({
+      ...comment,
+      createdAt: formatDate(comment.createdAt),
+    }));
 
-    fetchComments();
+    setComments(formattedComments);
   }, []);
 
   const handleCommentSubmit = async (content: string) => {
-    if (editingCommentId !== null) {
-      // 댓글 수정
-      try {
-        const response = await fetch(`/api/${teamId}/comments/${editingCommentId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            // 'Authorization': 'Bearer your-token-here', // 인증 헤더 필요 시 추가
-          },
-          body: JSON.stringify({ content }),
-        });
-        const updatedComment = await response.json();
-        setComments((prev) => prev.map((comment) => (comment.id === editingCommentId ? updatedComment : comment)));
-      } catch (error) {
-        console.error('댓글 수정에 실패했습니다.', error);
-      }
-    } else {
-      // 댓글 추가
-      try {
-        const response = await fetch(`/api/comments`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // 'Authorization': 'Bearer your-token-here', // 인증 헤더 필요 시 추가
-          },
-          // body: JSON.stringify({
-          //   content,
-          //   cardId: /* 해당 cardId */,
-          //   columnId: /* 해당 columnId */,
-          //   dashboardId: /* 해당 dashboardId */
-          // }),
-        });
-        const newComment = await response.json();
-        setComments((prev) => [...prev, newComment]);
-      } catch (error) {
-        console.error('댓글 추가에 실패했습니다.', error);
-      }
-    }
-    setEditingCommentId(null); // 추가/수정 완료 후 상태 초기화
+    console.log('Submit comment:', content);
   };
 
-  // 댓글 삭제
   const handleCommentDelete = async (id: number) => {
-    try {
-      const response = await fetch(`/api/${teamId}/comments/${id}`, {
-        method: 'DELETE',
-        headers: {
-          // 'Authorization': 'Bearer your-token-here', // 인증 헤더 필요 시 추가
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      setComments((prev) => prev.filter((comment) => comment.id !== id));
-    } catch (error) {
-      console.error('댓글 삭제에 실패했습니다.', error);
-    }
+    console.log('Delete comment ID:', id);
   };
+
+  // 이후 수정 예정
+  //
+  // useEffect(() => {
+  //   const loadComments = async () => {
+  //     try {
+  //       const data = await fetchComments();
+  //       setComments(data.comments);
+  //     } catch (error) {
+  //       console.error('Failed to fetch comments', error);
+  //     }
+  //   };
+
+  //   loadComments();
+  // }, []);
+
+  // const handleCommentSubmit = async (content: string) => {
+  //   if (editingCommentId !== null) {
+  //     try {
+  //       const updatedComment = await updateComment(editingCommentId, content);
+  //       setComments((prev) => prev.map((comment) => (comment.id === editingCommentId ? updatedComment : comment)));
+  //     } catch (error) {
+  //       console.error('Failed to update comment', error);
+  //     }
+  //   } else {
+  //     try {
+  //       const newComment = await addComment(content);
+  //       setComments((prev) => [...prev, newComment]);
+  //     } catch (error) {
+  //       console.error('Failed to add comment', error);
+  //     }
+  //   }
+  //   setEditingCommentId(null);
+  // };
+
+  // const handleCommentDelete = async (id: number) => {
+  //   try {
+  //     const success = await deleteComment(id);
+  //     if (success) {
+  //       setComments((prev) => prev.filter((comment) => comment.id !== id));
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to delete comment', error);
+  //   }
+  // };
 
   return (
-    <div>
-      <p>댓글</p>
-      {/* 새 댓글 추가 필드 */}
-      <CommentInput onCommentSubmit={(content) => handleCommentSubmit(content)} initialContent="" />
+    <div className={styles.comments}>
+      <p className={styles.commentTitle}>댓글</p>
+      <CommentInput onCommentSubmit={handleCommentSubmit} initialContent="" />
 
-      {/* 댓글 목록 */}
       {comments.map((comment) => (
-        <div key={comment.id}>
-          {/* 댓글 표시 */}
-          <img src={comment.author.profileImageUrl} alt={`${comment.author.nickname}'s profile`} />
-          <span>{comment.author.nickname}</span>
-          <span>{comment.createdAt}</span>
-          {editingCommentId === comment.id ? (
-            // 수정 중인 댓글 입력 필드: 수정 버튼 클릭 시만 표시
-            <div>
-              <CommentInput onCommentSubmit={handleCommentSubmit} initialContent={comment.content} />
-              <button type="button" onClick={() => setEditingCommentId(null)}>
-                취소
-              </button>
+        <div className={styles.commentContainer} key={comment.id}>
+          <Profile profileImageUrl={comment.author.profileImageUrl} />
+          <div className={styles.commentBox}>
+            <div className={styles.commentHeader}>
+              <span className={styles.nickname}>{comment.author.nickname}</span>
+              <span className={styles.createdAt}>{comment.createdAt}</span>
             </div>
-          ) : (
-            <div>
-              <p>{comment.content}</p>
-              <button type="button" onClick={() => setEditingCommentId(comment.id)}>
-                수정
-              </button>
-              <button type="button" onClick={() => handleCommentDelete(comment.id)}>
-                삭제
-              </button>
-            </div>
-          )}
+            {editingCommentId === comment.id ? (
+              <div className={styles.commentBody}>
+                <CommentInput onCommentSubmit={handleCommentSubmit} initialContent={comment.content} />
+                <div className={styles.BtnBox}>
+                  <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(null)}>
+                    취소
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.commentBody}>
+                <p className={styles.commentText}>{comment.content}</p>
+                <div className={styles.BtnBox}>
+                  <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
+                    수정
+                  </button>
+                  <button className={styles.commentBtn} type="button" onClick={() => handleCommentDelete(comment.id)}>
+                    삭제
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       ))}
     </div>

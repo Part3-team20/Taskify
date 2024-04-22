@@ -5,6 +5,7 @@ import Modal from '../Modal';
 import styles from './Task.module.scss';
 // eslint-disable-next-line import/extensions
 import Profile from '@/components/common/Profile/Profile';
+import Comments from './Comment/Comments';
 
 interface TaskProps {
   title: string;
@@ -37,6 +38,7 @@ export default function Task({ title }: TaskProps) {
                 <div className={styles.labels}>tag</div>
                 <div className={styles.contents}>content</div>
                 <div className={styles.commentsArea}>comment</div>
+                <Comments />
               </div>
               <div className={styles.information}>
                 <ul>
