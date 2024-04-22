@@ -35,7 +35,7 @@ export default function Task({ title, description, tags, dueDate, assignee, imag
       <button type="button" onClick={() => setIsOpen(true)}>
         모달열기
       </button>
-      <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '730px', height: 'auto' }}>
+      <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '760px', height: 'auto', maxHeight: '730px' }}>
         <div className={styles.taskModal}>
           <div className={styles.modalHeader}>
             <h2>{title}</h2>

@@ -5,7 +5,8 @@
   position: relative;
   flex-direction: column;
   width: 100%;
-  padding: 28px;
+  padding: 24px;
+  max-height: 730px;
 
   .modalHeader {
     display: flex;
@@ -29,9 +30,12 @@
   .modalContainer {
     display: flex;
     overflow: auto;
-    gap: 24px;
+    gap: 16px;
     flex-direction: row;
     margin-top: 24px;
+    justify-content: space-between;
+    height: 450px;
+    overflow-y: auto;
 
     .contentArea {
       .labels {
@@ -52,7 +56,7 @@
       }
       .contents {
         margin-top: 24px;
-        width: 450px;
+        width: 440px;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -76,6 +80,8 @@
       }
     }
     .information {
+      position: sticky;
+      top: 0;
       width: 200px;
       height: 155px;
       border-radius: 8px;
