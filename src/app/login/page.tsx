@@ -8,7 +8,6 @@ import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import PasswordInput from '@/components/common/input/PasswordInput';
 import Input from '@/components/common/input';
 import styles from './Login.module.scss';
-import logo from '../../../public/images/mainLogo.svg';
 
 export default function LoginPage() {
   const { fetchPost } = useFetchPost();
@@ -58,7 +57,7 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <Link href="/">
-        <Image className={styles.logo} src={logo} alt="logo" />
+        <Image className={styles.logo} src="/images/fullLogo.svg" alt="logo" width={200} height={280} />
       </Link>
       <p className={styles.greetingText}>오늘도 만나서 반가워요!</p>
       <form className={styles.form} onSubmit={handleSubmit}>

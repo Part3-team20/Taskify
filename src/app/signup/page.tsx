@@ -7,7 +7,6 @@ import useFetchPost from '@/hooks/useFetchPost';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import Input from '@/components/common/input';
 import PasswordInput from '@/components/common/input/PasswordInput';
-import logo from '../../../public/images/mainLogo.svg';
 import styles from './Signup.module.scss';
 
 export default function SignUpPage() {
@@ -69,7 +68,7 @@ export default function SignUpPage() {
   return (
     <div className={styles.container}>
       <Link href="/">
-        <Image className={styles.logo} src={logo} alt="logo" />
+        <Image className={styles.logo} src="/images/fullLogo.svg" alt="logo" width={200} height={280} />
       </Link>
       <p className={styles.greetingText}>첫 방문을 환영합니다!</p>
       <form className={styles.form} onSubmit={handleSubmit}>
