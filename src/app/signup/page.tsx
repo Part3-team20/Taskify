@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useFetchPost from '@/hooks/useFetchPost';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
+import Input from '@/components/common/input';
+import PasswordInput from '@/components/common/input/PasswordInput';
 import logo from '../../../public/images/mainLogo.svg';
-import eyeOff from '../../../public/images/eye-off.svg';
-import eyeOn from '../../../public/images/eye-on.svg';
 import styles from './Signup.module.scss';
 
 export default function SignUpPage() {
@@ -18,13 +18,8 @@ export default function SignUpPage() {
     password: '',
     confirmPassword: '',
   });
+  const [isPasswordError, setIsPasswordError] = useState(false);
   const [isBtnActive, setIsBtnActive] = useState(false);
-  const [isMoreThanEight, setIsMoreThanEight] = useState(true);
-  const [isPasswordShow, setIsPasswordShow] = useState(false);
-  const [isConfirmPasswordShow, setIsConfirmPasswordShow] = useState(false);
-
-  const passwordType = isPasswordShow ? 'text' : 'password';
-  const confirmPasswordType = isConfirmPasswordShow ? 'text' : 'password';
 
   function handleChange(e: any) {
     const { name, value } = e.target;
@@ -51,14 +46,6 @@ export default function SignUpPage() {
     }
   };
 
-  const handleTogglePassword = () => {
-    setIsPasswordShow((prev) => !prev);
-  };
-
-  const handleToggleConfirmPassword = () => {
-    setIsConfirmPasswordShow((prev) => !prev);
-  };
-
   useEffect(() => {
     const { email, nickname, password, confirmPassword } = values;
 
@@ -72,10 +59,10 @@ export default function SignUpPage() {
     setIsBtnActive(isValid);
 
     // 비밀번호 8자 이하 확인
-    if (password.trim().length > 0 && password.trim().length < 8) {
-      setIsMoreThanEight(false);
+    if (password.trim().length < 8 && password.trim().length > 0) {
+      setIsPasswordError(true);
     } else {
-      setIsMoreThanEight(true);
+      setIsPasswordError(false);
     }
   }, [values]);
 
@@ -86,61 +73,40 @@ export default function SignUpPage() {
       </Link>
       <p className={styles.greetingText}>첫 방문을 환영합니다!</p>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label htmlFor="user_email" className={styles.label}>
-          이메일
-          <input
-            className={styles.input}
-            id="user_email"
-            type="email"
-            name="email"
-            required
-            onChange={handleChange}
-            placeholder="이메일을 입력해 주세요"
-          />
-        </label>
-        <label htmlFor="user_nickname" className={styles.label}>
-          닉네임
-          <input
-            className={styles.input}
-            id="user_nickname"
-            type="text"
-            name="nickname"
-            required
-            onChange={handleChange}
-            placeholder="닉네임을 입력해 주세요"
-          />
-        </label>
-        <label htmlFor="user_pw" className={`${styles.label} ${styles.labelPw}`}>
-          비밀번호
-          <input
-            className={styles.input}
-            id="user_pw"
-            type={passwordType}
-            name="password"
-            placeholder="8자 이상 입력해 주세요"
-            required
-            onChange={handleChange}
-          />
-          <button className={styles.togglePw} type="button" onClick={handleTogglePassword}>
-            {isPasswordShow ? <Image src={eyeOn} alt="eye-on" /> : <Image src={eyeOff} alt="eye-off" />}
-          </button>
-        </label>
-        {!isMoreThanEight && <p className={styles.errorMessage}>8자 이상 입력해주세요.</p>}
-        <label htmlFor="user_confirmPw" className={`${styles.label} ${styles.labelPw}`}>
-          비밀번호 확인
-          <input
-            className={styles.input}
-            id="user_confirmPw"
-            type={confirmPasswordType}
-            name="confirmPassword"
-            placeholder="비밀번호를 한번 더 입력해 주세요"
-            required
-            onChange={handleChange}
-          />
-          <button className={styles.togglePw} type="button" onClick={handleToggleConfirmPassword}>
-            {isConfirmPasswordShow ? <Image src={eyeOn} alt="eye-on" /> : <Image src={eyeOff} alt="eye-off" />}
-          </button>
-        </label>
+        <Input
+          labelName="이메일"
+          type="email"
+          placeholder="이메일을 입력해주세요"
+          name="email"
+          onChange={handleChange}
+          required
+        />
+        <Input
+          labelName="닉네임"
+          type="text"
+          placeholder="닉네임을 입력해주세요"
+          name="nickname"
+          onChange={handleChange}
+          required
+        />
+        <PasswordInput
+          labelName="비밀번호"
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          name="password"
+          onChange={handleChange}
+          error={isPasswordError}
+          errorMessage="비밀번호를 8자 이상 입력해주세요"
+          required
+        />
+        <PasswordInput
+          labelName="비밀번호 확인"
+          type="password"
+          placeholder="비밀번호를 한번 더 입력해주세요"
+          name="confirmPassword"
+          onChange={handleChange}
+          required
+        />
         <LoginSubmitButton isActive={isBtnActive}>가입하기</LoginSubmitButton>
       </form>
       <p className={styles.signupText}>
