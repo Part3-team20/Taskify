@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Sample Card 1",
+    "profileImageUrl": "https://pbs.twimg.com/media/FHN7Q_aaAAAhZr5?format=png&name=small",
+    "tags": ["React", "Next.js", "Component"],
+    "imageUrl": "https://www.hanwhaeagles.co.kr/images/pages/game/bg_header_game.jpg",
+    "dueDate": "2024-04-30"
+  },
+  {
+    "title": "Sample Card 2"
+  }
+]
