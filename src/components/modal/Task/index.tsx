@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Modal from '../Modal';
 import styles from './Task.module.scss';
 // eslint-disable-next-line import/extensions
 import Profile from '@/components/common/Profile/Profile';
 import Comments from './Comment/Comments';
+import KabobMenu from './Kabob/KabobMenu';
 
 interface TaskProps {
   title: string;
@@ -24,16 +26,20 @@ export default function Task({ title }: TaskProps) {
         모달열기
       </button>
       <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '730px', height: 'auto' }}>
-        <div>
+        <div className={styles.taskModal}>
           <div className={styles.modalHeader}>
             <h2>{title}</h2>
             <div className={styles.buttons}>
-              <div className={styles.kabob}>케밥</div>
-              <button type="button">클로즈 버튼</button>
+              <div className={styles.kabob}>
+                <KabobMenu />
+              </div>
+              <button onClick={handleCloseModal} type="button">
+                <Image src="/images/close_icon.svg" alt="닫기 버튼" width={32} height={32} />
+              </button>
             </div>
           </div>
-          <div className={styles.modalContainer}>
-            <article>
+          <div>
+            <article className={styles.modalContainer}>
               <div className={styles.contentArea}>
                 <div className={styles.labels}>tag</div>
                 <div className={styles.contents}>content</div>

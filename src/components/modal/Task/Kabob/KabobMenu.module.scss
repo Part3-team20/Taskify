@@ -1,0 +1,35 @@
+@import '@/styles/_color.scss';
+
+.kabobMenuContainer {
+  position: relative;
+
+  .menuOptions {
+    display: flex;
+    position: absolute;
+    right: 0;
+    width: 93px;
+    height: 82px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid $gray_D9D9D9;
+    background: $white_FFFFFF;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+    gap: 5px;
+    flex-direction: column;
+
+    button {
+      width: 81px;
+      height: 32px;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      &:hover {
+        background-color: $violet_8;
+        color: $violet_5534DA;
+      }
+    }
+  }
+}

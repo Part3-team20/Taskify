@@ -1,1 +1,21 @@
 // task
+.taskModal {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  padding: 28px;
+
+  .modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .modalContainer {
+    display: flex;
+    overflow: auto;
+    gap: 24px;
+    flex-direction: row;
+  }
+}
