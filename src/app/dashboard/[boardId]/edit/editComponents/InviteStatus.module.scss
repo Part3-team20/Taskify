@@ -1,0 +1,48 @@
+.container {
+  width: 620px;
+  height: 477px;
+  border-radius: 8px;
+  background: var(--white-white_FFFFFF, #fff);
+  margin: 12px 0;
+  padding: 33.5px 28px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 33.5px;
+    .title {
+      color: var(--black-black_333236, #333236);
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      .paginationNumber {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+  .email {
+    color: var(--gray-gray_9FA6B2, #9fa6b2);
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 33.5px;
+  }
+  .emailSection {
+    margin-bottom: 25.5px;
+    .emailList {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25.5px;
+    }
+    .contour {
+      border: none;
+      height: 1px;
+      background-color: #d9d9d9;
+    }
+  }
+}
