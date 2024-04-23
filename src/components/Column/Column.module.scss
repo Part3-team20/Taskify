@@ -1,0 +1,55 @@
+@import '@/styles/color.scss';
+@import '@/styles/responsive-styles.scss';
+
+.column {
+  width: 354px;
+  // height: 100%;
+  height: 1010px;
+  background-color: $gray_FAFAFA;
+  border-right: 1px solid $gray_EEEEEE;
+
+  .columnHeader {
+    position: relative;
+    display: flex;
+    padding: 24px 20px;
+
+    .columnTitle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .iconCircle {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: $violet_5534DA;
+        }
+      }
+    }
+
+    .setting {
+      position: absolute;
+      right: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .columnBody {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    align-items: center;
+
+    .addBtn {
+      display: flex;
+      width: 314px;
+      height: 40px;
+    }
+  }
+}
