@@ -1,0 +1,116 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  padding-top: 1.25rem;
+  padding-left: 1.25rem;
+  padding-bottom: 7.8125rem;
+
+  @include tablet {
+    padding-bottom: 11.125rem;
+  }
+
+  @include mobile {
+    padding-top: 1rem;
+    padding-left: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
+.profileForm {
+  margin-top: 1.5625rem;
+  margin-bottom: 0.75rem;
+  padding: 2rem 1.75rem 1.75rem 1.75rem;
+  max-width: 38.75rem;
+
+  & h1 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  & .fileInput {
+    width: 11.375rem;
+    height: 11.375rem;
+  }
+
+  & .inputs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  & .textInputs {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  & .button {
+    display: flex;
+    justify-content: right;
+  }
+
+  @include mobile {
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+    padding: 1.75rem 1.25rem 1.25rem 1.25rem;
+
+    & h1 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    & .fileInput {
+      width: 6.25rem;
+      height: 6.25rem;
+    }
+
+    & .inputs {
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    & .textInputs {
+      gap: 1rem;
+    }
+  }
+}
+
+.passwordForm {
+  padding: 2rem 1.75rem 1.75rem 1.75rem;
+  max-width: 38.75rem;
+
+  & h1 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  & .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  & .button {
+    display: flex;
+    justify-content: right;
+  }
+
+  @include mobile {
+    padding: 1.75rem 1.25rem 1.25rem 1.25rem;
+
+    & h1 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    & .inputs {
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+}

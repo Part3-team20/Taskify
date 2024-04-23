@@ -1,34 +1,45 @@
+/* eslint-disable no-console */
+
 'use client';
 
-import React, { ChangeEvent, useState } from 'react';
-import ModalInput from '../ModalInput';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './CommentInput.module.scss';
 
-export default function CommentInput() {
-  const [comment, setComment] = useState('');
+interface CommentInputProps {
+  onCommentSubmit: (content: string) => void;
+  initialContent: string;
+  style?: React.CSSProperties;
+}
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+export default function CommentInput({ onCommentSubmit, initialContent = '', style }: CommentInputProps) {
+  const [comment, setComment] = useState(initialContent);
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  const handlePostComment = () => {
-    /* TODO : POST comment */
-    /* TODO : POST comment */
+  const handleSubmit = () => {
+    onCommentSubmit(comment); // 댓글 내용을 상위 컴포넌트로 전달
+    setComment(''); // 필드 초기화
   };
+
+  useEffect(() => {
+    setComment(initialContent); // 수정 시 기존 내용으로 필드 설정
+  }, [initialContent]);
+
   return (
-    <div>
-      <p className={styles.comment}>댓글</p>
-      <form className={styles.container}>
-        <ModalInput
+    <div className={styles.commentForm}>
+      <form onSubmit={(e) => e.preventDefault()} style={style}>
+        <textarea
+          className={styles.textarea}
           placeholder="댓글 작성하기"
           value={comment}
           onChange={handleChange}
-          style={{ width: '26rem', height: '6.875rem' }}
-        >
-          <button className={styles.postComment} type="button" onClick={handlePostComment}>
-            입력
-          </button>
-        </ModalInput>
+          rows={3}
+        />
+        <button type="button" className={styles.postComment} onClick={handleSubmit}>
+          입력
+        </button>
       </form>
     </div>
   );
