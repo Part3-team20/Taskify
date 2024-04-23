@@ -1,3 +1,5 @@
+@import '@/styles/_color.scss';
+@import '@/styles/_responsive-styles.scss';
 .container {
   width: 620px;
   height: 477px;
@@ -5,6 +7,13 @@
   background: var(--white-white_FFFFFF, #fff);
   margin: 12px 0;
   padding: 33.5px 28px;
+  @include tablet {
+    width: 544px;
+  }
+  @include mobile {
+    width: 284px;
+    height: 395px;
+  }
   .header {
     display: flex;
     justify-content: space-between;
@@ -14,6 +23,9 @@
       color: var(--black-black_333236, #333236);
       font-size: 24px;
       font-weight: 700;
+      @include mobile {
+        font-size: 18px;
+      }
     }
     .pagination {
       display: flex;
@@ -22,6 +34,9 @@
       .paginationNumber {
         font-size: 14px;
         font-weight: 400;
+        @include mobile {
+          font-size: 12px;
+        }
       }
     }
   }
@@ -30,14 +45,28 @@
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 33.5px;
+    @include mobile {
+      font-size: 14px;
+    }
   }
   .emailSection {
     margin-bottom: 25.5px;
+    @include mobile {
+      margin-bottom: 5.5px;
+    }
     .emailList {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 25.5px;
+      @include mobile {
+        margin-bottom: 18.5px;
+      }
+      .inviteEmail {
+        @include mobile {
+          font-size: 14px;
+        }
+      }
     }
     .contour {
       border: none;

@@ -80,9 +80,9 @@ export default function MemberManagement(id: any) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <p>구성원</p>
+        <p className={styles.memberTitle}>구성원</p>
         <div className={styles.pagination}>
-          <p>
+          <p className={styles.pageNum}>
             {Math.ceil(mockData.members.length / PAGESIZE)} 페이지 중 {currentPage}
           </p>
           <PaginationButton
@@ -101,7 +101,7 @@ export default function MemberManagement(id: any) {
               <div className={styles.profile}>
                 {/* <Profile profileImageUrl={member.profileImageUrl} /> */}
                 <Profile />
-                <p>{member.nickname}</p>
+                <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
               <Button color="white" handleClick={() => handleDeleteMember(member.userId)}>
                 삭제

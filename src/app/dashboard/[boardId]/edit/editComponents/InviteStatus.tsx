@@ -174,7 +174,9 @@ export default function InviteStatus(id: any) {
         .map((invite) => (
           <div className={styles.emailSection}>
             <div className={styles.emailList}>
-              <p key={invite.id}>{invite.invitee.email}</p>
+              <p key={invite.id} className={styles.inviteEmail}>
+                {invite.invitee.email}
+              </p>
               <Button color="white" handleClick={() => handleCancelInvite(invite.id)}>
                 취소
               </Button>
