@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+// eslint-disable-next-line import/extensions
 import SideBar from '@/components/SideBar';
 import styles from './CommonLayout.module.scss';
 
