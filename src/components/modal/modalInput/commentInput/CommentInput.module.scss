@@ -1,19 +1,53 @@
 @import '@/styles/color.scss';
-.comment {
-  font-weight: 500;
-  margin-bottom: 0.625rem;
-}
-.container {
+@import '@/styles/responsive-styles.scss';
+
+.commentForm {
+  display: flex;
+  position: relative;
+
+  .textarea {
+    width: 100%;
+    display: flex;
+    height: 110px;
+    padding: 16px;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1px solid $gray_D9D9D9;
+    background: $white_FFFFFF;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $violet_5534DA;
+    }
+  }
   .postComment {
     cursor: pointer;
     position: absolute;
-    top: 6.25rem;
-    right: 1.875rem;
+    bottom: 0.75rem;
+    right: 0.75rem;
     border-radius: 0.25rem;
-    border: 0.0625rem solid var(--gray-gray_D9D9D9, $gray_D9D9D9);
-    background: var(--white-white_FFFFFF, $white_FFFFFF);
+    border: 0.0625rem solid $gray_D9D9D9;
+    background: $white_FFFFFF;
     width: 5.25rem;
     height: 1.75rem;
     color: $violet_5534DA;
+  }
+}
+
+@include tablet {
+  .commentForm {
+    .textarea {
+      width: 100%;
+    }
+  }
+}
+
+@include mobile {
+  .commentForm {
+    .textarea {
+      width: 100%;
+      height: 70px;
+    }
   }
 }
