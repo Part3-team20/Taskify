@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import ModalInvite from '@/components/modal/modalInvite/ModalInvite';
 import Button from '@/components/common/Button/Button';
@@ -109,7 +112,28 @@ export default function InviteStatus(id: any) {
           email: 'invitee5@example.com',
           id: 5,
         },
-        inviteAccepted: true,
+        inviteAccepted: false,
+        createdAt: '2024-04-22T07:57:04.979Z',
+        updatedAt: '2024-04-22T07:57:04.979Z',
+      },
+      {
+        id: 5,
+        inviter: {
+          nickname: 'inviter6',
+          email: 'inviter6@example.com',
+          id: 5,
+        },
+        teamId: 'team6',
+        dashboard: {
+          title: 'dashboard6',
+          id: 5,
+        },
+        invitee: {
+          nickname: 'invitee6',
+          email: 'invitee6@example.com',
+          id: 6,
+        },
+        inviteAccepted: false,
         createdAt: '2024-04-22T07:57:04.979Z',
         updatedAt: '2024-04-22T07:57:04.979Z',
       },
@@ -118,20 +142,35 @@ export default function InviteStatus(id: any) {
   const handleCancelInvite = (userId: any) => {
     console.log(userId, '취소');
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGESIZE = 4;
+  const startIndex = (currentPage - 1) * PAGESIZE;
+  const endIndex = startIndex + PAGESIZE;
+  const inviteList = mockData.invitations.slice(startIndex, endIndex);
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.title}>초대 내역</p>
         <div className={styles.pagination}>
-          <p className={styles.paginationNumber}>1 페이지 중 1</p>
-          <PaginationButton className="" hasNext />
+          <p className={styles.paginationNumber}>
+            {Math.ceil(mockData.invitations.length / PAGESIZE)} 페이지 중 {currentPage}
+          </p>
+          <PaginationButton
+            className=""
+            hasNext={currentPage < Math.ceil(mockData.invitations.length / PAGESIZE)}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
           <ModalInvite />
         </div>
       </div>
       <p className={styles.email}>이메일</p>
-      {mockData?.invitations
-        .filter((invite) => !invite.inviteAccepted) // inviteAccepted가 false인 초대만 필터링
+      {inviteList
+        .filter((invite) => !invite.inviteAccepted)
         .map((invite) => (
           <div className={styles.emailSection}>
             <div className={styles.emailList}>
