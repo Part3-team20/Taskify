@@ -1,8 +1,7 @@
 'use client';
 
-import LabelChip from '@/components/common/chip/LabelChip';
 import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
-
+import LabelChip from '@/components/common/Chip/LabelChip';
 import styles from './TagInput.module.scss';
 
 export default function TagInput() {
