@@ -1,0 +1,23 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.goBackButton {
+  @include flex-center;
+  gap: 0.375rem;
+  font-size: 1rem;
+  font-weight: 500;
+
+  @include mobile {
+    font-size: 0.875rem;
+  }
+}
+
+.arrow {
+  rotate: 180deg;
+
+  @include mobile {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}

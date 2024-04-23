@@ -1,9 +1,14 @@
 .profile {
-  background-color: #760dde;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2.375rem;
-  height: 2.375rem;
+  width: 2.125rem;
+  height: 2.125rem;
+  overflow: hidden;
+}
+
+.profileImg {
+  width: 100%;
+  height: 100%;
 }
