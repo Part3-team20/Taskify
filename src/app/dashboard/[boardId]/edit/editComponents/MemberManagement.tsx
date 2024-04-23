@@ -64,12 +64,11 @@ export default function MemberManagement(id: any) {
     totalCount: 4,
   };
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 4; // 페이지당 보여질 멤버 수
-  const totalPages = Math.ceil(mockData.members.length / pageSize);
+  const PAGESIZE = 4;
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentMembers = mockData.members.slice(startIndex, endIndex);
+  const startIndex = (currentPage - 1) * PAGESIZE;
+  const endIndex = startIndex + PAGESIZE;
+  const memberList = mockData.members.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -83,23 +82,26 @@ export default function MemberManagement(id: any) {
       <div className={styles.header}>
         <p>구성원</p>
         <div className={styles.pagination}>
-          <p>{`${totalPages} 페이지 중 ${currentPage}`}</p>
-          <Button color="white" handleClick={() => handlePageChange(currentPage - 1)}>
-            이전
-          </Button>
-          <Button color="white" handleClick={() => handlePageChange(currentPage + 1)}>
-            다음
-          </Button>
+          <p>
+            {Math.ceil(mockData.members.length / PAGESIZE)} 페이지 중 {currentPage}
+          </p>
+          <PaginationButton
+            className=""
+            hasNext={currentPage < Math.ceil(mockData.members.length / PAGESIZE)}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
       <p className={styles.name}>이름</p>
       <div className={styles.member}>
-        {currentMembers.map((member) => (
-          <div className={styles.memberSection}>
+        {memberList.map((member) => (
+          <div className={styles.memberSection} key={member.id}>
             <div className={styles.memberList}>
               <div className={styles.profile}>
+                {/* <Profile profileImageUrl={member.profileImageUrl} /> */}
                 <Profile />
-                <p key={member.id}>{member.nickname}</p>
+                <p>{member.nickname}</p>
               </div>
               <Button color="white" handleClick={() => handleDeleteMember(member.userId)}>
                 삭제
