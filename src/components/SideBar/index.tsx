@@ -7,7 +7,7 @@ import styles from './SideBar.module.scss';
 import IconTextButton from '../common/Button/IconTextButton';
 import SideBarListItem from './SideBarListItem';
 import PaginationButton from '../common/Button/PaginationButton';
-import Modal from '../Modal/Modal';
+import Modal from '../modal/Modal';
 
 // mock data
 const dashboardData = [
