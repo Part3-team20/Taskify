@@ -1,93 +1,68 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import Profile from '@/components/common/Profile/Profile';
 import Button from '@/components/common/Button/Button';
 import styles from './MemberManagement.module.scss';
 
-export default function MemberManagement(id: any) {
-  console.log(id);
-  const mockData = {
-    members: [
-      {
-        id: 0,
-        userId: 0,
-        email: 'user0@example.com',
-        nickname: 'user0',
-        profileImageUrl: 'https://example.com/profile0.jpg',
-        createdAt: '2024-04-22T06:42:35.077Z',
-        updatedAt: '2024-04-22T06:42:35.077Z',
-        isOwner: true,
-      },
-      {
-        id: 1,
-        userId: 1,
-        email: 'user1@example.com',
-        nickname: 'user1',
-        profileImageUrl: 'https://example.com/profile1.jpg',
-        createdAt: '2024-04-22T06:42:35.077Z',
-        updatedAt: '2024-04-22T06:42:35.077Z',
-        isOwner: false,
-      },
-      {
-        id: 2,
-        userId: 2,
-        email: 'user2@example.com',
-        nickname: 'user2',
-        profileImageUrl: 'https://example.com/profile2.jpg',
-        createdAt: '2024-04-22T06:42:35.077Z',
-        updatedAt: '2024-04-22T06:42:35.077Z',
-        isOwner: false,
-      },
-      {
-        id: 3,
-        userId: 3,
-        email: 'user3@example.com',
-        nickname: 'user3',
-        profileImageUrl: 'https://example.com/profile3.jpg',
-        createdAt: '2024-04-22T06:42:35.077Z',
-        updatedAt: '2024-04-22T06:42:35.077Z',
-        isOwner: false,
-      },
-      {
-        id: 4,
-        userId: 4,
-        email: 'user4@example.com',
-        nickname: 'user4',
-        profileImageUrl: 'https://example.com/profile4.jpg',
-        createdAt: '2024-04-22T06:42:35.077Z',
-        updatedAt: '2024-04-22T06:42:35.077Z',
-        isOwner: false,
-      },
-    ],
-    totalCount: 4,
-  };
+interface Member {
+  id: number;
+  nickname: string;
+  userId: number;
+}
+export default function MemberManagement({ boardId }: { boardId: number }) {
+  const { fetchWithToken } = useFetchWithToken();
+  const [memberData, setMemberData] = useState<Member[]>([]);
+  console.log(boardId);
+
   const [currentPage, setCurrentPage] = useState(1);
   const PAGESIZE = 4;
 
   const startIndex = (currentPage - 1) * PAGESIZE;
   const endIndex = startIndex + PAGESIZE;
-  const memberList = mockData.members.slice(startIndex, endIndex);
+  const memberList = memberData.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const handleDeleteMember = (userId: any) => {
+  const handleDeleteMember = async (userId: number) => {
     console.log(userId, '해당 멤버 삭제');
+    try {
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members/${userId}`, 'DELETE');
+    } catch (e) {
+      console.error(e);
+    }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseData = await fetchWithToken(
+          `https://sp-taskify-api.vercel.app/4-20/members?page=1&size=20&dashboardId=${boardId}`,
+          'GET'
+        );
+        console.log(responseData);
+        setMemberData(responseData.members);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, [boardId]);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.memberTitle}>구성원</p>
         <div className={styles.pagination}>
           <p className={styles.pageNum}>
-            {Math.ceil(mockData.members.length / PAGESIZE)} 페이지 중 {currentPage}
+            {Math.ceil(memberData.length / PAGESIZE)} 페이지 중 {currentPage}
           </p>
           <PaginationButton
             className=""
-            hasNext={currentPage < Math.ceil(mockData.members.length / PAGESIZE)}
+            hasNext={currentPage < Math.ceil(memberData.length / PAGESIZE)}
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
