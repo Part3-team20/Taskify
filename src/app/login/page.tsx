@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import useFetchPost from '@/hooks/useFetchPost';
+import useFetchPost from '@/hooks/useFetcht';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import PasswordInput from '@/components/common/input/PasswordInput';
 import Input from '@/components/common/input';
