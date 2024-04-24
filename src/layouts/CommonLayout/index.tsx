@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-// eslint-disable-next-line import/extensions
-import SideBar from '@/components/SideBar';
+import SideBar from '@/components/SideBar/index';
 import styles from './CommonLayout.module.scss';
 
 interface CommonLayoutProps {

@@ -3,8 +3,7 @@
 import React from 'react';
 import Modal from '../Modal';
 import styles from './DeleteTask.module.scss';
-// eslint-disable-next-line import/extensions
-import ModalButton from '../ModalButton/Button';
+import ModalButton from '../ModalButton/Button/index';
 
 type DeleteTaskProps = {
   isOpen: boolean;
