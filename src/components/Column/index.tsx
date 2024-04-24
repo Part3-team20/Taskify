@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './Column.module.scss';
 import Card from '../Card/Card';
-import NumberChip from '../common/Chip/NumberChip';
+import NumberChip from '../common/chip/NumberChip';
 import AddButton from '../common/Button/AddButton';
 
 interface CardProps {

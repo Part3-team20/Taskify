@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import CommentInput from '../../ModalInput/commentInput/CommentInput';
+import Profile from '@/components/common/Profile/Profile';
+import CommentInput from '../../modalInput/commentInput/CommentInput';
 // import useFormattedDate from '../../../../hook/useFormattedDate';
 // eslint-disable-next-line import/extensions
-import Profile from '@/components/common/Profile/Profile';
 import styles from './Comments.module.scss';
 import DeleteTask from '../../DeleteTask';
 
