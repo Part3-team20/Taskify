@@ -84,7 +84,6 @@ export default function MyDashboardList() {
           onPageChange={() => {}}
         />
       </div>
-      {/* 새로운 대시보드 추가 모달 */}
       <ModalPortal>
         <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </ModalPortal>
