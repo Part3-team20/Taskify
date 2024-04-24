@@ -61,7 +61,7 @@ export default function MyDashboardList() {
       </ul>
       <div className={styles.paginationContainer}>
         <span>1 페이지 중 1</span>
-        <PaginationButton className={styles.pagination} hasNext={false} />
+        <PaginationButton className={styles.pagination} hasNext={false} currentPage={1} onPageChange={() => {}} />
       </div>
       <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
