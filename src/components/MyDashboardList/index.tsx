@@ -6,6 +6,7 @@ import DashboardButton from '../common/Button/DashboardButton';
 import PaginationButton from '../common/Button/PaginationButton';
 import styles from './MyDashboardList.module.scss';
 import CreateDashboard from '../modal/CreateDashboard';
+import ModalPortal from '../modal/ModalPortal';
 
 const dashboardData = [
   {
@@ -63,7 +64,10 @@ export default function MyDashboardList() {
         <span>1 페이지 중 1</span>
         <PaginationButton className={styles.pagination} hasNext={false} currentPage={1} onPageChange={() => {}} />
       </div>
-      <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {/* 새로운 대시보드 추가 모달 */}
+      <ModalPortal>
+        <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      </ModalPortal>
     </div>
   );
 }
