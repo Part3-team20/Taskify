@@ -25,7 +25,8 @@
     border-radius: 0.5rem;
 
     &.dashboard {
-      width: 20.75rem;
+      width: 100%;
+      max-width: 20.75rem;
       font-size: 1rem;
       font-weight: 600;
     }
@@ -33,7 +34,7 @@
 
   @include tablet {
     &.hasChildren.dashboard {
-      width: 15.4375rem;
+      max-width: 100%;
       height: 4.25rem;
     }
   }

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './DashboardButton.module.scss';
 
 // 대시보드 데이터 타입
@@ -17,20 +18,14 @@ interface DashboardButtonProps {
   title: string;
   color: string;
   createdByMe: boolean;
-  handleClick: (id: number) => void;
 }
 
-export default function DashboardButton({ id, title, color, createdByMe, handleClick }: DashboardButtonProps) {
-  const onClick = () => {
-    // 부모 컴포넌트에서 handleClick 이벤트를 받아와 개별 대시보드의 id를 넘겨 페이지 이동
-    handleClick(id);
-  };
-
+export default function DashboardButton({ id, title, color, createdByMe }: DashboardButtonProps) {
   return (
-    <button className={styles.container} type="button" onClick={onClick}>
+    <Link className={styles.container} href={`/dashboard/${id}`}>
       <span className={styles.color} style={{ backgroundColor: color }} />
       <p className={styles.title}>
-        {title}
+        <span className={styles.text}>{title}</span>
         {createdByMe && (
           <span className={styles.icon}>
             <Image fill src="/images/crown_icon.svg" alt="왕관 아이콘" />
@@ -38,6 +33,6 @@ export default function DashboardButton({ id, title, color, createdByMe, handleC
         )}
       </p>
       <Image width="18" height="18" src="/images/arrow_icon.svg" alt="화살표 아이콘" />
-    </button>
+    </Link>
   );
 }
