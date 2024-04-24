@@ -1,8 +1,7 @@
 'use client';
 
-import LabelChip from '@/components/common/chip/LabelChip';
 import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
-
+import LabelChip from '@/components/common/Chip/LabelChip';
 import styles from './TagInput.module.scss';
 
 export default function TagInput() {
@@ -42,7 +41,7 @@ export default function TagInput() {
         <div className={styles.tagList}>
           {tagList?.map((tagItem) => (
             <button type="button" className={styles.tagItem} onClick={() => handleDeleteTag(tagItem)}>
-              <LabelChip key={tagItem} size="large" label={tagItem} type="tag" />
+              <LabelChip key={tagItem} label={tagItem} type="tag" />
             </button>
           ))}
         </div>

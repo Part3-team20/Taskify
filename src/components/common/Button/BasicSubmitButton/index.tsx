@@ -8,11 +8,12 @@ interface BasicSubmitButtonProps {
   color: 'violet' | 'white';
   children: ReactNode;
   isActive: boolean;
+  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function BasicSubmitButton({ color, children, isActive }: BasicSubmitButtonProps) {
+export default function BasicSubmitButton({ color, children, isActive, handleClick }: BasicSubmitButtonProps) {
   return (
-    <button className={cx('container', color)} type="submit" disabled={!isActive}>
+    <button className={cx('container', color)} type="submit" disabled={!isActive} onClick={handleClick}>
       {children}
     </button>
   );
