@@ -7,6 +7,7 @@ import DashboardButton from '../common/Button/DashboardButton';
 import PaginationButton from '../common/Button/PaginationButton';
 import styles from './MyDashboardList.module.scss';
 import CreateDashboard from '../modal/CreateDashboard';
+import ModalPortal from '../modal/ModalPortal';
 
 interface Dashboard {
   id: number;
@@ -83,7 +84,10 @@ export default function MyDashboardList() {
           onPageChange={() => {}}
         />
       </div>
-      <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {/* 새로운 대시보드 추가 모달 */}
+      <ModalPortal>
+        <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      </ModalPortal>
     </div>
   );
 }
