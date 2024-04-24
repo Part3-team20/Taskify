@@ -1,40 +1,41 @@
 import { useState } from 'react';
 
-function useFetchPost() {
-  const [loading, setLoading] = useState<boolean>(false);
+function useFetchWithToken() {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchPost = async (url: string, data: any) => {
+  const fetchWithToken = async (url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET', body: any = null) => {
     try {
       setLoading(true);
+      setError(null);
 
-      const response = await fetch(`https://sp-taskify-api.vercel.app/4-20${url}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // 여기에 필요한 다른 헤더들을 추가할 수 있습니다.
-        },
-        body: JSON.stringify(data),
+      const accessToken = localStorage.getItem('accessToken'); // 토큰 가져오기
+      const headers = new Headers({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
+      });
+
+      const response = await fetch(url, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : null, // 객체가 있다면 JSON 문자열로 변환
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const responseData = await response.json();
-
       setLoading(false);
-
       return responseData;
     } catch (err) {
-      setError(err);
+      setError(err as Error);
       setLoading(false);
-      console.error('Error:', error);
-      throw error; // 에러를 호출자에게 전파합니다.
+      throw err; // 에러를 호출자에게 전파합니다.
     }
   };
 
-  return { fetchPost, loading, error };
+  return { fetchWithToken, loading, error };
 }
 
-export default useFetchPost;
+export default useFetchWithToken;
