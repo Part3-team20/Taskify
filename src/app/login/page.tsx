@@ -37,7 +37,7 @@ export default function LoginPage() {
     const { email, password } = values;
 
     try {
-      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/auth/login', 'POST', {
+      const responseData = await fetchWithToken(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, 'POST', {
         email,
         password,
       });
