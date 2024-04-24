@@ -1,6 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import CommonLayout from '@/layouts/CommonLayout';
 import DeleteDashboardButton from '@/components/common/Button/DeleteDashboardButton';
 import PreviosPageButton from './editComponents/PreviousPageButton';
@@ -8,7 +9,6 @@ import MemberManagement from './editComponents/MemberManagement';
 import InviteStatus from './editComponents/InviteStatus';
 import styles from './BoardEdit.module.scss';
 import DashboaradChange from './editComponents/DashboardChange';
-import useFetchWithToken from '@/hooks/useFetchToken';
 
 export default function BoardEdit() {
   /* 현재 페이지의 boardId를 받아와 각 컴포넌트에 id값 전달
