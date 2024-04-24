@@ -1,0 +1,124 @@
+@import '@/styles/color.scss';
+@import '@/styles/mixins.scss';
+
+.container {
+  @include flex-center;
+  background-color: $black_000000;
+  padding-top: 70px;
+
+  .contentsWrapper {
+    @include flex-center;
+    flex-direction: column;
+    width: 1200px;
+    color: $white_FFFFFF;
+    gap: 100px;
+
+    .topContent {
+      width: 100%;
+      @include flex-center;
+      flex-direction: column;
+      gap: 32px;
+
+      h1 {
+        font-size: 76px;
+        span {
+          font-size: 90px;
+          color: $violet_5534DA;
+        }
+      }
+
+      .description {
+        p {
+          text-align: center;
+          padding-bottom: 8px;
+        }
+      }
+      .btn {
+        @include flex-center;
+        width: 280px;
+        height: 50px;
+        border-radius: 8px;
+        background-color: $violet_5534DA;
+      }
+    }
+
+    .middleContent {
+      width: 100%;
+
+      .pointCard {
+        display: flex;
+        justify-content: space-between;
+        background-color: $black_171717;
+        border-radius: 8px;
+        margin-top: 64px;
+        padding-top: 112px;
+
+        .textContent {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          padding-left: 56px;
+          margin-right: 80px;
+
+          h1 {
+            font-size: 22px;
+            color: $gray_9FA6B2;
+            font-weight: 500;
+            margin-bottom: 100px;
+          }
+
+          p {
+            font-size: 48px;
+            font-weight: 700;
+          }
+        }
+
+        .imageContent {
+          width: 50%;
+          margin-left: 80px;
+        }
+      }
+
+      .point2 {
+        flex-direction: row-reverse;
+      }
+    }
+
+    .bottomContent {
+      margin-bottom: 128px;
+
+      .title {
+        font-size: 28px;
+        margin-bottom: 48px;
+      }
+
+      .cardList {
+        @include flex-center;
+        gap: 20px;
+
+        .cardItem {
+          width: 378px;
+
+          .top {
+            @include flex-center;
+            height: 260px;
+            background-color: $black_4B4B4B;
+            border-radius: 8px 8px 0 0;
+          }
+
+          .bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 32px;
+            gap: 16px;
+            height: 124px;
+            background-color: $black_171717;
+            border-radius: 0 0 8px 8px;
+          }
+        }
+      }
+    }
+  }
+}
