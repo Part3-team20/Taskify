@@ -1,16 +1,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import useFetchPost from '@/hooks/useFetcht';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import Input from '@/components/common/input';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import PasswordInput from '@/components/common/input/PasswordInput';
-import Input from '@/components/common/input';
+
 import styles from './Login.module.scss';
 
 export default function LoginPage() {
-  const { fetchPost } = useFetchPost();
+  const { fetchWithToken, loading, error } = useFetchWithToken();
+  const router = useRouter();
 
   const [values, setValues] = useState({
     email: '',
@@ -34,10 +37,13 @@ export default function LoginPage() {
     const { email, password } = values;
 
     try {
-      await fetchPost('/auth/login', {
+      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/auth/login', 'POST', {
         email,
         password,
       });
+      console.log(responseData);
+      localStorage.setItem('accessToken', responseData.accessToken);
+      router.push('/mydashboard');
     } catch (err) {
       console.error(err);
     }
@@ -52,6 +58,11 @@ export default function LoginPage() {
       setIsPasswordError(false);
     }
     setIsBtnActive(isLoginValid);
+
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      router.push('/mydashboard');
+    }
   }, [values]);
 
   return (
