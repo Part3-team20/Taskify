@@ -7,12 +7,12 @@ import styles from './MyDashboard.module.scss';
 export default function MyDashboard() {
   return (
     <CommonLayout>
-      <InviteProvider>
-        <div className={styles.container}>
-          <MyDashboardList />
+      <div className={styles.container}>
+        <MyDashboardList />
+        <InviteProvider>
           <InvitedBoard />
-        </div>
-      </InviteProvider>
+        </InviteProvider>
+      </div>
     </CommonLayout>
   );
 }
