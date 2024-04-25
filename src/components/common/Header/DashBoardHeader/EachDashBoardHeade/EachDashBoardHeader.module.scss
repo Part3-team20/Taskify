@@ -7,28 +7,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
-  margin-left: 300px;
-  padding-left: 40px;
-  padding-right: 80px;
-  border-bottom: 1px solid $gray_D9D9D9;
+  height: 4.375rem;
+  margin-left: 18.75rem;
+  padding-left: 2.5rem;
+  padding-right: 5rem;
+  border-bottom: 0.0625rem solid $gray_D9D9D9;
 
   @include tablet {
-    margin-left: 160px;
-    padding-right: 40px;
+    margin-left: 10rem;
+    padding-right: 2.5rem;
   }
 
   @include mobile {
-    margin-left: 67px;
-    padding-left: 24px;
-    padding-right: 12px;
-    height: 60px;
+    margin-left: 4.1875rem;
+    padding-left: 1.5rem;
+    padding-right: 0.75rme;
+    height: 3.75rem;
   }
 }
 
 .dashBoardTitle {
   color: $black_333236;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
 
   @include tablet {
@@ -40,37 +40,37 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 1.5rem;
 
   @include mobile {
-    gap: 12px;
+    gap: 0.75rem;
   }
 }
 
 .buttons {
   display: flex;
-  gap: 16px;
-  margin-right: 8px;
+  gap: 1rem;
+  margin-right: 0.5rem;
 
   @include tablet {
-    gap: 12px;
+    gap: 0.75rem;
   }
 
   @include mobile {
-    gap: 6px;
-    margin-right: 4px;
+    gap: 0.375rem;
+    margin-right: 0.25rem;
   }
 }
 
 .button {
   display: flex;
   align-items: center;
-  gap: 8px;
-  border-radius: 8px;
-  border: 1px solid $gray_D9D9D9;
-  padding: 10px 16px;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid $gray_D9D9D9;
+  padding: 0.625rem 1rem;
   font-weight: 500;
-  height: 40px;
+  height: 2.5rem;
   cursor: pointer;
 
   & img {
@@ -80,14 +80,14 @@
   }
 
   @include tablet {
-    padding: 8px 16px;
-    font-size: 14px;
-    height: 36px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    height: 2.25rem;
   }
 
   @include mobile {
-    height: 30px;
-    padding: 7px 12px;
+    height: 1.875rem;
+    padding: 0.4375rem 0.75rem;
   }
 }
 
@@ -111,35 +111,35 @@
   color: #d25b68;
   font-weight: 500;
   position: relative;
-  border: 2px solid $white_FFFFFF;
+  border: 0.125rem solid $white_FFFFFF;
   border-radius: 50%;
   width: 2.375rem;
   height: 2.375rem;
   flex-shrink: 0;
-  left: -28px;
+  left: -1.75rem;
 
   @include flex-center;
 
   @include tablet {
-    left: -14px;
+    left: -0.875rem;
   }
 }
 
 .boundary {
   margin: 0;
-  height: 38px;
+  height: 2.375rem;
   border-color: $gray_FAFAFA;
 
   @include mobile {
-    height: 34px;
+    height: 2.125rem;
   }
 }
 
 .profile {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 16px;
+  gap: 0.75rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
