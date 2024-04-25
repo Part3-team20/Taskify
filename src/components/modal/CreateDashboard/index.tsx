@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ColorChip from '@/components/common/chip/ColorChip';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import Modal from '../Modal';
 import ModalInput from '../modalInput/ModalInput';
 import styles from './CreateDashboard.module.scss';
@@ -14,21 +15,26 @@ interface CreateDashboardProps {
 export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProps) {
   /**
    *  @TODOS
-   * -모달 인풋 가로 길이 조정
-   * -실제 POST 리퀘스트 로직
+   * -error 처리
+   * -POST 후 대시보드 목록 다시 받아오기
    * */
 
   const initialValues = { title: '', color: '#7ac555' };
   const [values, setValues] = useState(initialValues);
   const [isActive, setIsActive] = useState(false);
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { fetchWithToken: postDashboard, loading, error } = useFetchWithToken();
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (values.title.trim() === '') return;
 
-    /* POST 리퀘스트로 추후 변경 */
-    console.log(values);
+    await postDashboard(`https://sp-taskify-api.vercel.app/4-20/dashboards`, 'POST', values);
+
+    if (error) {
+      console.log(error);
+    }
 
     setValues(() => initialValues);
     onClose();
@@ -44,12 +50,12 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
   };
 
   useEffect(() => {
-    if (values.title.trim() !== '') {
+    if (values.title.trim() !== '' && loading === false) {
       setIsActive(() => true);
     } else {
       setIsActive(() => false);
     }
-  }, [values.title]);
+  }, [values.title, loading]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} style={{ width: 'auto', height: 'auto' }}>
@@ -58,14 +64,14 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
         <form onSubmit={handleFormSubmit} className={styles.form}>
           <div className={styles.input}>
             <span className={styles.label}>대시보드 이름</span>
-            <ModalInput placeholder="" value={values.title} onChange={onChangeInput} />
+            <ModalInput placeholder="새로운 대시보드" value={values.title} onChange={onChangeInput} />
           </div>
           <ColorChip onSelect={(newColor) => setValues((prevValues) => ({ ...prevValues, color: newColor }))} />
           <div className={styles.buttonBox}>
             <ModalButton color="white" handleClick={handleClose}>
               취소
             </ModalButton>
-            <ModalSubmitButton isActive={isActive}>생성</ModalSubmitButton>
+            <ModalSubmitButton isActive={isActive}>{loading ? '로딩중...' : '생성'}</ModalSubmitButton>
           </div>
         </form>
       </div>

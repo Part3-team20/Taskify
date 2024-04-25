@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Profile from '@/components/common/Profile/Profile';
+import LabelChip from '@/components/common/chip/LabelChip';
 import Modal from '../Modal';
 import styles from './Task.module.scss';
 // eslint-disable-next-line import/extensions
-import Profile from '@/components/common/Profile/Profile';
 import Comments from './Comment/Comments';
 import KabobMenu from './Kabob/KabobMenu';
 // eslint-disable-next-line import/extensions
-import LabelChip from '@/components/common/Chip/LabelChip';
 
 interface TaskProps {
   title: string;
