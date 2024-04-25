@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-
 import styles from './Card.module.scss';
 import LabelChip from '../common/chip/LabelChip';
 import Profile from '../common/Profile/Profile';
+import Task from '../Modal/Task';
+import ModalPortal from '../Modal/ModalPortal';
 
-interface CardProps {
+interface CardDetail {
+  id?: number;
   title: string;
   tags?: string[];
-  profileImageUrl?: string;
-  imageUrl?: string;
   dueDate?: string;
+  assignee: {
+    id?: number;
+    nickname?: string;
+    profileImageUrl?: string;
+  };
+  imageUrl?: string;
+  dashboardId: number;
+  columnId: number;
 }
 
-export default function Card({ title, tags, profileImageUrl, imageUrl, dueDate }: CardProps) {
+export default function Card({ id, title, tags, assignee, imageUrl, dueDate, dashboardId, columnId }: CardDetail) {
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+
+  // 카드 클릭 핸들러
+  const handleCardClick = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <div className={styles.card}>
+    <button type="button" className={styles.card} onClick={handleCardClick}>
       {imageUrl && (
         <div className={styles.image}>
           {/* <Image src={imageUrl} alt="카드 대표 이미지" layout="fill" objectFit="cover" /> */}
@@ -36,11 +51,22 @@ export default function Card({ title, tags, profileImageUrl, imageUrl, dueDate }
               </div>
             )}
             <div className={styles.profile}>
-              <Profile profileImageUrl={profileImageUrl} />
+              <Profile profileImageUrl={assignee.profileImageUrl} />
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <ModalPortal>
+        {isModalOpen && id !== undefined ? (
+          <Task
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            cardId={id}
+            dashboardId={dashboardId}
+            columnId={columnId}
+          />
+        ) : null}
+      </ModalPortal>
+    </button>
   );
 }

@@ -1,7 +1,6 @@
 import React, { ReactNode, useRef, useEffect } from 'react';
 import styles from './Modal.module.scss';
 
-// modal
 interface ModalProps {
   children: ReactNode;
   isOpen: boolean;

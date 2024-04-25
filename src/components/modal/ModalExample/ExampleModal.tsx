@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+<<<<<<< HEAD:src/components/modal/ModalExample/ExampleModal.tsx
 import Modal from '../index';
+=======
+import Modal from '..';
+>>>>>>> main:src/components/modal/modalExample/ExampleModal.tsx
 
 // example
 export default function ExampleModal() {
