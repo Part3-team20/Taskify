@@ -1,0 +1,136 @@
+@import '@/styles/_color.scss';
+
+// task
+.taskModal {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  padding: 28px;
+  max-height: 730px;
+
+  .modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+
+    h2 {
+      color: $black_333236;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+    .buttons {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+  }
+  .modalContainer {
+    display: flex;
+    overflow: auto;
+    gap: 16px;
+    flex-direction: row;
+    margin-top: 24px;
+    justify-content: space-between;
+    height: 450px;
+    overflow-y: auto;
+
+    .contentArea {
+      .labels {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .divide {
+          display: block;
+          width: 1px;
+          height: 20px;
+          stroke-width: 1px;
+          background-color: $gray_D9D9D9;
+        }
+        .tags {
+          display: flex;
+          gap: 6px;
+        }
+      }
+      .contents {
+        margin-top: 24px;
+        width: 440px;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+      }
+
+      .imgBox {
+        margin-top: 16px;
+        display: flex;
+        width: 450px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        img {
+          border-radius: 6px;
+          max-width: 100%;
+        }
+      }
+      .comments {
+        margin-top: 24px;
+      }
+    }
+    .information {
+      position: sticky;
+      top: 0;
+      width: 200px;
+      height: 155px;
+      border-radius: 8px;
+      border: 1px solid $gray_D9D9D9;
+      background: $white_FFFFFF;
+      padding: 16px;
+
+      ul {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+
+        .infoBox {
+          display: flex;
+          gap: 8px;
+          flex-direction: column;
+
+          .assignee {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+
+            .name {
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+              color: $black_333236;
+            }
+            .subtitle {
+              margin-bottom: 6px;
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 20px;
+              color: $black_000000;
+            }
+          }
+
+          .dueDate {
+            color: $black_333236;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+        }
+      }
+    }
+  }
+}

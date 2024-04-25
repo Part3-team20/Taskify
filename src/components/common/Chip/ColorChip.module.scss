@@ -1,0 +1,43 @@
+@import '@/styles/color.scss';
+@import '@/styles/responsive-styles.scss';
+
+// ColorChip
+.colorChipContainer {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+
+  .colorChip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    width: 1.875rem;
+    height: 1.875rem;
+
+    &.picker {
+      border: 1.5px solid $violet_5534DA;
+    }
+  }
+
+  .colorPicker {
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    //추후 사용하는 곳에 따라서 right 값 수정
+    right: -11.25rem;
+    transform: translateX(0%);
+  }
+}
+
+@include mobile {
+  .colorChipContainer {
+    .colorChip {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+}
