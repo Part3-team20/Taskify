@@ -11,7 +11,13 @@ export default function Home() {
       <div className={styles.container}>
         <div className={styles.contentsWrapper}>
           <div className={styles.topContent}>
-            <Image src="/images/landing/top1.png" alt="top_image" width={722} height={422} />
+            <Image
+              className={styles.imageContent}
+              src="/images/landing/top1.png"
+              alt="top_image"
+              width={722}
+              height={422}
+            />
             <h1>
               새로운 일정 관리 <span>Taskify</span>
             </h1>
@@ -37,7 +43,13 @@ export default function Home() {
                 <p>관리하세요</p>
               </div>
               <div className={styles.imageContent}>
-                <Image src="/images/landing/middle1.png" alt="middle1_image" width={594} height={497} />
+                <Image
+                  className={styles.image}
+                  src="/images/landing/middle1.png"
+                  alt="middle1_image"
+                  width={594}
+                  height={497}
+                />
               </div>
             </div>
             <div className={`${styles.point2} ${styles.pointCard}`}>
@@ -47,7 +59,13 @@ export default function Home() {
                 <p>등록하세요</p>
               </div>
               <div className={styles.imageContent}>
-                <Image src="/images/landing/middle2.png" alt="middle2_image" width={436} height={502} />
+                <Image
+                  className={styles.image}
+                  src="/images/landing/middle2.png"
+                  alt="middle2_image"
+                  width={436}
+                  height={502}
+                />
               </div>
             </div>
           </div>
