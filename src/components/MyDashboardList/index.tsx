@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import AddButton from '../common/Button/AddButton';
 import DashboardButton from '../common/Button/DashboardButton';
 import PaginationButton from '../common/Button/PaginationButton';
@@ -8,47 +9,61 @@ import styles from './MyDashboardList.module.scss';
 import CreateDashboard from '../modal/CreateDashboard';
 import ModalPortal from '../modal/ModalPortal';
 
-const dashboardData = [
-  {
-    id: 1,
-    title: '비브리지',
-    color: '#125515',
-    createdAt: '2024-04-18T09:45:26.609Z',
-    updatedAt: '2024-04-18T09:45:26.609Z',
-    createdByMe: true,
-    userId: 0,
-  },
-  {
-    id: 2,
-    title: '코드잇',
-    color: '#a9238e',
-    createdAt: '2024-04-18T09:45:26.609Z',
-    updatedAt: '2024-04-18T09:45:26.609Z',
-    createdByMe: false,
-    userId: 0,
-  },
-  {
-    id: 3,
-    title: '3분기 계획 기이이이이이이이이이이이이이이이이이이이인 제목',
-    color: '#8abdef',
-    createdAt: '2024-04-18T09:45:26.609Z',
-    updatedAt: '2024-04-18T09:45:26.609Z',
-    createdByMe: true,
-    userId: 0,
-  },
-];
+interface Dashboard {
+  id: number;
+  title: string;
+  color: string;
+  createdAt: string;
+  updatedAt: string;
+  createdByMe: boolean;
+  userId: number;
+}
+
+interface Cursor {
+  cursorId: number;
+  totalCount: number;
+}
 
 export default function MyDashboardList() {
   const [isOpen, setIsOpen] = useState(false);
+  const [cursor, setCursor] = useState<Cursor>({ cursorId: 0, totalCount: 0 });
+  const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
+
+  const { fetchWithToken: getDashboardList, loading, error } = useFetchWithToken();
+
+  /**
+   * @TODO
+   * -pagination
+   * -페이지 내 출력 개수
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getDashboardList(
+        'https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination',
+        'GET'
+      );
+      if (response) {
+        setDashboards(response.dashboards);
+        setCursor({ cursorId: response.cursorId, totalCount: response.totalCount });
+      }
+      if (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className={styles.container}>
       <ul className={styles.dashboardContainer}>
-        {dashboardData.map(({ id, title, createdByMe, color }) => (
-          <li key={id} className={styles.item}>
-            <DashboardButton id={id} title={title} createdByMe={createdByMe} color={color} />
-          </li>
-        ))}
+        {loading && '로딩중...'}
+        {dashboards &&
+          dashboards.map(({ id, title, createdByMe, color }) => (
+            <li key={id} className={styles.item}>
+              <DashboardButton id={id} title={title} createdByMe={createdByMe} color={color} />
+            </li>
+          ))}
         <li className={styles.item}>
           <AddButton
             handleClick={() => {
@@ -62,9 +77,13 @@ export default function MyDashboardList() {
       </ul>
       <div className={styles.paginationContainer}>
         <span>1 페이지 중 1</span>
-        <PaginationButton className={styles.pagination} hasNext={false} currentPage={1} onPageChange={() => {}} />
+        <PaginationButton
+          className={styles.pagination}
+          hasNext={cursor.totalCount - cursor.cursorId * 5 > 0}
+          currentPage={1}
+          onPageChange={() => {}}
+        />
       </div>
-      {/* 새로운 대시보드 추가 모달 */}
       <ModalPortal>
         <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </ModalPortal>
