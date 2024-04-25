@@ -1,54 +1,61 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import styles from './SideBar.module.scss';
 import IconTextButton from '../common/Button/IconTextButton';
 import SideBarListItem from './SideBarListItem';
 import PaginationButton from '../common/Button/PaginationButton';
-import Modal from '../Modal';
+import CreateDashboard from '../modal/CreateDashboard';
+import ModalPortal from '../modal/ModalPortal';
 
-// mock data
-const dashboardData = [
-  {
-    id: 1,
-    title: '비브리지',
-    color: '#125515',
-    createdAt: '2024-04-18T09:45:26.609Z',
-    updatedAt: '2024-04-18T09:45:26.609Z',
-    createdByMe: true,
-    userId: 0,
-  },
-  {
-    id: 2,
-    title: '코드잇',
-    color: '#a9238e',
-    createdAt: '2024-04-18T09:45:26.609Z',
-    updatedAt: '2024-04-18T09:45:26.609Z',
-    createdByMe: false,
-    userId: 0,
-  },
-  {
-    id: 3,
-    title: '3분기 계획 기이이이이이이이이이이이이이이이이이이이인 제목',
-    color: '#8abdef',
-    createdAt: '2024-04-18T09:45:26.609Z',
-    updatedAt: '2024-04-18T09:45:26.609Z',
-    createdByMe: true,
-    userId: 0,
-  },
-];
+interface Dashboard {
+  id: number;
+  title: string;
+  color: string;
+  createdAt: string;
+  updatedAt: string;
+  createdByMe: boolean;
+  userId: number;
+}
+
+interface Cursor {
+  cursorId: number;
+  totalCount: number;
+}
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [cursor, setCursor] = useState<Cursor>({ cursorId: 0, totalCount: 0 });
+  const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
 
-  // 추후 데이터로 받아올 부분
-  const totalCount = 11;
+  const { fetchWithToken: getDashboardList, loading, error } = useFetchWithToken();
 
-  const handleCloseModal = () => {
-    setIsOpen(false);
-  };
+  /**
+   * @TODO
+   * -pagination
+   * -로딩 처리
+   * -dashboardList 데이터 전역 전환
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getDashboardList(
+        'https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination',
+        'GET'
+      );
+      if (response) {
+        setDashboards(response.dashboards);
+        setCursor({ cursorId: response.cursorId, totalCount: response.totalCount });
+      }
+      if (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <aside className={styles.container}>
@@ -66,15 +73,21 @@ export default function SideBar() {
           </IconTextButton>
         </div>
         <ul className={styles.list}>
-          {dashboardData.map((data) => (
-            <SideBarListItem key={data.id} data={data} />
-          ))}
+          {loading && '로딩중...'}
+          {dashboards && dashboards.map((data) => <SideBarListItem key={data.id} data={data} />)}
         </ul>
-        {totalCount > 10 && <PaginationButton className={styles.pagination} hasNext={false} />}
+        {cursor.totalCount > 10 && (
+          <PaginationButton
+            className={styles.pagination}
+            hasNext={cursor.totalCount - cursor.cursorId * 10 > 0}
+            currentPage={1}
+            onPageChange={() => {}}
+          />
+        )}
       </div>
-      <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '540px', height: '334px' }}>
-        <div>새로운 대시보드</div>
-      </Modal>
+      <ModalPortal>
+        <CreateDashboard isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      </ModalPortal>
     </aside>
   );
 }
