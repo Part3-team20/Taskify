@@ -1,5 +1,6 @@
 @import '@/styles/_color.scss';
 @import '@/styles/_responsive-styles.scss';
+
 .container {
   .deadline {
     font-size: 1.125rem;
@@ -27,7 +28,7 @@
       }
 
       @include mobile {
-        width: 17.9375rem;
+        width: 20.5rem;
       }
     }
   }

@@ -9,7 +9,6 @@ import DeadLineInput from '../modalInput/deadlineInput/DeadlineInput';
 import TagInput from '../modalInput/tagInput/TagInput';
 import FileInput from '@/components/common/FileInput';
 import ModalSubmitButton from '../ModalButton/SubmitButton';
-import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 
 export default function CreateTask() {
   const [isOpen, setIsOpen] = useState(false);
