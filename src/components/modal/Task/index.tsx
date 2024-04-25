@@ -1,50 +1,61 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Profile from '@/components/common/Profile/Profile';
-import LabelChip from '@/components/common/chip/LabelChip';
-import Modal from '../Modal';
+import Modal from '@/components/Modal';
 import styles from './Task.module.scss';
-// eslint-disable-next-line import/extensions
+import Profile from '@/components/common/Profile/Profile';
 import Comments from './Comment/Comments';
 import KabobMenu from './Kabob/KabobMenu';
-// eslint-disable-next-line import/extensions
+import LabelChip from '@/components/common/Chip/LabelChip';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import { CardProps } from '@/types/DashboardTypes';
 
 interface TaskProps {
-  title: string;
-  description: string;
-  tags?: string[];
-  dueDate?: string;
-  assignee: {
-    nickname: string;
-    profileImageUrl?: string;
-  };
-  imageUrl?: string;
+  dashboardId: number;
+  columnId: number;
+  cardId: number;
+  onClose: () => void;
+  isOpen: boolean;
 }
 
-export default function Task({ title, description, tags, dueDate, assignee, imageUrl }: TaskProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Task({ dashboardId, columnId, cardId, onClose, isOpen }: TaskProps) {
+  const { fetchWithToken } = useFetchWithToken();
+  const [cardDetails, setCardDetails] = useState<CardProps | null>(null);
 
-  const handleCloseModal = () => {
-    setIsOpen(false);
+  const handleButtonClose = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+    onClose();
   };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const fetchCardDetails = async () => {
+      try {
+        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${cardId}`);
+        setCardDetails(response); // 상태에 카드 정보 저장
+      } catch (error) {
+        console.error('Failed to fetch card details:', error);
+      }
+    };
+
+    fetchCardDetails();
+  }, [cardId, isOpen, fetchWithToken]);
+
+  if (!cardDetails) return null; // 데이터가 없는 경우 아무것도 표시하지 않음
 
   return (
     <div>
-      {/* 카드와 추후 연결 */}
-      <button type="button" onClick={() => setIsOpen(true)}>
-        모달열기
-      </button>
-      <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '760px', height: 'auto', maxHeight: '730px' }}>
+      <Modal isOpen={isOpen} onClose={onClose} style={{ width: '760px', height: 'auto', maxHeight: '730px' }}>
         <div className={styles.taskModal}>
           <div className={styles.modalHeader}>
-            <h2>{title}</h2>
+            <h2>{cardDetails.title}</h2>
             <div className={styles.buttons}>
               <div className={styles.kabob}>
                 <KabobMenu />
               </div>
-              <button onClick={handleCloseModal} type="button">
+              <button onClick={handleButtonClose} type="button">
                 <Image src="/images/close_icon.svg" alt="닫기 버튼" width={32} height={32} />
               </button>
             </div>
@@ -58,32 +69,34 @@ export default function Task({ title, description, tags, dueDate, assignee, imag
                   <span className={styles.divide}></span>
                   {/* 컬럼은 다른 props와 달리 컬럼 id로 find를 해야해서 임의로 값 생성 */}
                   <div className={styles.tags}>
-                    {tags && tags.map((tag) => <LabelChip key={tag} type="tag" label={tag} />)}
+                    {cardDetails.tags && cardDetails.tags.map((tag) => <LabelChip key={tag} type="tag" label={tag} />)}
                   </div>
                 </div>
-                <div className={styles.contents}>{description}</div>
-                <div className={styles.imgBox}>
-                  <img src={imageUrl} alt="본문 첨부 이미지" />
-                  {/* <Image src={imageUrl} alt="본문 첨부 이미지" className={styles.img} /> */}
-                </div>
+                <div className={styles.contents}>{cardDetails.description}</div>
+                {cardDetails.imageUrl && (
+                  <div className={styles.imgBox}>
+                    <img src={cardDetails.imageUrl} alt="본문 첨부 이미지" />
+                    {/* <Image src={imageUrl} alt="본문 첨부 이미지" className={styles.img} /> */}
+                  </div>
+                )}
                 <div className={styles.comments}>
-                  <Comments />
+                  <Comments cardId={cardId} columnId={columnId} dashboardId={dashboardId} />
                 </div>
               </div>
               <div className={styles.information}>
                 <ul>
-                  {assignee && (
+                  {cardDetails.assignee && (
                     <li className={styles.infoBox}>
                       <span className={styles.subtitle}>담당자</span>
                       <div className={styles.assignee}>
-                        <Profile profileImageUrl={assignee.profileImageUrl} />
-                        <span className={styles.name}>{assignee.nickname}</span>
+                        <Profile profileImageUrl={cardDetails.assignee.profileImageUrl} />
+                        <span className={styles.name}>{cardDetails.assignee.nickname}</span>
                       </div>
                     </li>
                   )}
                   <li className={styles.infoBox}>
                     <span className={styles.subtitle}>마감일</span>
-                    <span className={styles.dueDate}>{dueDate}</span>
+                    <span className={styles.dueDate}>{cardDetails.dueDate}</span>
                   </li>
                 </ul>
               </div>

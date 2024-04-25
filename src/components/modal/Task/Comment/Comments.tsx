@@ -1,138 +1,90 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import CommentInput from '@/components/Modal/ModalInput/CommentInput/CommentInput';
 import Profile from '@/components/common/Profile/Profile';
-import CommentInput from '../../modalInput/commentInput/CommentInput';
-// import useFormattedDate from '../../../../hook/useFormattedDate';
-// eslint-disable-next-line import/extensions
 import styles from './Comments.module.scss';
-import DeleteTask from '../../DeleteTask';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import { CommentProps } from '@/types/DashboardTypes';
 
-interface CommentData {
-  id: number;
-  content: string;
-  createdAt: string;
+interface Comment {
   cardId: number;
-  author: {
-    id: number;
-    nickname: string;
-    profileImageUrl?: string;
-  };
+  columnId: number;
+  dashboardId: number;
 }
 
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
+export default function Comments({ cardId, columnId, dashboardId }: Comment) {
+  const { fetchWithToken } = useFetchWithToken();
+  const [comments, setComments] = useState<CommentProps[]>([]);
+  const [editingCommentId, setEditingCommentId] = useState(null);
 
-export default function Comments() {
-  const [comments, setComments] = useState<CommentData[]>([]);
-  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [commentToDelete, setCommentToDelete] = useState<number | null>(null);
+  const fetchComments = useCallback(async () => {
+    try {
+      const result = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/comments?cardId=${cardId}`, 'GET');
+      setComments(result.comments);
+    } catch (error) {
+      console.error('Failed to fetch comments:', error);
+    }
+  }, [fetchWithToken, cardId]);
 
-  // 목 데이터
+  const handlePostComment = useCallback(
+    async (content: string) => {
+      const url = `https://sp-taskify-api.vercel.app/4-20/comments`;
+      const body = {
+        content,
+        cardId,
+        columnId,
+        dashboardId: Number(dashboardId),
+      };
+      try {
+        await fetchWithToken(url, 'POST', body);
+        fetchComments(); // 댓글 목록을 다시 불러옵니다
+      } catch (error) {
+        console.error('Failed to post comment:', error);
+      }
+    },
+    [fetchWithToken, cardId, columnId, dashboardId, fetchComments]
+  );
+
+  const handlePutComment = useCallback(
+    async (content: string, id: number) => {
+      const url = `https://sp-taskify-api.vercel.app/4-20/comments/${id}`;
+      const body = { content };
+      try {
+        await fetchWithToken(url, 'PUT', body);
+        fetchComments(); // 댓글 목록을 다시 불러옵니다
+        setEditingCommentId(null); // 편집 상태를 초기화합니다
+      } catch (error) {
+        console.error('Failed to update comment:', error);
+      }
+    },
+    [fetchWithToken, fetchComments]
+  );
+
+  const handleDeleteComment = useCallback(
+    async (id: number) => {
+      try {
+        const url = `https://sp-taskify-api.vercel.app/4-20/comments/${id}`;
+        await fetchWithToken(url, 'DELETE');
+        // 서버에서 삭제 후 상태 업데이트로 댓글 목록에서 바로 제거
+        setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
+      } catch (error) {
+        console.error('Failed to delete comment:', error);
+      }
+    },
+    [fetchWithToken, setComments]
+  );
+
   useEffect(() => {
-    const mockComments = [
-      {
-        id: 1,
-        content: 'This is a mock comment',
-        createdAt: '2024-04-21T21:46:35.646Z',
-        cardId: 101,
-        author: {
-          id: 1,
-          nickname: 'User One',
-          profileImageUrl:
-            'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/3-7_1520_1712645279291.png',
-        },
-      },
-      {
-        id: 2,
-        content: 'Another example comment',
-        createdAt: '2024-03-21T21:46:35.646Z',
-        cardId: 102,
-        author: { id: 2, nickname: 'User Two' },
-      },
-    ];
-    const formattedComments = mockComments.map((comment) => ({
-      ...comment,
-      createdAt: formatDate(comment.createdAt),
-    }));
+    console.log('Comments updated:', comments);
+  }, [comments]);
 
-    setComments(formattedComments);
-  }, []);
-
-  const handleCommentSubmit = async (content: string) => {
-    console.log('Submit comment:', content);
-  };
-
-  // const handleCommentDelete = async (id: number) => {
-  //   console.log('Delete comment ID:', id);
-  // };
-
-  const openDeleteModal = (id: number) => {
-    setCommentToDelete(id);
-    setIsDeleteModalOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-    setCommentToDelete(null);
-  };
-
-  // 이후 수정 예정
-  //
-  // useEffect(() => {
-  //   const loadComments = async () => {
-  //     try {
-  //       const data = await fetchComments();
-  //       setComments(data.comments);
-  //     } catch (error) {
-  //       console.error('Failed to fetch comments', error);
-  //     }
-  //   };
-
-  //   loadComments();
-  // }, []);
-
-  // const handleCommentSubmit = async (content: string) => {
-  //   if (editingCommentId !== null) {
-  //     try {
-  //       const updatedComment = await updateComment(editingCommentId, content);
-  //       setComments((prev) => prev.map((comment) => (comment.id === editingCommentId ? updatedComment : comment)));
-  //     } catch (error) {
-  //       console.error('Failed to update comment', error);
-  //     }
-  //   } else {
-  //     try {
-  //       const newComment = await addComment(content);
-  //       setComments((prev) => [...prev, newComment]);
-  //     } catch (error) {
-  //       console.error('Failed to add comment', error);
-  //     }
-  //   }
-  //   setEditingCommentId(null);
-  // };
-
-  // const handleCommentDelete = async (id: number) => {
-  //   try {
-  //     const success = await deleteComment(id);
-  //     if (success) {
-  //       setComments((prev) => prev.filter((comment) => comment.id !== id));
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to delete comment', error);
-  //   }
-  // };
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   return (
     <div className={styles.comments}>
       <p className={styles.commentTitle}>댓글</p>
-      <CommentInput onCommentSubmit={handleCommentSubmit} initialContent="" style={{ width: '450px' }} />
+      <CommentInput onCommentSubmit={handlePostComment} initialContent="" style={{ width: '450px' }} />
 
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
@@ -146,7 +98,7 @@ export default function Comments() {
               <div className={styles.commentBody}>
                 <div>
                   <CommentInput
-                    onCommentSubmit={handleCommentSubmit}
+                    onCommentSubmit={(content) => handlePutComment(content, comment.id)}
                     initialContent={comment.content}
                     style={{ width: '400px' }}
                   />
@@ -164,7 +116,7 @@ export default function Comments() {
                   <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                     수정
                   </button>
-                  <button className={styles.commentBtn} type="button" onClick={() => openDeleteModal(comment.id)}>
+                  <button className={styles.commentBtn} type="button" onClick={() => handleDeleteComment(comment.id)}>
                     삭제
                   </button>
                 </div>
@@ -173,7 +125,6 @@ export default function Comments() {
           </div>
         </div>
       ))}
-      <DeleteTask isOpen={isDeleteModalOpen} onClose={closeDeleteModal} />
     </div>
   );
 }
