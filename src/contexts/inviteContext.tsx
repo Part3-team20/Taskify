@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
-import invitedBoardData from '@/components/InvitedBoard/mockData';
+import useFetchWithToken from '@/hooks/useFetchToken';
 
 interface InviteProviderProps {
   children: ReactNode;
@@ -37,7 +37,7 @@ interface InvitationData {
 
 interface InviteValues {
   invitationData: InvitationData[];
-  cursorId: number;
+  cursorId: number | null;
   setInvitationData: (newData: InvitationData[] | ((prevState: InvitationData[]) => InvitationData[])) => void;
   searchInvitation: (keyword: string) => void;
   acceptInvitation: (id: number) => void;
@@ -46,7 +46,7 @@ interface InviteValues {
 
 const defaultValues: InviteValues = {
   invitationData: [],
-  cursorId: 0,
+  cursorId: null,
   setInvitationData: () => {},
   searchInvitation: () => {},
   acceptInvitation: () => {},
@@ -55,7 +55,7 @@ const defaultValues: InviteValues = {
 
 const InviteContext = createContext<InviteValues>(defaultValues);
 
-const useFormatInviteData = (inviteList: Invitation[]) =>
+const formatInviteData = (inviteList: Invitation[]) =>
   inviteList.map(({ id, inviter: { nickname }, dashboard: { title }, inviteAccepted }) => ({
     id,
     nickname,
@@ -64,46 +64,73 @@ const useFormatInviteData = (inviteList: Invitation[]) =>
   }));
 
 export function InviteProvider({ children }: InviteProviderProps) {
+  const [cursorId, setCursorId] = useState<number | null>(null);
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [invitationData, setInvitationData] = useState<InvitationData[]>([]);
-  const { cursorId, invitations } = invitedBoardData;
-  const formatInvitedData = useFormatInviteData(invitations).filter((data) => data.inviteAccepted !== true);
+
+  /**
+   * @TODO
+   * -로딩 관련 처리?
+   * -url env
+   */
+  const {
+    fetchWithToken: inviteResponse,
+    error: inviteConfirmError,
+    // loading: inviteConfirmLoading,
+  } = useFetchWithToken();
+
+  const {
+    fetchWithToken: getInvitations,
+    error: getInvitationError,
+    // loading: getInvitatioLoading,
+  } = useFetchWithToken();
 
   const searchInvitation = (keyword: string) => {
     if (keyword.trim() === '') {
-      setInvitationData(formatInvitedData);
+      setInvitationData(formatInviteData(invitations));
+    } else {
+      const nextInvitedData = formatInviteData(invitations).filter((data) => data.title.includes(keyword));
+      setInvitationData(nextInvitedData);
     }
-
-    const nextInvitedData = formatInvitedData.filter((data) => data.title.includes(keyword));
-    setInvitationData(nextInvitedData);
   };
 
-  const acceptInvitation = (id: number) => {
-    /**
-     * @TODO
-     * PUT Request /invitations/{invitationId}
-     * payload: {'inviteAccepted': true}
-     */
-    console.log('accept ', id);
+  const acceptInvitation = async (id: number) => {
+    try {
+      await inviteResponse(`https://sp-taskify-api.vercel.app/4-20/invitations/${id}`, 'PUT', {
+        inviteAccepted: true,
+      });
+    } catch (error) {
+      console.log(inviteConfirmError);
+    }
   };
 
-  const rejectInvitation = (id: number) => {
-    /**
-     * @TODO
-     * PUT Request /invitations/{invitationId}
-     * payload: {'inviteAccepted': false}
-     * 근데 기본이 false인 상태라면 거절해도 계속 초대 목록에 남아있는게 아닌가?
-     * 별도의 처리로 자동 변경되는건지? 실제 데이터 통신으로 확인해볼 것
-     */
-    console.log('reject', id);
+  const rejectInvitation = async (id: number) => {
+    try {
+      await inviteResponse(`https://sp-taskify-api.vercel.app/4-20/invitations/${id}`, 'PUT', {
+        inviteAccepted: false,
+      });
+    } catch (error) {
+      console.log(inviteConfirmError);
+    }
   };
 
-  /**
-   * @TODOS
-   * -실제 데이터 가져오기
-   * -로직 다듬기
-   */
   useEffect(() => {
-    setInvitationData(() => formatInvitedData);
+    const fetchData = async () => {
+      try {
+        const response = await getInvitations(`https://sp-taskify-api.vercel.app/4-20/invitations?size=10`, 'GET');
+        if (response) {
+          setInvitations(response.invitations);
+          setCursorId(response.cursorId);
+          const formatInvitedData = formatInviteData(response.invitations).filter((data) => !data.inviteAccepted);
+          setInvitationData(formatInvitedData);
+        }
+      } catch (error) {
+        console.log(getInvitationError);
+      }
+    };
+    fetchData();
+
+    // const formatInvitedData = formatInviteData(invitations).filter((data) => data.inviteAccepted !== true);
   }, []);
 
   const value = useMemo(
