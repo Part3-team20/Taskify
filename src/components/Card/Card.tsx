@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import LabelChip from '@/components/common/Chip/LabelChip';
+import Profile from '@/components/common/Profile';
+import Task from '@/components/Modal/Task';
 import styles from './Card.module.scss';
-import LabelChip from '../common/chip/LabelChip';
-import Profile from '../common/Profile/Profile';
-import Task from '../Modal/Task';
 import ModalPortal from '../Modal/ModalPortal';
 
 interface CardDetail {

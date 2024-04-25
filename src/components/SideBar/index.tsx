@@ -8,8 +8,8 @@ import styles from './SideBar.module.scss';
 import IconTextButton from '../common/Button/IconTextButton';
 import SideBarListItem from './SideBarListItem';
 import PaginationButton from '../common/Button/PaginationButton';
-import CreateDashboard from '../modal/CreateDashboard';
-import ModalPortal from '../modal/ModalPortal';
+import CreateDashboard from '@/components/Modal/CreateDashboard';
+import ModalPortal from '@/components/Modal/ModalPortal';
 
 interface Dashboard {
   id: number;

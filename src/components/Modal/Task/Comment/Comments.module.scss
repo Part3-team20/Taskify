@@ -1,0 +1,73 @@
+@import '@/styles/_color.scss';
+
+// comments
+.comments {
+  .commentTitle {
+    color: $black_333236;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 10px;
+  }
+
+  .commentContainer {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+
+    .commentBox {
+      display: flex;
+      flex-direction: column;
+
+      .commentHeader {
+        display: flex;
+        gap: 8px;
+
+        .nickname {
+          color: $black_333236;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+        .createdAt {
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          color: $gray_9FA6B2;
+        }
+      }
+
+      .commentBody {
+        display: flex;
+        gap: 12px;
+        flex-direction: column;
+        margin-top: 12px;
+
+        .commentText {
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          color: $black_333236;
+        }
+
+        .btnBox {
+          display: flex;
+          gap: 12px;
+
+          .commentBtn {
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-decoration-line: underline;
+            color: $gray_9FA6B2;
+          }
+        }
+      }
+    }
+  }
+}
