@@ -8,18 +8,15 @@
   align-items: center;
   justify-content: space-between;
   height: 4.375rem;
-  margin-left: 18.75rem;
   padding-left: 2.5rem;
   padding-right: 5rem;
   border-bottom: 0.0625rem solid $gray_D9D9D9;
 
   @include tablet {
-    margin-left: 10rem;
     padding-right: 2.5rem;
   }
 
   @include mobile {
-    margin-left: 4.1875rem;
     padding-left: 1.5rem;
     padding-right: 0.75rme;
     height: 3.75rem;

@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, useState } from 'react';
 import styles from './NameInput.module.scss';
-import ModalInput from '../ModalInput';
+import ModalInput from '../../ModalInput';
 
 type NameInputProps = {
   value: string;

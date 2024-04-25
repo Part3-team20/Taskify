@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import CommentInput from '@/components/Modal/ModalInput/CommentInput/CommentInput';
-import Profile from '@/components/common/Profile/Profile';
+import CommentInput from '@/components/Modal/ModalInput/CommentInput';
+import Profile from '@/components/common/Profile';
 import styles from './Comments.module.scss';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { CommentProps } from '@/types/DashboardTypes';
