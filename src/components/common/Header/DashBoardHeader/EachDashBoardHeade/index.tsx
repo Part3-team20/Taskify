@@ -1,6 +1,6 @@
 'use client';
 
-import Profile from '@/components/common/Profile/Profile';
+import Profile from '@/components/common/Profile';
 import styles from './EachDashBoardHeader.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -7,8 +7,6 @@ import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/input';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
-import CreateTask from '@/components/modal/CreateTask';
-import ModifyTask from '@/components/modal/ModifyTask';
 
 const mockData = {
   id: 1,
@@ -99,8 +97,6 @@ export default function MyPage() {
             </BasicSubmitButton>
           </div>
         </form>
-        <ModifyTask />
-        <CreateTask />
       </div>
     </CommonLayout>
   );

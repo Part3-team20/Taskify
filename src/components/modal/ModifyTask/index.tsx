@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import styles from './ModifyTask.module.scss';
-import Modal from '../Modal';
-import TitleInput from '../modalInput/titleInput/TitleInput';
-import MembersDropDown from '../ModalDropDown/MemberDropDown/MemberDropDown';
-import DeadLineInput from '../modalInput/deadlineInput/DeadlineInput';
-import TagInput from '../modalInput/tagInput/TagInput';
+import Modal from '@/components/Modal';
+import TitleInput from '../ModalInput/TitleInput';
+import MembersDropDown from '../ModalDropDown/MemberDropDown';
+import DeadLineInput from '../ModalInput/DeadlineInput';
+import TagInput from '../ModalInput/TagInput';
 import FileInput from '@/components/common/FileInput';
 import ModalSubmitButton from '../ModalButton/SubmitButton';
 
