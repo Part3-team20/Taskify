@@ -62,7 +62,7 @@ export default function MyDashboardList() {
       </ul>
       <div className={styles.paginationContainer}>
         <span>1 페이지 중 1</span>
-        <PaginationButton className={styles.pagination} hasNext={false} />
+        <PaginationButton className={styles.pagination} hasNext={false} currentPage={1} onPageChange={() => {}} />
       </div>
       {/* 새로운 대시보드 추가 모달 */}
       <ModalPortal>

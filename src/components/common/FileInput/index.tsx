@@ -1,8 +1,8 @@
 'use client';
 
 import { InputHTMLAttributes, useRef, useState } from 'react';
-import styles from './FileInput.module.scss';
 import Image from 'next/image';
+import styles from './FileInput.module.scss';
 
 interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
