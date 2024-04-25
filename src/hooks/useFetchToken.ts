@@ -14,21 +14,28 @@ function useFetchWithToken() {
         Authorization: `Bearer ${accessToken}`,
       });
 
-      const response = await fetch(url, {
+      const config: RequestInit = {
         method,
         headers,
         body: body ? JSON.stringify(body) : null,
-      });
+      };
+
+      const response = await fetch(url, config);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      const contentType = response.headers.get('content-type');
+      let data = null;
 
-      const data = await response.json();
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        data = await response.json();
+      }
+
       setLoading(false);
       return data;
     } catch (err) {
-      setError(error);
+      setError(err);
       setLoading(false);
       throw err;
     }

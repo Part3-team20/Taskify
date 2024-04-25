@@ -1,0 +1,45 @@
+@import '@/styles/_color.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 2rem;
+  gap: 2rem;
+  width: 100%;
+
+  .text {
+    color: $black_333236;
+    font-style: normal;
+    line-height: normal;
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+
+  .input {
+    width: 30.25rem;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .delete {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: underline;
+    color: $gray_9FA6B2;
+  }
+}

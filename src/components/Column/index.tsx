@@ -8,17 +8,38 @@ import NumberChip from '../common/Chip/NumberChip';
 import AddButton from '../common/Button/AddButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { CardProps } from '@/types/DashboardTypes';
+import ChangeColumn from '../Modal/ChangeColumn';
 
 interface ColumnProps {
   dashboardId: number;
   columnId: number;
   title: string;
   onAddCard: () => void;
+  existingTitles: string[];
+  onUpdate: (columnId: number, newTitle: string) => void;
+  onDelete: (columnId: number) => void;
 }
 
-export default function Column({ dashboardId, columnId, title, onAddCard }: ColumnProps) {
+export default function Column({
+  columnId,
+  title,
+  onAddCard,
+  onUpdate,
+  onDelete,
+  existingTitles,
+  dashboardId,
+}: ColumnProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [cards, setCards] = useState<CardProps[]>([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleOpenEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -43,7 +64,9 @@ export default function Column({ dashboardId, columnId, title, onAddCard }: Colu
           </div>
           <NumberChip number={cards.length} />
         </div>
-        <Image className={styles.setting} src="/images/settings_icon.svg" width={24} height={24} alt="설정 아이콘" />
+        <button type="button" onClick={handleOpenEditModal} className={styles.settingButton}>
+          <Image className={styles.setting} src="/images/settings_icon.svg" width={24} height={24} alt="설정 아이콘" />
+        </button>
       </div>
       <div className={styles.columnBody}>
         <div className={styles.addBtn}>
@@ -64,6 +87,15 @@ export default function Column({ dashboardId, columnId, title, onAddCard }: Colu
             />
           ))}
       </div>
+      {isEditModalOpen && (
+        <ChangeColumn
+          isOpen={isEditModalOpen}
+          onClose={handleCloseEditModal}
+          existingTitles={existingTitles}
+          onChange={(newTitle) => onUpdate(columnId, newTitle)}
+          onDelete={() => onDelete(columnId)}
+        />
+      )}
     </div>
   );
 }
