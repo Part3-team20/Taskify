@@ -7,7 +7,9 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import Input from '@/components/common/input';
 import PasswordInput from '@/components/common/input/PasswordInput';
+import Toast from '@/util/Toast';
 import styles from './Signup.module.scss';
+import { stringify } from 'querystring';
 
 export default function SignUpPage() {
   const { fetchWithToken, loading, error } = useFetchWithToken();
@@ -35,12 +37,12 @@ export default function SignUpPage() {
     const { email, nickname, password } = values;
 
     try {
-      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/users', 'POST', {
+      await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/users', 'POST', {
         email,
         nickname,
         password,
       });
-      console.log('responsedata', responseData);
+      Toast.success('가입이 완료되었습니다!');
     } catch (err) {
       console.log('Error submitting data:', err);
     }
