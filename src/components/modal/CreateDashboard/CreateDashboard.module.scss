@@ -8,6 +8,8 @@
   flex-direction: column;
   gap: 2rem;
   padding: 2rem 1.75rem 1.75rem;
+  width: 33.75rem;
+  height: 20.875rem;
 
   .title {
     font-size: 1.5rem;
@@ -22,6 +24,8 @@
     gap: 1.75rem;
 
     .input {
+      width: 100%;
+
       .label {
         font-size: 1.125rem;
         color: $black_333236;
@@ -41,6 +45,7 @@
   @include mobile {
     gap: 1.5rem;
     width: 20.4375rem;
+    height: 18.3125rem;
     padding: 1.75rem 1.25rem;
 
     .title {
