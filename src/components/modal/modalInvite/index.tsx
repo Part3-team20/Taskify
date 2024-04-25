@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Modal from '@/components/Modal/index';
 import Button from '@/components/common/Button/Button';
-
 import styles from './ModalInvite.module.scss';
 
 export default function ModalInvite() {
