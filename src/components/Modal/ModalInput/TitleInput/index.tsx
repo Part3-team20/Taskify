@@ -3,8 +3,8 @@
 // titleInput
 
 import React, { ChangeEvent, useState } from 'react';
+import ModalInput from '@/components/Modal/ModalInput';
 import styles from './TitleInput.module.scss';
-import ModalInput from '..';
 
 export default function TitleInput() {
   const [inputValue, setInputValue] = useState('');

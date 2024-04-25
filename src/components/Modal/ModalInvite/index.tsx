@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
 import Image from 'next/image';
-import Modal from '../Modal';
+import Modal from '@/components/Modal';
 import styles from './ModalInvite.module.scss';
 
 export default function ModalInvite({ boardId }: { boardId: number }) {

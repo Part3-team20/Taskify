@@ -2,25 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-<<<<<<< HEAD
-import Profile from '@/components/common/Profile/Profile';
-import LabelChip from '@/components/common/chip/LabelChip';
-import Modal from '../index';
-import styles from './Task.module.scss';
-import Comments from './Comment/Comments';
-import KebobMenu from './Kebob/KabobMenu';
-
-// task
-=======
-import Modal from '@/components/Modal';
-import styles from './Task.module.scss';
-import Profile from '@/components/common/Profile/Profile';
-import Comments from './Comment/Comments';
-import KabobMenu from './Kabob/KabobMenu';
-import LabelChip from '@/components/common/Chip/LabelChip';
 import useFetchWithToken from '@/hooks/useFetchToken';
+import Modal from '@/components/Modal';
 import { CardProps } from '@/types/DashboardTypes';
->>>>>>> main
+import LabelChip from '@/components/common/Chip/LabelChip';
+import Profile from '@/components/common/Profile';
+import Comments from './Comment/Comments';
+import KebobMenu from './Kebob/KebobMenu';
+import styles from './Task.module.scss';
 
 interface TaskProps {
   dashboardId: number;

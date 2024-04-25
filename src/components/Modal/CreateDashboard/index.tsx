@@ -1,17 +1,11 @@
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
 import ColorChip from '@/components/common/Chip/ColorChip';
 import Modal from '@/components/Modal';
 import ModalInput from '@/components/Modal/ModalInput/index';
-=======
-import ColorChip from '@/components/common/chip/ColorChip';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import Modal from '../Modal';
-import ModalInput from '../modalInput/ModalInput';
->>>>>>> main
-import styles from './CreateDashboard.module.scss';
 import ModalButton from '@/components/Modal/ModalButton/Button';
 import ModalSubmitButton from '@/components/Modal/ModalButton/SubmitButton';
+import styles from './CreateDashboard.module.scss';
 
 interface CreateDashboardProps {
   isOpen: boolean;

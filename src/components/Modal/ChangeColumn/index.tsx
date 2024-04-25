@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Modal from '..';
+import Modal from '@/components/Modal';
 import styles from './ChangeColumn.module.scss';
 import ModalButton from '../ModalButton/Button/index';
 import NameInput from '../ModalInput/NameInput';
