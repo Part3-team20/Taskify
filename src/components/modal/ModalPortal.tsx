@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-function ModalPortal({ children }: { children: ReactElement }) {
+function ModalPortal({ children }: { children: ReactElement | null }) {
   const [mounted, setMounted] = useState<boolean>(false);
 
   const el = document.getElementById('modal-root') as HTMLElement;
@@ -12,8 +12,10 @@ function ModalPortal({ children }: { children: ReactElement }) {
     return () => setMounted(false);
   }, []);
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   if (typeof window === 'undefined') return <></>;
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return mounted ? createPortal(children, el) : <></>;
 }
 

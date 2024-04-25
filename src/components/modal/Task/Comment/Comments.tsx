@@ -1,80 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CommentInput from '../../ModalInput/commentInput/CommentInput';
-// import useFormattedDate from '../../../../hook/useFormattedDate';
-// eslint-disable-next-line import/extensions
 import Profile from '@/components/common/Profile/Profile';
 import styles from './Comments.module.scss';
 import DeleteTask from '../../DeleteTask';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import { CommentProps } from '@/types/DashboardTypes';
 
-interface CommentData {
-  id: number;
-  content: string;
-  createdAt: string;
+interface Comment {
   cardId: number;
-  author: {
-    id: number;
-    nickname: string;
-    profileImageUrl?: string;
-  };
+  columnId: number;
+  dashboardId: number;
 }
 
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
-
-export default function Comments() {
-  const [comments, setComments] = useState<CommentData[]>([]);
-  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+export default function Comments({ cardId, columnId, dashboardId }: Comment) {
+  const { fetchWithToken } = useFetchWithToken();
+  const [comments, setComments] = useState<CommentProps[]>([]);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentContent, setEditingCommentContent] = useState('');
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [commentToDelete, setCommentToDelete] = useState<number | null>(null);
+  const [commentToDelete, setCommentToDelete] = useState(null);
 
-  // 목 데이터
-  useEffect(() => {
-    const mockComments = [
-      {
-        id: 1,
-        content: 'This is a mock comment',
-        createdAt: '2024-04-21T21:46:35.646Z',
-        cardId: 101,
-        author: {
-          id: 1,
-          nickname: 'User One',
-          profileImageUrl:
-            'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/3-7_1520_1712645279291.png',
-        },
-      },
-      {
-        id: 2,
-        content: 'Another example comment',
-        createdAt: '2024-03-21T21:46:35.646Z',
-        cardId: 102,
-        author: { id: 2, nickname: 'User Two' },
-      },
-    ];
-    const formattedComments = mockComments.map((comment) => ({
-      ...comment,
-      createdAt: formatDate(comment.createdAt),
-    }));
+  const fetchComments = useCallback(async () => {
+    try {
+      const result = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/comments?cardId=${cardId}`, 'GET');
+      setComments(result.comments);
+    } catch (error) {
+      console.error('Failed to fetch comments:', error);
+    }
+  }, [fetchWithToken, cardId]);
 
-    setComments(formattedComments);
-  }, []);
+  const handleCommentSubmit = useCallback(
+    async (content: string, id = null) => {
+      const method = id ? 'PUT' : 'POST';
+      const url = `https://sp-taskify-api.vercel.app/4-20/comments${id ? `/${id}` : ''}`;
+      const body = {
+        content,
+        cardId,
+        columnId,
+        dashboardId,
+      };
 
-  const handleCommentSubmit = async (content: string) => {
-    console.log('Submit comment:', content);
-  };
+      try {
+        await fetchWithToken(url, method, body);
+        fetchComments(); // After adding or updating a comment, re-fetch comments
+        setEditingCommentId(null); // Reset editing state
+      } catch (error) {
+        console.error('Failed to submit comment:', error);
+      }
+    },
+    [fetchWithToken, cardId, columnId, dashboardId, fetchComments]
+  );
 
-  // const handleCommentDelete = async (id: number) => {
-  //   console.log('Delete comment ID:', id);
-  // };
-
-  const openDeleteModal = (id: number) => {
+  const openDeleteModal = (id: any) => {
     setCommentToDelete(id);
     setIsDeleteModalOpen(true);
   };
@@ -84,50 +61,9 @@ export default function Comments() {
     setCommentToDelete(null);
   };
 
-  // 이후 수정 예정
-  //
-  // useEffect(() => {
-  //   const loadComments = async () => {
-  //     try {
-  //       const data = await fetchComments();
-  //       setComments(data.comments);
-  //     } catch (error) {
-  //       console.error('Failed to fetch comments', error);
-  //     }
-  //   };
-
-  //   loadComments();
-  // }, []);
-
-  // const handleCommentSubmit = async (content: string) => {
-  //   if (editingCommentId !== null) {
-  //     try {
-  //       const updatedComment = await updateComment(editingCommentId, content);
-  //       setComments((prev) => prev.map((comment) => (comment.id === editingCommentId ? updatedComment : comment)));
-  //     } catch (error) {
-  //       console.error('Failed to update comment', error);
-  //     }
-  //   } else {
-  //     try {
-  //       const newComment = await addComment(content);
-  //       setComments((prev) => [...prev, newComment]);
-  //     } catch (error) {
-  //       console.error('Failed to add comment', error);
-  //     }
-  //   }
-  //   setEditingCommentId(null);
-  // };
-
-  // const handleCommentDelete = async (id: number) => {
-  //   try {
-  //     const success = await deleteComment(id);
-  //     if (success) {
-  //       setComments((prev) => prev.filter((comment) => comment.id !== id));
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to delete comment', error);
-  //   }
-  // };
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   return (
     <div className={styles.comments}>

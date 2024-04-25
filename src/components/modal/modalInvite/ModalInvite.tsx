@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Button from '@/components/common/Button/Button';
 import Image from 'next/image';
-import Modal from '../Modal';
+import Modal from '..';
 
 import styles from './ModalInvite.module.scss';
 
