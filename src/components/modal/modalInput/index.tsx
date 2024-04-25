@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import styles from './modalInput.module.scss';
 
+// modalInput
 interface ModalInputProps {
   placeholder: string;
   value: string;

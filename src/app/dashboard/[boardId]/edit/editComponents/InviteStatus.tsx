@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import PaginationButton from '@/components/common/Button/PaginationButton';
-import ModalInvite from '@/components/modal/modalInvite/ModalInvite';
+import ModalInvite from '@/components/Modal/ModalInvite';
 import Button from '@/components/common/Button/Button';
 import styles from './InviteStatus.module.scss';
 

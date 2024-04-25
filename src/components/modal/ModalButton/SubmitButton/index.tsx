@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import styles from './ModalSubmitButton.module.scss';
 
+// button
 interface ModalSubmitButtonProps {
   children: ReactNode;
   isActive: boolean;

@@ -7,9 +7,11 @@ import styles from './Task.module.scss';
 // eslint-disable-next-line import/extensions
 import Profile from '@/components/common/Profile/Profile';
 import Comments from './Comment/Comments';
-import KabobMenu from './Kabob/KabobMenu';
+import KabobMenu from './Kebob/KabobMenu';
 // eslint-disable-next-line import/extensions
 import LabelChip from '@/components/common/Chip/LabelChip';
+
+// task
 
 interface TaskProps {
   title: string;

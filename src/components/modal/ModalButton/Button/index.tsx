@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ModalButton.module.scss';
 
+// button
 const cx = classNames.bind(styles);
 
 interface ModalButtonProps {

@@ -1,8 +1,10 @@
 'use client';
 
+// titleInput
+
 import React, { ChangeEvent, useState } from 'react';
 import styles from './TitleInput.module.scss';
-import ModalInput from '../ModalInput';
+import ModalInput from '..';
 
 export default function TitleInput() {
   const [inputValue, setInputValue] = useState('');

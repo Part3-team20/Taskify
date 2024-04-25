@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CommentInput from '../../ModalInput/commentInput/CommentInput';
-// import useFormattedDate from '../../../../hook/useFormattedDate';
-// eslint-disable-next-line import/extensions
+import CommentInput from '../../ModalInput/CommentInput';
 import Profile from '@/components/common/Profile/Profile';
 import styles from './Comments.module.scss';
 import DeleteTask from '../../DeleteTask';
@@ -18,6 +16,7 @@ interface CommentData {
   };
 }
 
+// comments
 function formatDate(dateString: string) {
   const date = new Date(dateString);
   const year = date.getFullYear();

@@ -5,7 +5,7 @@ import DeleteTask from '../../DeleteTask';
 
 type MenuOption = '수정하기' | '삭제하기';
 
-export default function KabobMenu() {
+export default function KebobMenu() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function KabobMenu() {
     };
   }, [menuRef]);
 
-  const handleKabobClick = () => {
+  const handleKebobClick = () => {
     setMenuVisible(!isMenuVisible);
   };
 
@@ -38,8 +38,8 @@ export default function KabobMenu() {
   };
 
   return (
-    <div className={styles.kabobMenuContainer} ref={menuRef}>
-      <button type="button" className={styles.kabobIcon} onClick={handleKabobClick}>
+    <div className={styles.kebobMenuContainer} ref={menuRef}>
+      <button type="button" className={styles.kebobIcon} onClick={handleKebobClick}>
         <Image src="/images/kebab_icon.svg" alt="추가 버튼" width={28} height={28} />
       </button>
 

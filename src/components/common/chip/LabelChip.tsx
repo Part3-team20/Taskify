@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './LabelChip.module.scss';
 
+// index
 // 백그라운드와 텍스트 색상 상수 배열
 const BACKGROUNDCOLORS = ['#E7F7DB', '#F1EFFD', '#F9EEE3', '#E0F2F6', '#F7E4F2', '#D7D7D7'];
 const TEXTCOLORS = ['#7ac555', '#760dde', '#ffa500', '#76a5ea', '#e876ea', '#4b4b4b'];

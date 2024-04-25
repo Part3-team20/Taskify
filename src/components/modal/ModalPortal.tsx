@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+// Potal
 function ModalPortal({ children }: { children: ReactElement }) {
   const [mounted, setMounted] = useState<boolean>(false);
 

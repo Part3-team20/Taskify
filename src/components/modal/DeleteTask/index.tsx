@@ -10,6 +10,7 @@ type DeleteTaskProps = {
   onClose: () => void;
 };
 
+// delete task
 export default function DeleteTask({ isOpen, onClose }: DeleteTaskProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} style={{ width: '540', height: '250' }}>
