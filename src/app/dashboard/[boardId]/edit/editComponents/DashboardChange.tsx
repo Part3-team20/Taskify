@@ -1,25 +1,17 @@
 'use client';
 
 import { ChangeEvent, useEffect, useState } from 'react';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import ColorChip from '@/components/common/chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import styles from './DashboardChange.module.scss';
 
-const mockData = {
-  id: 1,
-  title: 'Task for Today',
-  color: '#ff0000',
-  createdAt: '2024-04-22T15:22:12.569Z',
-  updatedAt: '2024-04-22T15:22:12.569Z',
-  createdByMe: true,
-  userId: 456,
-};
-
-export default function DashboaradChange(id: any) {
+export default function DashboaradChange({ boardId }: { boardId: number }) {
   const [selectedColor, setSelectedColor] = useState('');
   const [dashboardName, setDashboardName] = useState('');
+  const { fetchWithToken } = useFetchWithToken();
+
   const handleSelectColor = (color: any) => {
-    /* TODO */
     setSelectedColor(color);
     console.log(selectedColor);
   };
@@ -31,19 +23,37 @@ export default function DashboaradChange(id: any) {
   const isInput = dashboardName !== ''; // input 값 있는지 확인
 
   /* TODO 현재 id의 정보 불러오기 + 대쉬보드 수정 요청 보내기 */
-  const handlePutDashboard = () => {
+  const handlePutDashboard = async () => {
     /* PUT 대시보드 정보 변경 */
-    console.log('전송 값 : ', id, selectedColor, dashboardName);
+    console.log('전송 값 : ', boardId, selectedColor, dashboardName);
+    try {
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`, 'PUT', {
+        title: dashboardName,
+        color: selectedColor,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
-    console.log('현재 페이지의 id', id);
-    /* 현재 페이지의 id로 현재 대시보드의 이름,색상을 가져오기 (placeholder)
-        [ /{teamId}/dashboards/{dashboardId} ]
-      */
-    // setDashboardName(mockData[parseInt(id, 10)].title);
-    setDashboardName(mockData.title);
-  });
+    const fetchData = async () => {
+      try {
+        const responseData = await fetchWithToken(
+          `https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`,
+          'GET'
+        );
+        console.log(responseData);
+        setDashboardName(responseData.title);
+        setSelectedColor(responseData.color);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+    /* 현재 페이지의 id로 현재 대시보드의 이름,색상을 가져오기 (placeholder) */
+    // setDashboardName(mockData.title);
+  }, []);
 
   return (
     <div className={styles.container}>

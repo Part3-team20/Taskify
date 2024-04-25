@@ -1,0 +1,72 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+// create
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 1.75rem 1.75rem;
+  width: 33.75rem;
+  height: 20.875rem;
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $black_333236;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+
+    .input {
+      width: 100%;
+
+      .label {
+        font-size: 1.125rem;
+        color: $black_333236;
+        font-weight: 500;
+        display: inline-block;
+        margin-bottom: 0.5625rem;
+      }
+    }
+
+    .buttonBox {
+      display: flex;
+      align-self: flex-end;
+      gap: 0.75rem;
+    }
+  }
+
+  @include mobile {
+    gap: 1.5rem;
+    width: 20.4375rem;
+    height: 18.3125rem;
+    padding: 1.75rem 1.25rem;
+
+    .title {
+      font-size: 1.25rem;
+    }
+
+    .form {
+      gap: 1.5rem;
+
+      .input {
+        .label {
+          font-size: 1rem;
+          margin-bottom: 0.625rem;
+        }
+      }
+
+      .buttonBox {
+        display: flex;
+        align-self: flex-start;
+        gap: 0.6875rem;
+      }
+    }
+  }
+}
