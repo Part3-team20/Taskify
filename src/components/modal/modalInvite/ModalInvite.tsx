@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '@/components/common/Button/Button';
 import Image from 'next/image';
-import Modal from '../Modal';
+import Modal from '@/components/Modal/index';
+import Button from '@/components/common/Button/Button';
 
 import styles from './ModalInvite.module.scss';
 

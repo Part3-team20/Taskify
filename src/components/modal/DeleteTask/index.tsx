@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Modal from '../Modal';
+import Modal from '..';
 import styles from './DeleteTask.module.scss';
 import ModalButton from '../ModalButton/Button/index';
 

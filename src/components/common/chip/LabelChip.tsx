@@ -5,7 +5,6 @@ import styles from './LabelChip.module.scss';
 const BACKGROUNDCOLORS = ['#E7F7DB', '#F1EFFD', '#F9EEE3', '#E0F2F6', '#F7E4F2', '#D7D7D7'];
 const TEXTCOLORS = ['#7ac555', '#760dde', '#ffa500', '#76a5ea', '#e876ea', '#4b4b4b'];
 
-// 컬럼용 고정 색상
 const COLUMN_BACKGROUND = '#F1EFFD';
 const COLUMN_TEXT_COLOR = '#760dde';
 

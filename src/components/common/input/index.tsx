@@ -7,6 +7,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   labelName: string;
 }
 
+// eslint error
+
 const Input = ({ labelName, error, errorMessage, ...props }: InputProps) => {
   return (
     <label className={styles.label}>

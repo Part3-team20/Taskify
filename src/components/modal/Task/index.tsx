@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Modal from '../Modal';
+import Modal from '..';
 import styles from './Task.module.scss';
 // eslint-disable-next-line import/extensions
 import Profile from '@/components/common/Profile/Profile';

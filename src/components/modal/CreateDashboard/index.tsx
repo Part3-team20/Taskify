@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ColorChip from '@/components/common/chip/ColorChip';
-import Modal from '../Modal';
+import Modal from '..';
 import ModalInput from '../modalInput/ModalInput';
 import styles from './CreateDashboard.module.scss';
 import ModalButton from '../ModalButton/Button';
