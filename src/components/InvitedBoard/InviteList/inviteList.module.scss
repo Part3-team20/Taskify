@@ -1,0 +1,50 @@
+@import '@/styles/color.scss';
+@import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
+
+.container {
+  background-color: $gray_EEEEEE;
+  width: 100%;
+
+  .title {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.3125rem 1.75rem;
+    background-color: $white_FFFFFF;
+
+    span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: $gray_9FA6B2;
+    }
+
+    @include tablet {
+      grid-template-columns: 1.65fr 1fr 1.55fr;
+      gap: 1rem;
+    }
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .item {
+    list-style: none;
+    padding: 1.25rem 1.75rem;
+    background-color: $white_FFFFFF;
+
+    @include mobile {
+      padding: 1rem 1rem;
+
+      &:last-child {
+        padding-bottom: 1.25rem;
+      }
+    }
+  }
+}

@@ -3,14 +3,14 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import useFetchPost from '@/hooks/useFetchPost';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import Input from '@/components/common/input';
 import PasswordInput from '@/components/common/input/PasswordInput';
 import styles from './Signup.module.scss';
 
 export default function SignUpPage() {
-  const { fetchPost } = useFetchPost();
+  const { fetchWithToken, loading, error } = useFetchWithToken();
   const [values, setValues] = useState({
     email: '',
     nickname: '',
@@ -35,11 +35,12 @@ export default function SignUpPage() {
     const { email, nickname, password } = values;
 
     try {
-      await fetchPost('/users', {
+      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/users', 'POST', {
         email,
         nickname,
         password,
       });
+      console.log('responsedata', responseData);
     } catch (err) {
       console.log('Error submitting data:', err);
     }

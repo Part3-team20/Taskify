@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import styles from './Card.module.scss';
-import LabelChip from '../common/Chip/LabelChip';
+import LabelChip from '../common/chip/LabelChip';
 import Profile from '../common/Profile/Profile';
 
 interface CardProps {

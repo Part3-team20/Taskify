@@ -11,7 +11,7 @@ interface AddButtonProps {
   handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function AddButton({ children, dashboard, handleClick }: AddButtonProps) {
+export default function AddButton({ children = null, dashboard = false, handleClick }: AddButtonProps) {
   return (
     <button
       className={cx('container', children ? 'hasChildren' : null, dashboard && 'dashboard')}
@@ -25,8 +25,3 @@ export default function AddButton({ children, dashboard, handleClick }: AddButto
     </button>
   );
 }
-
-AddButton.defaultProps = {
-  children: null,
-  dashboard: false,
-};

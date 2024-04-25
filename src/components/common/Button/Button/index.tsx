@@ -12,7 +12,7 @@ interface ButtonProps {
   cancel?: boolean;
 }
 
-export default function Button({ color, children, handleClick, invite, cancel }: ButtonProps) {
+export default function Button({ color, children, handleClick, invite = false, cancel = false }: ButtonProps) {
   return (
     <button
       className={cx('container', color, invite && 'invite', cancel && 'cancel')}
@@ -23,8 +23,3 @@ export default function Button({ color, children, handleClick, invite, cancel }:
     </button>
   );
 }
-
-Button.defaultProps = {
-  invite: false,
-  cancel: false,
-};
