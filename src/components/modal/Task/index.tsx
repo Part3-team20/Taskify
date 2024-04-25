@@ -2,14 +2,12 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Modal from '..';
-import styles from './Task.module.scss';
-// eslint-disable-next-line import/extensions
 import Profile from '@/components/common/Profile/Profile';
+import LabelChip from '@/components/common/chip/LabelChip';
+import Modal from '../index';
+import styles from './Task.module.scss';
 import Comments from './Comment/Comments';
-import KabobMenu from './Kebob/KabobMenu';
-// eslint-disable-next-line import/extensions
-import LabelChip from '@/components/common/Chip/LabelChip';
+import KebobMenu from './Kebob/KabobMenu';
 
 // task
 
@@ -44,7 +42,7 @@ export default function Task({ title, description, tags, dueDate, assignee, imag
             <h2>{title}</h2>
             <div className={styles.buttons}>
               <div className={styles.kabob}>
-                <KabobMenu />
+                <KebobMenu />
               </div>
               <button onClick={handleCloseModal} type="button">
                 <Image src="/images/close_icon.svg" alt="닫기 버튼" width={32} height={32} />

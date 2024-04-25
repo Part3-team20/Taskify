@@ -70,7 +70,9 @@ export default function SideBar() {
             <SideBarListItem key={data.id} data={data} />
           ))}
         </ul>
-        {totalCount > 10 && <PaginationButton className={styles.pagination} hasNext={false} />}
+        {totalCount > 10 && (
+          <PaginationButton className={styles.pagination} hasNext={false} currentPage={1} onPageChange={() => {}} />
+        )}
       </div>
       <Modal isOpen={isOpen} onClose={handleCloseModal} style={{ width: '540px', height: '334px' }}>
         <div>새로운 대시보드</div>
