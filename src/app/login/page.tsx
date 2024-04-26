@@ -5,14 +5,15 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import Input from '@/components/common/input';
+import Input from '@/components/common/Input';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
-import PasswordInput from '@/components/common/input/PasswordInput';
+import PasswordInput from '@/components/common/Input/PasswordInput';
 
 import styles from './Login.module.scss';
+import Toast from '@/util/Toast';
 
 export default function LoginPage() {
-  const { fetchWithToken, loading, error } = useFetchWithToken();
+  const { fetchWithToken } = useFetchWithToken();
   const router = useRouter();
 
   const [values, setValues] = useState({
@@ -41,11 +42,12 @@ export default function LoginPage() {
         email,
         password,
       });
-      console.log(responseData);
       localStorage.setItem('accessToken', responseData.accessToken);
       router.push('/mydashboard');
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      // Error 객체에서 Message만 추출
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
