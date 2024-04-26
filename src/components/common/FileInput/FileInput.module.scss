@@ -5,17 +5,17 @@
 .previewContainer {
   display: block;
   position: relative;
-  width: 76px;
-  height: 76px;
-  border-radius: 6px;
+  width: 4.75rem;
+  height: 4.75rem;
+  border-radius: 0.375rem;
   background: #f5f5f5;
   cursor: pointer;
 
   @include flex-center;
 
   @include mobile {
-    width: 58px;
-    height: 58px;
+    width: 3.625rem;
+    height: 3.625rem;
   }
 }
 
@@ -23,8 +23,8 @@
   object-fit: cover;
 
   @include mobile {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
   }
 }
 

@@ -6,29 +6,24 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 interface InviteProviderProps {
   children: ReactNode;
 }
-
-interface Inviter {
-  nickname: string;
-  email: string;
-  id: number;
-}
-
-interface Dashboard {
-  title: string;
-  id: number;
-}
-
 export interface Invitation {
   id: number;
-  inviter: Inviter;
+  inviter: {
+    nickname: string;
+    email: string;
+    id: number;
+  };
   teamId: string;
-  dashboard: Dashboard;
+  dashboard: {
+    title: string;
+    id: number;
+  };
   inviteAccepted: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
-interface InvitationData {
+export interface InvitationData {
   id: number;
   nickname: string;
   title: string;
@@ -39,23 +34,25 @@ interface InviteValues {
   invitationData: InvitationData[];
   cursorId: number | null;
   setInvitationData: (newData: InvitationData[] | ((prevState: InvitationData[]) => InvitationData[])) => void;
+  setCursorId: (newCursorId: number | null) => void;
   searchInvitation: (keyword: string) => void;
-  acceptInvitation: (id: number) => void;
-  rejectInvitation: (id: number) => void;
+  fetchMoreData: (keyword?: string) => void;
+  isSearched: boolean;
 }
 
 const defaultValues: InviteValues = {
   invitationData: [],
   cursorId: null,
   setInvitationData: () => {},
+  setCursorId: () => {},
   searchInvitation: () => {},
-  acceptInvitation: () => {},
-  rejectInvitation: () => {},
+  fetchMoreData: () => {},
+  isSearched: false,
 };
 
 const InviteContext = createContext<InviteValues>(defaultValues);
 
-const formatInviteData = (inviteList: Invitation[]) =>
+export const formatInviteData = (inviteList: Invitation[]) =>
   inviteList.map(({ id, inviter: { nickname }, dashboard: { title }, inviteAccepted }) => ({
     id,
     nickname,
@@ -65,19 +62,14 @@ const formatInviteData = (inviteList: Invitation[]) =>
 
 export function InviteProvider({ children }: InviteProviderProps) {
   const [cursorId, setCursorId] = useState<number | null>(null);
-  const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [invitationData, setInvitationData] = useState<InvitationData[]>([]);
+  const [isSearched, setIsSearched] = useState(false);
 
   /**
    * @TODO
    * -로딩 관련 처리?
    * -url env
    */
-  const {
-    fetchWithToken: inviteResponse,
-    error: inviteConfirmError,
-    // loading: inviteConfirmLoading,
-  } = useFetchWithToken();
 
   const {
     fetchWithToken: getInvitations,
@@ -85,56 +77,71 @@ export function InviteProvider({ children }: InviteProviderProps) {
     // loading: getInvitatioLoading,
   } = useFetchWithToken();
 
-  const searchInvitation = (keyword: string) => {
+  const fetchMoreData = async (keyword?: string) => {
+    const query = isSearched ? `${cursorId}&title=${keyword}` : cursorId;
+    try {
+      const response = await getInvitations(
+        `https://sp-taskify-api.vercel.app/4-20/invitations?size=2&cursorId=${query}`
+      );
+      const newData: InvitationData[] = formatInviteData(response?.invitations);
+      setCursorId(response?.cursorId);
+      setInvitationData((prevData) => [...prevData, ...newData]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const searchInvitation = async (keyword: string) => {
     if (keyword.trim() === '') {
-      setInvitationData(formatInviteData(invitations));
-    } else {
-      const nextInvitedData = formatInviteData(invitations).filter((data) => data.title.includes(keyword));
-      setInvitationData(nextInvitedData);
-    }
-  };
+      setIsSearched(false);
 
-  const acceptInvitation = async (id: number) => {
-    try {
-      await inviteResponse(`https://sp-taskify-api.vercel.app/4-20/invitations/${id}`, 'PUT', {
-        inviteAccepted: true,
-      });
-    } catch (error) {
-      console.log(inviteConfirmError);
+      try {
+        const response = await getInvitations(`https://sp-taskify-api.vercel.app/4-20/invitations?size=2`);
+        setCursorId(response.cursorId);
+        setInvitationData(formatInviteData(response?.invitations));
+      } catch (error) {
+        console.log(error);
+      }
+      return;
     }
-  };
 
-  const rejectInvitation = async (id: number) => {
     try {
-      await inviteResponse(`https://sp-taskify-api.vercel.app/4-20/invitations/${id}`, 'PUT', {
-        inviteAccepted: false,
-      });
+      setIsSearched(true);
+      const response = await getInvitations(
+        `https://sp-taskify-api.vercel.app/4-20/invitations?size=2&title=${keyword}`
+      );
+      setCursorId(response.cursorId);
+      setInvitationData(formatInviteData(response?.invitations));
     } catch (error) {
-      console.log(inviteConfirmError);
+      console.log(error);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getInvitations(`https://sp-taskify-api.vercel.app/4-20/invitations?size=10`, 'GET');
+        const response = await getInvitations('https://sp-taskify-api.vercel.app/4-20/invitations?size=2');
         if (response) {
-          setInvitations(response.invitations);
           setCursorId(response.cursorId);
-          const formatInvitedData = formatInviteData(response.invitations).filter((data) => !data.inviteAccepted);
-          setInvitationData(formatInvitedData);
+          setInvitationData(formatInviteData(response.invitations));
         }
       } catch (error) {
         console.log(getInvitationError);
       }
     };
     fetchData();
-
-    // const formatInvitedData = formatInviteData(invitations).filter((data) => data.inviteAccepted !== true);
   }, []);
 
   const value = useMemo(
-    () => ({ invitationData, cursorId, setInvitationData, searchInvitation, acceptInvitation, rejectInvitation }),
+    () => ({
+      invitationData,
+      cursorId,
+      setInvitationData,
+      searchInvitation,
+      setCursorId,
+      fetchMoreData,
+      isSearched,
+    }),
     [invitationData, cursorId]
   );
 

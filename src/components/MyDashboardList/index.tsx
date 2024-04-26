@@ -20,31 +20,34 @@ interface Dashboard {
 }
 
 interface Cursor {
-  cursorId: number;
+  page: number;
   totalCount: number;
 }
 
 export default function MyDashboardList() {
   const [isOpen, setIsOpen] = useState(false);
-  const [cursor, setCursor] = useState<Cursor>({ cursorId: 0, totalCount: 0 });
+  const [page, setPage] = useState<Cursor>({ page: 1, totalCount: 0 });
   const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
 
-  const { fetchWithToken: getDashboardList, loading, error } = useFetchWithToken();
+  const { fetchWithToken: getDashboardList, error } = useFetchWithToken();
+
+  const handlePageChange = (pageNumber: number) => {
+    setPage((prevPage) => ({ ...prevPage, page: pageNumber }));
+  };
 
   /**
    * @TODO
-   * -pagination
-   * -페이지 내 출력 개수
+   * -로딩 처리
    */
   useEffect(() => {
     const fetchData = async () => {
       const response = await getDashboardList(
-        'https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination',
+        `https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination&page=${page.page}&size=5`,
         'GET'
       );
       if (response) {
         setDashboards(response.dashboards);
-        setCursor({ cursorId: response.cursorId, totalCount: response.totalCount });
+        setPage((prevPage) => ({ ...prevPage, totalCount: response.totalCount }));
       }
       if (error) {
         console.log(error);
@@ -52,12 +55,11 @@ export default function MyDashboardList() {
     };
 
     fetchData();
-  }, []);
+  }, [page.page]);
 
   return (
     <div className={styles.container}>
       <ul className={styles.dashboardContainer}>
-        {loading && '로딩중...'}
         {dashboards &&
           dashboards.map(({ id, title, createdByMe, color }) => (
             <li key={id} className={styles.item}>
@@ -76,12 +78,14 @@ export default function MyDashboardList() {
         </li>
       </ul>
       <div className={styles.paginationContainer}>
-        <span>1 페이지 중 1</span>
+        <span>
+          {Math.ceil(page.totalCount / 5)} 페이지 중 {page.page}
+        </span>
         <PaginationButton
           className={styles.pagination}
-          hasNext={cursor.totalCount - cursor.cursorId * 5 > 0}
-          currentPage={1}
-          onPageChange={() => {}}
+          hasNext={page.totalCount - page.page * 5 > 0}
+          currentPage={page.page}
+          onPageChange={handlePageChange}
         />
       </div>
       <ModalPortal>

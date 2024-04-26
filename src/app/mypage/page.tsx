@@ -1,10 +1,11 @@
 'use client';
 
+import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import CommonLayout from '@/layouts/CommonLayout';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
-import { ChangeEvent, FormEvent, useState } from 'react';
+
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import styles from './MyPage.module.scss';
 
@@ -39,6 +40,10 @@ export default function MyPage() {
 
   const handlePasswordSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  };
+
+  const handleLogoutClick = (e: MouseEvent<HTMLDivElement>) => {
+    window.localStorage.removeItem('accessToken');
   };
 
   return (
@@ -97,6 +102,9 @@ export default function MyPage() {
             </BasicSubmitButton>
           </div>
         </form>
+        <div className={styles.logout} onClick={handleLogoutClick}>
+          로그아웃
+        </div>
       </div>
     </CommonLayout>
   );

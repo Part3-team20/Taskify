@@ -6,9 +6,10 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   style?: React.CSSProperties;
+  className?: string;
 }
 
-export default function Modal({ isOpen = false, children, onClose, style }: ModalProps) {
+export default function Modal({ isOpen = false, children, onClose, style, className }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function Modal({ isOpen = false, children, onClose, style }: Moda
 
   return (
     <div className={styles.container}>
-      <div ref={modalRef} className={styles.modal} style={style}>
+      <div ref={modalRef} className={`${className} ${styles.modal}`} style={style}>
         {children}
       </div>
     </div>

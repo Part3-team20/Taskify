@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import styles from './KabobMenu.module.scss';
+import styles from './KebobMenu.module.scss';
 import DeleteTask from '../../DeleteTask';
 
 type MenuOption = '수정하기' | '삭제하기';
