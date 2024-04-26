@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ChangeEvent, useState } from 'react';
-import ModalInput from '..';
+import ModalInput from '@/components/Modal/ModalInput';
 import styles from './NameInput.module.scss';
 
 type NameInputProps = {

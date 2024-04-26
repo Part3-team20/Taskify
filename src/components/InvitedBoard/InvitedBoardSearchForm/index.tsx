@@ -1,21 +1,24 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { useInvite } from '@/contexts/inviteContext';
 import styles from './InvitedBoardSearchForm.module.scss';
 
-export default function InvitedBoardSearchForm() {
-  const [value, setValue] = useState<string>('');
+interface InvitedBoardSearchFormProps {
+  keyword: string;
+  setKeyword: (newKeyword: string) => void;
+}
+
+export default function InvitedBoardSearchForm({ keyword, setKeyword }: InvitedBoardSearchFormProps) {
   const { searchInvitation } = useInvite();
 
-  const onSearchFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSearchFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    searchInvitation(value);
+    searchInvitation(keyword);
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setKeyword(e.target.value);
   };
 
   return (
@@ -26,7 +29,7 @@ export default function InvitedBoardSearchForm() {
         </span>
         <input
           className={styles.input}
-          value={value}
+          value={keyword}
           type="text"
           placeholder="검색"
           id="search"
