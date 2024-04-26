@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
-import Profile from '@/components/common/Profile/Profile';
+import Profile from '@/components/common/Profile';
 import Button from '@/components/common/Button/Button';
 import styles from './MemberManagement.module.scss';
 
@@ -11,6 +11,7 @@ interface Member {
   id: number;
   nickname: string;
   userId: number;
+  memberId: number;
 }
 export default function MemberManagement({ boardId }: { boardId: number }) {
   const { fetchWithToken } = useFetchWithToken();
@@ -28,10 +29,13 @@ export default function MemberManagement({ boardId }: { boardId: number }) {
     setCurrentPage(page);
   };
 
-  const handleDeleteMember = async (userId: number) => {
-    console.log(userId, '해당 멤버 삭제');
+  const handleDeleteMember = async (memberId: number) => {
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members/${userId}`, 'DELETE');
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members/${memberId}`, 'DELETE');
+      // const updatedMemberData = memberData.filter((member) => member.userId !== userId);
+      // setMemberData(updatedMemberData);
+
+      setMemberData((prevMember) => prevMember.filter((member) => member.memberId !== memberId));
     } catch (e) {
       console.error(e);
     }
@@ -78,7 +82,7 @@ export default function MemberManagement({ boardId }: { boardId: number }) {
                 <Profile />
                 <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
-              <Button color="white" handleClick={() => handleDeleteMember(member.userId)}>
+              <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
                 삭제
               </Button>
             </div>
