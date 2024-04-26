@@ -5,6 +5,7 @@ import { CommentProps } from '@/types/DashboardTypes';
 import CommentInput from '@/components/Modal/ModalInput/CommentInput';
 import Profile from '@/components/common/Profile';
 import styles from './Comments.module.scss';
+import ConfirmModal from '../../ConfirmModal';
 
 interface Comment {
   cardId: number;
@@ -34,6 +35,8 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const { fetchWithToken } = useFetchWithToken();
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [deleteCommentId, setDeleteCommentId] = useState<number | null>(null);
 
   const fetchComments = useCallback(async () => {
     try {
@@ -85,16 +88,20 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const handleDeleteComment = useCallback(
     async (id: number) => {
       try {
-        const url = `https://sp-taskify-api.vercel.app/4-20/comments/${id}`;
-        await fetchWithToken(url, 'DELETE');
-        // 서버에서 삭제 후 상태 업데이트로 댓글 목록에서 바로 제거
+        await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/comments/${id}`, 'DELETE');
         setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
+        setIsConfirmOpen(false);
       } catch (error) {
         console.error('Failed to delete comment:', error);
       }
     },
-    [fetchWithToken, setComments]
+    [fetchWithToken]
   );
+
+  const openConfirmModal = (id: number) => {
+    setDeleteCommentId(id);
+    setIsConfirmOpen(true);
+  };
 
   useEffect(() => {
     fetchComments();
@@ -135,7 +142,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
                   <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                     수정
                   </button>
-                  <button className={styles.commentBtn} type="button" onClick={() => handleDeleteComment(comment.id)}>
+                  <button className={styles.commentBtn} type="button" onClick={() => openConfirmModal(comment.id)}>
                     삭제
                   </button>
                 </div>
@@ -144,6 +151,15 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
           </div>
         </div>
       ))}
+      {isConfirmOpen && (
+        <ConfirmModal
+          isOpen={isConfirmOpen}
+          onClose={() => setIsConfirmOpen(false)}
+          onConfirm={() => deleteCommentId && handleDeleteComment(deleteCommentId)}
+        >
+          <p className={styles.modalSubText}>댓글을 삭제할까요?</p>
+        </ConfirmModal>
+      )}
     </div>
   );
 }

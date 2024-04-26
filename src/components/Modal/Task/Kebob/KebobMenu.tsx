@@ -59,8 +59,8 @@ export default function KebobMenu({ onDelete }: KebobMenuProps) {
       )}
 
       <ConfirmModal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} onConfirm={onDelete}>
-        <p>정말 삭제하시겠습니까?</p>
-        <p>한번 삭제하신 내용은 되돌릴 수 없습니다.</p>
+        <p className={styles.modalText}>정말 삭제하시겠습니까?</p>
+        <p className={styles.modalSubText}>한번 삭제하신 내용은 되돌릴 수 없습니다.</p>
       </ConfirmModal>
     </div>
   );
