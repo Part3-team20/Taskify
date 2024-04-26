@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useBoardId } from '@/contexts/idContext';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import ModalInvite from '@/components/Modal/ModalInvite';
@@ -15,7 +16,8 @@ interface Invite {
   };
 }
 
-export default function InviteStatus({ boardId }: { boardId: number }) {
+export default function InviteStatus() {
+  const boardId = useBoardId();
   const [inviteData, setInviteData] = useState<Invite[]>([]);
   const { fetchWithToken } = useFetchWithToken();
 
@@ -71,14 +73,14 @@ export default function InviteStatus({ boardId }: { boardId: number }) {
             onPageChange={handlePageChange}
           />
           <div className={styles.onPcSize}>
-            <ModalInvite boardId={boardId} />
+            <ModalInvite />
           </div>
         </div>
       </div>
       <div className={styles.subcontainer}>
         <p className={styles.email}>이메일</p>
         <div className={styles.onMobileSize}>
-          <ModalInvite boardId={boardId} />
+          <ModalInvite />
         </div>
       </div>
 

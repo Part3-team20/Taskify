@@ -1,12 +1,15 @@
 'use client';
 
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useBoardId } from '@/contexts/idContext';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import styles from './DashboardChange.module.scss';
 
-export default function DashboaradChange({ boardId }: { boardId: number }) {
+export default function DashboaradChange() {
+  const boardId = useBoardId();
+
   const [selectedColor, setSelectedColor] = useState('');
   const [dashboardName, setDashboardName] = useState(''); // 입력 후 GET 된 값
 

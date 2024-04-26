@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useBoardId } from '@/contexts/idContext';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import Profile from '@/components/common/Profile';
@@ -13,7 +14,8 @@ interface Member {
   userId: number;
   memberId: number;
 }
-export default function MemberManagement({ boardId }: { boardId: number }) {
+export default function MemberManagement() {
+  const boardId = useBoardId();
   const { fetchWithToken } = useFetchWithToken();
   const [memberData, setMemberData] = useState<Member[]>([]);
   console.log(boardId);
