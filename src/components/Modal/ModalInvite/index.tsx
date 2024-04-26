@@ -28,6 +28,7 @@ export default function ModalInvite({ boardId }: { boardId: number }) {
         email: emailValue,
       });
       setIsOpen(false);
+      window.location.reload();
     } catch (e) {
       console.error(e);
     }
@@ -39,7 +40,7 @@ export default function ModalInvite({ boardId }: { boardId: number }) {
         <Image className={styles.inviteIcon} src="/images/add_box.svg" width={16} height={16} alt="invite" />
         초대하기
       </Button>
-      <Modal isOpen={isOpen} onClose={handleClickCancel} style={{ width: '33.75rem', height: '17.25rem' }}>
+      <Modal isOpen={isOpen} onClose={handleClickCancel} style={{ width: 'auto', height: 'auto' }}>
         <div className={styles.modalContainer}>
           <p className={styles.invite}>초대하기</p>
           <p className={styles.email}>이메일</p>
