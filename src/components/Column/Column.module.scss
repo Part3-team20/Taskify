@@ -52,3 +52,33 @@
     }
   }
 }
+
+@include mobile {
+  .column {
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid $gray_EEEEEE;
+    .columnBody {
+      margin-bottom: 16px;
+      .addBtn {
+        width: 90%;
+        height: 40px;
+      }
+    }
+  }
+}
+
+@include tablet {
+  .column {
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid $gray_EEEEEE;
+    .columnBody {
+      margin-bottom: 16px;
+      .addBtn {
+        width: 90%;
+        height: 40px;
+      }
+    }
+  }
+}

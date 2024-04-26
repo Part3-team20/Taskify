@@ -44,8 +44,7 @@ export default function Card({
     <button type="button" className={styles.card} onClick={handleCardClick}>
       {imageUrl && (
         <div className={styles.image}>
-          {/* <Image src={imageUrl} alt="카드 대표 이미지" layout="fill" objectFit="cover" /> */}
-          <img src={imageUrl} alt="카드 대표 이미지" style={{ width: '100%', height: '100%' }} />
+          <Image src={imageUrl} alt="카드 대표 이미지" layout="fill" objectFit="cover" />
         </div>
       )}
       <div className={styles.body}>
