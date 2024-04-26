@@ -2,7 +2,6 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import CommonLayout from '@/layouts/CommonLayout';
 import DeleteDashboardButton from '@/components/common/Button/DeleteDashboardButton';
 import PreviosPageButton from './editComponents/PreviousPageButton';
 import MemberManagement from './editComponents/MemberManagement';
@@ -31,14 +30,12 @@ export default function BoardEdit() {
   };
 
   return (
-    <CommonLayout>
-      <div className={styles.container}>
-        <PreviosPageButton />
-        <DashboaradChange boardId={id} />
-        <MemberManagement boardId={id} />
-        <InviteStatus boardId={id} />
-        <DeleteDashboardButton handleDelete={() => handleDeleteDashboard(id)} />
-      </div>
-    </CommonLayout>
+    <div className={styles.container}>
+      <PreviosPageButton />
+      <DashboaradChange boardId={id} />
+      <MemberManagement boardId={id} />
+      <InviteStatus boardId={id} />
+      <DeleteDashboardButton handleDelete={() => handleDeleteDashboard(id)} />
+    </div>
   );
 }

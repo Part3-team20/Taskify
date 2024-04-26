@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { Dashboard as Column } from '@/types/DashboardTypes';
-import CommonLayout from '@/layouts/CommonLayout';
-import styles from './Dashboard.module.scss';
 import ColumnComponent from '@/components/Column';
 import AddButton from '@/components/common/Button/AddButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import CreateColumn from '@/components/Modal/CreateColumn';
+import styles from './Dashboard.module.scss';
 
 export default function Dashboard({ params }: { params: { boardId: number } }) {
   const { fetchWithToken } = useFetchWithToken();
@@ -75,36 +74,34 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
   };
 
   return (
-    <CommonLayout>
-      <div className={styles.container}>
-        <div className={styles.columnBox}>
-          {columns.map((column) => (
-            <ColumnComponent
-              key={column.id}
-              columnId={column.id}
-              title={column.title}
-              onAddCard={() => console.log('Add card button clicked!')}
-              onUpdate={handleUpdateColumn}
-              onDelete={handleDeleteColumn}
-              existingTitles={columns.map((c) => c.title)}
-              dashboardId={boardId}
-            />
-          ))}
-        </div>
-        <div className={styles.btnBox}>
-          {/* eslint-disable-next-line react/no-children-prop */}
-          <AddButton handleClick={handleAddColumn}>새로운 컬럼 추가하기</AddButton>
-          {/* Modal component rendered conditionally */}
-          {isCreateModalOpen && (
-            <CreateColumn
-              isOpen={isCreateModalOpen}
-              onClose={handleCloseModal}
-              onCreate={handleCreateColumn}
-              existingTitles={columns.map((column) => column.title)}
-            />
-          )}
-        </div>
+    <div className={styles.container}>
+      <div className={styles.columnBox}>
+        {columns.map((column) => (
+          <ColumnComponent
+            key={column.id}
+            columnId={column.id}
+            title={column.title}
+            onAddCard={() => console.log('Add card button clicked!')}
+            onUpdate={handleUpdateColumn}
+            onDelete={handleDeleteColumn}
+            existingTitles={columns.map((c) => c.title)}
+            dashboardId={boardId}
+          />
+        ))}
       </div>
-    </CommonLayout>
+      <div className={styles.btnBox}>
+        {/* eslint-disable-next-line react/no-children-prop */}
+        <AddButton handleClick={handleAddColumn}>새로운 컬럼 추가하기</AddButton>
+        {/* Modal component rendered conditionally */}
+        {isCreateModalOpen && (
+          <CreateColumn
+            isOpen={isCreateModalOpen}
+            onClose={handleCloseModal}
+            onCreate={handleCreateColumn}
+            existingTitles={columns.map((column) => column.title)}
+          />
+        )}
+      </div>
+    </div>
   );
 }
