@@ -5,7 +5,7 @@ import styles from './MyPage.module.scss';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/input';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 
 const mockData = {
@@ -39,6 +39,10 @@ export default function MyPage() {
 
   const handlePasswordSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  };
+
+  const handleLogoutClick = (e: MouseEvent<HTMLDivElement>) => {
+    window.localStorage.removeItem('accessToken');
   };
 
   return (
@@ -97,6 +101,9 @@ export default function MyPage() {
             </BasicSubmitButton>
           </div>
         </form>
+        <div className={styles.logout} onClick={handleLogoutClick}>
+          로그아웃
+        </div>
       </div>
     </CommonLayout>
   );
