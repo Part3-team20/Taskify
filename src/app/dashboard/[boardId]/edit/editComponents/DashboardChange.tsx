@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useState } from 'react';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import ColorChip from '@/components/common/chip/ColorChip';
+import ColorChip from '@/components/common/Chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import styles from './DashboardChange.module.scss';
 

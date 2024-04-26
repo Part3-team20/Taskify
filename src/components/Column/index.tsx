@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { CardProps } from '@/types/DashboardTypes';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import styles from './Column.module.scss';
 import Card from '../Card/Card';
-import NumberChip from '../common/chip/NumberChip';
+import NumberChip from '../common/Chip/NumberChip';
 import AddButton from '../common/Button/AddButton';
-import useFetchWithToken from '@/hooks/useFetchToken';
-import { CardProps } from '@/types/DashboardTypes';
 import ChangeColumn from '../Modal/ChangeColumn';
 
 interface ColumnProps {

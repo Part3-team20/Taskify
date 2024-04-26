@@ -54,7 +54,7 @@ export default function KebobMenu() {
         </div>
       )}
 
-      <DeleteTask isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} />
+      <DeleteTask isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} onDelete={() => {}} />
     </div>
   );
 }
