@@ -35,6 +35,7 @@ export default function InviteStatus({ boardId }: { boardId: number }) {
         `https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}/invitations/${userId}`,
         'DELETE'
       );
+      setInviteData((prevInvites) => prevInvites.filter((invite) => invite.id !== userId));
     } catch (e) {
       console.error(e);
     }
@@ -69,10 +70,18 @@ export default function InviteStatus({ boardId }: { boardId: number }) {
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
+          <div className={styles.onPcSize}>
+            <ModalInvite boardId={boardId} />
+          </div>
+        </div>
+      </div>
+      <div className={styles.subcontainer}>
+        <p className={styles.email}>이메일</p>
+        <div className={styles.onMobileSize}>
           <ModalInvite boardId={boardId} />
         </div>
       </div>
-      <p className={styles.email}>이메일</p>
+
       {inviteList
         .filter((invite) => !invite.inviteAccepted)
         .map((invite) => (
