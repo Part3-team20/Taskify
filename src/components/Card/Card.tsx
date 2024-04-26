@@ -19,9 +19,20 @@ interface CardDetail {
   imageUrl?: string;
   dashboardId: number;
   columnId: number;
+  onDeleteCard: (cardId: number) => Promise<void>;
 }
 
-export default function Card({ id, title, tags, assignee, imageUrl, dueDate, dashboardId, columnId }: CardDetail) {
+export default function Card({
+  id,
+  title,
+  tags,
+  assignee,
+  imageUrl,
+  dueDate,
+  dashboardId,
+  columnId,
+  onDeleteCard,
+}: CardDetail) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
   // 카드 클릭 핸들러
@@ -64,6 +75,7 @@ export default function Card({ id, title, tags, assignee, imageUrl, dueDate, das
             cardId={id}
             dashboardId={dashboardId}
             columnId={columnId}
+            onDeleteCard={onDeleteCard}
           />
         ) : null}
       </ModalPortal>

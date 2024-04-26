@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './KebobMenu.module.scss';
-import DeleteTask from '../../DeleteTask';
+import ConfirmModal from '../../ConfirmModal';
 
 type MenuOption = '수정하기' | '삭제하기';
 
-export default function KebobMenu() {
+interface KebobMenuProps {
+  onDelete: () => void;
+}
+
+export default function KebobMenu({ onDelete }: KebobMenuProps) {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -54,7 +58,10 @@ export default function KebobMenu() {
         </div>
       )}
 
-      <DeleteTask isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} onDelete={() => {}} />
+      <ConfirmModal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} onConfirm={onDelete}>
+        <p>정말 삭제하시겠습니까?</p>
+        <p>한번 삭제하신 내용은 되돌릴 수 없습니다.</p>
+      </ConfirmModal>
     </div>
   );
 }

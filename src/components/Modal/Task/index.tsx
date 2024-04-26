@@ -17,9 +17,10 @@ interface TaskProps {
   cardId: number;
   onClose: () => void;
   isOpen: boolean;
+  onDeleteCard: (cardId: number) => Promise<void>;
 }
 
-export default function Task({ dashboardId, columnId, cardId, onClose, isOpen }: TaskProps) {
+export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, onDeleteCard }: TaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [cardDetails, setCardDetails] = useState<CardProps | null>(null);
 
@@ -53,7 +54,7 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen }:
             <h2>{cardDetails.title}</h2>
             <div className={styles.buttons}>
               <div className={styles.kabob}>
-                <KebobMenu />
+                <KebobMenu onDelete={() => onDeleteCard(cardId)} />
               </div>
               <button onClick={handleButtonClose} type="button">
                 <Image src="/images/close_icon.svg" alt="닫기 버튼" width={32} height={32} />
