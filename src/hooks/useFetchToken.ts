@@ -2,46 +2,37 @@ import { useCallback, useState } from 'react';
 
 function useFetchWithToken() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const fetchWithToken = useCallback(async (url: string | URL | Request, method = 'GET', body = null) => {
     setLoading(true);
-    setError(null);
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const headers = new Headers({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      });
 
-      const config: RequestInit = {
-        method,
-        headers,
-        body: body ? JSON.stringify(body) : null,
-      };
+    const accessToken = localStorage.getItem('accessToken');
 
-      const response = await fetch(url, config);
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const contentType = response.headers.get('content-type');
-      let data = null;
+    const config: RequestInit = {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null,
+    };
 
-      if (contentType && contentType.indexOf('application/json') !== -1) {
-        data = await response.json();
-      }
+    const response = await fetch(url, config);
+    const responseData = await response.json();
 
-      setLoading(false);
-      return data;
-    } catch (err) {
-      setError(err);
-      setLoading(false);
-      throw err;
+    if (!response.ok) {
+      const errorMessage = responseData.message;
+      throw new Error(errorMessage);
     }
+
+    setLoading(false);
+
+    return responseData;
   }, []);
 
-  return { fetchWithToken, loading, error };
+  return { fetchWithToken, loading };
 }
 
 export default useFetchWithToken;
