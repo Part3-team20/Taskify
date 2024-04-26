@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
-import Profile from '@/components/common/Profile/Profile';
+import Profile from '@/components/common/Profile';
 import Button from '@/components/common/Button/Button';
 import styles from './MemberManagement.module.scss';
 
