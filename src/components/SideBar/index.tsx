@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import styles from './SideBar.module.scss';
+import CreateDashboard from '@/components/Modal/CreateDashboard';
+import ModalPortal from '@/components/Modal/ModalPortal';
 import IconTextButton from '../common/Button/IconTextButton';
 import SideBarListItem from './SideBarListItem';
 import PaginationButton from '../common/Button/PaginationButton';
-import CreateDashboard from '@/components/Modal/CreateDashboard';
-import ModalPortal from '@/components/Modal/ModalPortal';
+import styles from './SideBar.module.scss';
 
 interface Dashboard {
   id: number;

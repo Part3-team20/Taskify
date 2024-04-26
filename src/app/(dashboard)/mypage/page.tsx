@@ -1,9 +1,9 @@
 'use client';
 
+import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
-import { ChangeEvent, FormEvent, useState } from 'react';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import styles from './MyPage.module.scss';
 
@@ -40,6 +40,10 @@ export default function MyPage() {
     e.preventDefault();
   };
 
+  const handleLogoutClick = () => {
+    window.localStorage.removeItem('accessToken');
+  };
+
   return (
     <div className={styles.container}>
       <GoBackButton />
@@ -59,7 +63,7 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.button}>
-          <BasicSubmitButton color={'violet'} isActive={Boolean(profile.nickName)}>
+          <BasicSubmitButton color="violet" isActive={Boolean(profile.nickName)} handleClick={() => {}}>
             저장
           </BasicSubmitButton>
         </div>
@@ -90,11 +94,14 @@ export default function MyPage() {
           />
         </div>
         <div className={styles.button}>
-          <BasicSubmitButton color={'violet'} isActive>
+          <BasicSubmitButton color="violet" isActive handleClick={() => {}}>
             변경
           </BasicSubmitButton>
         </div>
       </form>
+      <button type="button" className={styles.logout} onClick={handleLogoutClick}>
+        로그아웃
+      </button>
     </div>
   );
 }

@@ -3,18 +3,12 @@
 @import '@/styles/_responsive-styles.scss';
 
 .container {
-  padding-top: 1.25rem;
-  padding-left: 1.25rem;
-  padding-bottom: 7.8125rem;
-
-  @include tablet {
-    padding-bottom: 11.125rem;
-  }
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 7.8125rem 1.25rem;
 
   @include mobile {
-    padding-top: 1rem;
-    padding-left: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding: 1rem 0.75rem 3rem 0.75rem;
   }
 }
 
@@ -23,6 +17,7 @@
   margin-bottom: 0.75rem;
   padding: 2rem 1.75rem 1.75rem 1.75rem;
   max-width: 38.75rem;
+  background-color: $white_FFFFFF;
 
   & h1 {
     font-size: 1.5rem;
@@ -82,6 +77,7 @@
 .passwordForm {
   padding: 2rem 1.75rem 1.75rem 1.75rem;
   max-width: 38.75rem;
+  background-color: $white_FFFFFF;
 
   & h1 {
     font-size: 1.5rem;
@@ -113,4 +109,14 @@
       margin-bottom: 1rem;
     }
   }
+}
+
+.logout {
+  align-self: flex-end;
+  color: $gray_9FA6B2;
+  text-decoration-line: underline;
+  text-underline-offset: 0.3rem;
+  margin-top: 2rem;
+  padding-bottom: 0.25rem;
+  cursor: pointer;
 }

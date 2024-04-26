@@ -7,9 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   labelName: string;
 }
 
-// eslint error
-
-const Input = ({ labelName, error, errorMessage, ...props }: InputProps) => {
+export default function Input({ labelName, error, errorMessage, ...props }: InputProps) {
   return (
     <label className={styles.label}>
       {labelName}
@@ -17,6 +15,4 @@ const Input = ({ labelName, error, errorMessage, ...props }: InputProps) => {
       {error && <div className={styles.errorMessage}>{errorMessage}</div>}
     </label>
   );
-};
-
-export default Input;
+}

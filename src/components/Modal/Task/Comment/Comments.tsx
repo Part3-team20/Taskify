@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { CommentProps } from '@/types/DashboardTypes';
 import CommentInput from '@/components/Modal/ModalInput/CommentInput';
@@ -14,7 +15,7 @@ interface Comment {
 export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const { fetchWithToken } = useFetchWithToken();
   const [comments, setComments] = useState<CommentProps[]>([]);
-  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
 
   const fetchComments = useCallback(async () => {
     try {
@@ -88,7 +89,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
 
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
-          <Profile profileImageUrl={comment.author.profileImageUrl} />
+          <Profile profileImageUrl={comment.author.profileImageUrl || undefined} />
           <div className={styles.commentBox}>
             <div className={styles.commentHeader}>
               <span className={styles.nickname}>{comment.author.nickname}</span>
@@ -98,7 +99,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
               <div className={styles.commentBody}>
                 <div>
                   <CommentInput
-                    onCommentSubmit={(content) => handlePutComment(content, comment.id)}
+                    onCommentSubmit={(content: string) => handlePutComment(content, comment.id)}
                     initialContent={comment.content}
                     style={{ width: '400px' }}
                   />

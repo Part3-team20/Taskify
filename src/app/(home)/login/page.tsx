@@ -12,7 +12,8 @@ import PasswordInput from '@/components/common/Input/PasswordInput';
 import styles from './Login.module.scss';
 
 export default function LoginPage() {
-  const { fetchWithToken, loading, error } = useFetchWithToken();
+  const { fetchWithToken } = useFetchWithToken();
+  // loading, error 삭제
   const router = useRouter();
 
   const [values, setValues] = useState({
@@ -22,14 +23,14 @@ export default function LoginPage() {
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
 
-  function handleChange(e: any) {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
 
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
-  }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
