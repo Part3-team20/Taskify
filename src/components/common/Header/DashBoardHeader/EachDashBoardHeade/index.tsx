@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Profile from '@/components/common/Profile';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -117,10 +116,12 @@ export default function EachDashBoardHeader() {
         <hr className={styles.boundary} />
 
         {/* 내 프로필 */}
-        <div className={styles.profile}>
-          <Profile profileImageUrl={mockUser.profileImageUrl} />
-          <span className={styles.nickname}>{mockUser.nickname}</span>
-        </div>
+        <Link href={'/mypage'}>
+          <div className={styles.profile}>
+            <Profile profileImageUrl={mockUser.profileImageUrl} />
+            <span className={styles.nickname}>{mockUser.nickname}</span>
+          </div>
+        </Link>
       </div>
     </header>
   );
