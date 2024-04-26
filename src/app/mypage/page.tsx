@@ -1,30 +1,47 @@
 'use client';
 
-import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEvent, useCallback, useEffect, useState } from 'react';
 import CommonLayout from '@/layouts/CommonLayout';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
-
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import { USERS } from '@/constants/ApiUrl';
+
 import styles from './MyPage.module.scss';
 
-const mockData = {
-  id: 1,
-  email: 'cksdyd324@gmail.com',
-  nickname: '진찬용',
-  profileImageUrl: undefined,
-  createdAt: '2024-04-19T12:30:21.029Z',
-  updatedAt: '2024-04-19T12:30:21.029Z',
-};
+// const mockData = {
+//   id: 1,
+//   email: 'cksdyd324@gmail.com',
+//   nickname: '진찬용',
+//   profileImageUrl: undefined,
+//   createdAt: '2024-04-19T12:30:21.029Z',
+//   updatedAt: '2024-04-19T12:30:21.029Z',
+// };
 
 export default function MyPage() {
+  const { fetchWithToken } = useFetchWithToken();
   const [profile, setProfile] = useState<{ nickName: string; profileImageUrl: string | undefined }>({
-    nickName: mockData.nickname,
-    profileImageUrl: mockData.profileImageUrl,
+    nickName: '',
+    profileImageUrl: '',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [password, setPassword] = useState({ password: '', newPassword: '', passwordCheck: '' });
+  const [email, setEmail] = useState<string | undefined>('');
+
+  const fetchUserData = useCallback(async () => {
+    try {
+      const result = await fetchWithToken(`${USERS}`, 'GET');
+      setProfile({
+        nickName: result.nickname,
+        profileImageUrl: result.profileImageUrl,
+      });
+      setEmail(result.email);
+    } catch (error) {
+      console.error('Failed to fetch comments:', error);
+    }
+  }, []);
 
   const handleNickNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setProfile((prev) => ({ ...prev, nickName: e.target.value }));
@@ -42,9 +59,13 @@ export default function MyPage() {
     e.preventDefault();
   };
 
-  const handleLogoutClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleLogoutClick = () => {
     window.localStorage.removeItem('accessToken');
   };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
     <CommonLayout>
@@ -55,7 +76,7 @@ export default function MyPage() {
           <div className={styles.inputs}>
             <FileInput setFile={setImageFile} className={styles.fileInput} />
             <div className={styles.textInputs}>
-              <Input labelName="이메일" name="email" placeholder={mockData.email} disabled />
+              <Input labelName="이메일" name="email" placeholder={email} disabled />
               <Input
                 labelName="닉네임"
                 name="nickName"
