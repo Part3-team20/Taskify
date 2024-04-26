@@ -1,6 +1,6 @@
-import styles from './DashBoardHeader.module.scss';
-import Profile from '../../Profile';
 import Link from 'next/link';
+import Profile from '../../Profile';
+import styles from './DashBoardHeader.module.scss';
 
 const mockData = {
   id: 1,

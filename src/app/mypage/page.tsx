@@ -1,12 +1,13 @@
 'use client';
 
+import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import CommonLayout from '@/layouts/CommonLayout';
-import styles from './MyPage.module.scss';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
-import Input from '@/components/common/input';
-import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
+import Input from '@/components/common/Input';
+
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
+import styles from './MyPage.module.scss';
 
 const mockData = {
   id: 1,
@@ -65,7 +66,7 @@ export default function MyPage() {
             </div>
           </div>
           <div className={styles.button}>
-            <BasicSubmitButton color={'violet'} isActive={Boolean(profile.nickName)}>
+            <BasicSubmitButton color="violet" isActive={Boolean(profile.nickName)} handleClick={() => {}}>
               저장
             </BasicSubmitButton>
           </div>
@@ -96,7 +97,7 @@ export default function MyPage() {
             />
           </div>
           <div className={styles.button}>
-            <BasicSubmitButton color={'violet'} isActive>
+            <BasicSubmitButton color="violet" isActive handleClick={() => {}}>
               변경
             </BasicSubmitButton>
           </div>

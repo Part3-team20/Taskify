@@ -1,6 +1,6 @@
 'use client';
 
-import { InputHTMLAttributes, useRef, useState } from 'react';
+import { InputHTMLAttributes, useState } from 'react';
 import Image from 'next/image';
 import styles from './FileInput.module.scss';
 
@@ -20,9 +20,9 @@ export default function FileInput({ className, setFile, ...props }: FileInputPro
   return (
     <label className={`${styles.previewContainer} ${className}`}>
       <Image
-        src={preview ? preview : '/images/add_btn.svg'}
+        src={preview || '/images/add_btn.svg'}
         alt="preview"
-        fill={preview ? true : false}
+        fill={!!preview}
         width={preview ? undefined : 28}
         height={preview ? undefined : 28}
         className={styles.preview}
