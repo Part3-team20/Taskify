@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react';
 
 function useFetchWithToken() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null); // setError에서 오류 발생해서 임시로 any 처리
 
-  const fetchWithToken = useCallback(async (url: string | URL | Request, method = 'GET', body = null) => {
+  const fetchWithToken = useCallback(async (url: string | URL | Request, method: string = 'GET', body: any = null) => {
     setLoading(true);
     setError(null);
     try {
