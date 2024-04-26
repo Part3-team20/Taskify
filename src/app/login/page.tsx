@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import Input from '@/components/common/input';
+import Input from '@/components/common/Input';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
-import PasswordInput from '@/components/common/input/PasswordInput';
+import PasswordInput from '@/components/common/Input/PasswordInput';
 
 import styles from './Login.module.scss';
 
