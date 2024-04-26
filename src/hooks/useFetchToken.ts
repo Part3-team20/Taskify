@@ -4,7 +4,7 @@ function useFetchWithToken() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchWithToken = useCallback(async (url: string | URL | Request, method = 'GET', body = null) => {
+  const fetchWithToken = useCallback(async (url: string | URL | Request, method = 'GET', body: any = null) => {
     setLoading(true);
     setError(null);
     try {
