@@ -1,20 +1,40 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styles from './CreateTask.module.scss';
 import Modal from '@/components/Modal';
-import TitleInput from '../ModalInput/TitleInput';
 import MembersDropDown from '../ModalDropDown/MemberDropDown';
 import DeadLineInput from '../ModalInput/DeadlineInput';
 import TagInput from '../ModalInput/TagInput';
 import FileInput from '@/components/common/FileInput';
 import ModalSubmitButton from '../ModalButton/SubmitButton';
+import ModalInput from '../ModalInput';
 
-export default function CreateTask() {
+interface CreateTaskProps {
+  dashboardId: number;
+  columnId: number;
+}
+
+export default function CreateTask({ dashboardId, columnId }: CreateTaskProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [form, setForm] = useState({
+    assigneeUserId: 0,
+    dashboardId,
+    columnId,
+    title: '',
+    description: '',
+    dueDate: '',
+    tags: [''],
+    imageUrl: '',
+  });
+  const [imageFile, setFile] = useState<File | null>(null);
 
   const handleCloseModal = () => {
     setIsOpen(false);
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -30,18 +50,35 @@ export default function CreateTask() {
             <div className={styles.labelName}>담당자</div>
             <MembersDropDown />
           </label>
-          <TitleInput />
           <label className={styles.formSection}>
             <div className={styles.labelName}>
-              설명<span style={{ color: '#5534DA' }}>*</span>
+              제목<span style={{ color: '#5534DA' }}> *</span>
             </div>
-            <textarea className={styles.textarea} placeholder="설명을 입력해 주세요" />
+            <ModalInput
+              name="title"
+              placeholder="제목을 입력해주세요"
+              value={form.title}
+              onChange={handleInputChange}
+              style={{ fontSize: '0.875rem' }}
+            />
+          </label>
+          <label className={styles.formSection}>
+            <div className={styles.labelName}>
+              설명<span style={{ color: '#5534DA' }}> *</span>
+            </div>
+            <textarea
+              name="description"
+              className={styles.textarea}
+              placeholder="설명을 입력해 주세요"
+              value={form.description}
+              onChange={handleInputChange}
+            />
           </label>
           <DeadLineInput />
           <TagInput />
           <label className={styles.formSection}>
             <div className={styles.labelName}>이미지</div>
-            <FileInput />
+            <FileInput setFile={setFile} />
           </label>
           <div className={styles.buttons}>
             <ModalSubmitButton isActive className={styles.cancelButton}>
