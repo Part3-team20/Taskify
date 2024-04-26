@@ -20,6 +20,10 @@ function useFetchWithToken() {
     };
 
     const response = await fetch(url, config);
+
+    // PUT 요청시, 204 상태는 response 값이 없으므로 바로 return
+    if (response.status === 204) return null;
+
     const responseData = await response.json();
 
     if (!response.ok) {

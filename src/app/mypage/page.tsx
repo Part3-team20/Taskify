@@ -1,33 +1,27 @@
 'use client';
 
-import { ChangeEvent, FormEvent, MouseEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 import CommonLayout from '@/layouts/CommonLayout';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import { USERS } from '@/constants/ApiUrl';
+import { CHANGE_PASSWORD, USERS } from '@/constants/ApiUrl';
+import { useRouter } from 'next/navigation';
+import Toast from '@/util/Toast';
 
 import styles from './MyPage.module.scss';
 
-// const mockData = {
-//   id: 1,
-//   email: 'cksdyd324@gmail.com',
-//   nickname: '진찬용',
-//   profileImageUrl: undefined,
-//   createdAt: '2024-04-19T12:30:21.029Z',
-//   updatedAt: '2024-04-19T12:30:21.029Z',
-// };
-
 export default function MyPage() {
+  const router = useRouter();
   const { fetchWithToken } = useFetchWithToken();
   const [profile, setProfile] = useState<{ nickName: string; profileImageUrl: string | undefined }>({
     nickName: '',
     profileImageUrl: '',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [password, setPassword] = useState({ password: '', newPassword: '', passwordCheck: '' });
+  const [passwords, setPasswords] = useState({ password: '', newPassword: '', passwordCheck: '' });
   const [email, setEmail] = useState<string | undefined>('');
 
   const fetchUserData = useCallback(async () => {
@@ -47,16 +41,31 @@ export default function MyPage() {
     setProfile((prev) => ({ ...prev, nickName: e.target.value }));
   };
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handlePasswordChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    setPasswords((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleProfileSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
-  const handlePasswordSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handlePasswordSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const { password, newPassword } = passwords;
+
+    try {
+      await fetchWithToken(`${CHANGE_PASSWORD}`, 'PUT', {
+        password,
+        newPassword,
+      });
+      Toast.success('비밀번호를 변경했습니다');
+      router.refresh();
+    } catch (err: any) {
+      // Error 객체에서 Message만 추출
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
+    }
   };
 
   const handleLogoutClick = () => {
