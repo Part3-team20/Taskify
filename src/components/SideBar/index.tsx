@@ -22,32 +22,35 @@ interface Dashboard {
 }
 
 interface Cursor {
-  cursorId: number;
+  page: number;
   totalCount: number;
 }
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [cursor, setCursor] = useState<Cursor>({ cursorId: 0, totalCount: 0 });
+  const [page, setPage] = useState<Cursor>({ page: 1, totalCount: 0 });
   const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
 
-  const { fetchWithToken: getDashboardList, loading, error } = useFetchWithToken();
+  const { fetchWithToken: getDashboardList, error } = useFetchWithToken();
+
+  const handlePageChange = (pageNumber: number) => {
+    setPage((prevPage) => ({ ...prevPage, page: pageNumber }));
+  };
 
   /**
    * @TODO
-   * -pagination
    * -로딩 처리
    * -dashboardList 데이터 전역 전환
    */
   useEffect(() => {
     const fetchData = async () => {
       const response = await getDashboardList(
-        'https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination',
+        `https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination&page=${page.page}&size=12`,
         'GET'
       );
       if (response) {
         setDashboards(response.dashboards);
-        setCursor({ cursorId: response.cursorId, totalCount: response.totalCount });
+        setPage((prevPage) => ({ ...prevPage, totalCount: response.totalCount }));
       }
       if (error) {
         console.log(error);
@@ -55,7 +58,7 @@ export default function SideBar() {
     };
 
     fetchData();
-  }, []);
+  }, [page.page]);
 
   return (
     <aside className={styles.container}>
@@ -73,15 +76,14 @@ export default function SideBar() {
           </IconTextButton>
         </div>
         <ul className={styles.list}>
-          {loading && '로딩중...'}
           {dashboards && dashboards.map((data) => <SideBarListItem key={data.id} data={data} />)}
         </ul>
-        {cursor.totalCount > 10 && (
+        {page.totalCount > 10 && (
           <PaginationButton
             className={styles.pagination}
-            hasNext={cursor.totalCount - cursor.cursorId * 10 > 0}
-            currentPage={1}
-            onPageChange={() => {}}
+            hasNext={page.totalCount - page.page * 12 > 0}
+            currentPage={page.page}
+            onPageChange={handlePageChange}
           />
         )}
       </div>

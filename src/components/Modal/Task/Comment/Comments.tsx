@@ -4,6 +4,9 @@ import Profile from '@/components/common/Profile';
 import styles from './Comments.module.scss';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { CommentProps } from '@/types/DashboardTypes';
+import CommentInput from '@/components/Modal/ModalInput/CommentInput';
+import Profile from '@/components/common/Profile';
+import styles from './Comments.module.scss';
 
 interface Comment {
   cardId: number;
