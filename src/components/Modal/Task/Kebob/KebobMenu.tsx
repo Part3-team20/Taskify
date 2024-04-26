@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import styles from './KabobMenu.module.scss';
 import DeleteTask from '../../DeleteTask';
+import styles from './KebobMenu.module.scss';
 
 type MenuOption = '수정하기' | '삭제하기';
 
@@ -54,7 +54,7 @@ export default function KebobMenu() {
         </div>
       )}
 
-      <DeleteTask isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} />
+      <DeleteTask isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} onDelete={() => {}} />
     </div>
   );
 }

@@ -2,18 +2,20 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { LOGIN } from '@/constants/ApiUrl';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Input from '@/components/common/Input';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import PasswordInput from '@/components/common/Input/PasswordInput';
+import Toast from '@/util/Toast';
 
 import styles from './Login.module.scss';
-import Toast from '@/util/Toast';
 
 export default function LoginPage() {
   const { fetchWithToken } = useFetchWithToken();
+  // loading, error 삭제
   const router = useRouter();
 
   const [values, setValues] = useState({
@@ -23,14 +25,14 @@ export default function LoginPage() {
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
 
-  function handleChange(e: any) {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
 
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
-  }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -38,7 +40,7 @@ export default function LoginPage() {
     const { email, password } = values;
 
     try {
-      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/auth/login', 'POST', {
+      const responseData = await fetchWithToken(`${LOGIN}`, 'POST', {
         email,
         password,
       });

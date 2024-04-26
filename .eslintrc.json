@@ -6,6 +6,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -17,7 +18,9 @@
         "tsx": "never"
       }
     ],
-    "no-console": "off"
+    "no-console": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react-hooks/exhaustive-deps": "off"
   },
   "settings": {
     "import/resolver": {

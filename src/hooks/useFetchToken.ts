@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 function useFetchWithToken() {
   const [loading, setLoading] = useState(false);
 
-  const fetchWithToken = useCallback(async (url: string | URL | Request, method = 'GET', body = null) => {
+  const fetchWithToken = useCallback(async (url: string | URL | Request, method: string = 'GET', body: any = null) => {
     setLoading(true);
 
     const accessToken = localStorage.getItem('accessToken');

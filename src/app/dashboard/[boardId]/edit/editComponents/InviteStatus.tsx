@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useBoardId } from '@/contexts/idContext';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import ModalInvite from '@/components/Modal/ModalInvite';
@@ -15,7 +17,8 @@ interface Invite {
   };
 }
 
-export default function InviteStatus({ boardId }: { boardId: number }) {
+export default function InviteStatus() {
+  const boardId = useBoardId();
   const [inviteData, setInviteData] = useState<Invite[]>([]);
   const { fetchWithToken } = useFetchWithToken();
 
@@ -31,10 +34,8 @@ export default function InviteStatus({ boardId }: { boardId: number }) {
 
   const handleCancelInvite = async (userId: number) => {
     try {
-      await fetchWithToken(
-        `https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}/invitations/${userId}`,
-        'DELETE'
-      );
+      await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations/${userId}`, 'DELETE');
+      setInviteData((prevInvites) => prevInvites.filter((invite) => invite.id !== userId));
     } catch (e) {
       console.error(e);
     }
@@ -43,10 +44,7 @@ export default function InviteStatus({ boardId }: { boardId: number }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchWithToken(
-          `https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}/invitations`,
-          'GET'
-        );
+        const responseData = await fetchWithToken(`${DASHBOARDS}}/${boardId}/invitations`, 'GET');
         setInviteData(responseData.invitations);
       } catch (e) {
         console.error(e);
@@ -69,10 +67,18 @@ export default function InviteStatus({ boardId }: { boardId: number }) {
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
-          <ModalInvite boardId={boardId} />
+          <div className={styles.onPcSize}>
+            <ModalInvite />
+          </div>
         </div>
       </div>
-      <p className={styles.email}>이메일</p>
+      <div className={styles.subcontainer}>
+        <p className={styles.email}>이메일</p>
+        <div className={styles.onMobileSize}>
+          <ModalInvite />
+        </div>
+      </div>
+
       {inviteList
         .filter((invite) => !invite.inviteAccepted)
         .map((invite) => (

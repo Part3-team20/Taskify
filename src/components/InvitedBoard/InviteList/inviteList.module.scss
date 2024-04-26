@@ -6,6 +6,12 @@
   background-color: $gray_EEEEEE;
   width: 100%;
 
+  .noResult {
+    @include flex-center;
+    background-color: $white_FFFFFF;
+    padding: 6.25rem 0 8.75rem;
+  }
+
   .title {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -31,7 +37,7 @@
   .list {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 0.0625rem;
   }
 
   .item {

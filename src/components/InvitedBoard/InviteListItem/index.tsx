@@ -1,6 +1,8 @@
 'use client';
 
 import { useInvite } from '@/contexts/inviteContext';
+import { INVITATIONS } from '@/constants/ApiUrl';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
 import styles from './InviteListItem.module.scss';
 
@@ -11,14 +13,38 @@ interface InviteListItemProps {
 }
 
 export default function InviteListItem({ title, id, nickname }: InviteListItemProps) {
-  const { acceptInvitation, rejectInvitation } = useInvite();
+  const { invitationData, setInvitationData } = useInvite();
 
-  const onAcceptClick = () => {
-    acceptInvitation(id);
+  const {
+    fetchWithToken: inviteResponse,
+    error: inviteConfirmError,
+    // loading: inviteConfirmLoading,
+  } = useFetchWithToken();
+
+  /**
+   * @TODO
+   * -대시보드 수락했을 경우 사이드바, 대시보드 리스트에 값이 추가되어야 하는 문제
+   */
+
+  const onConfirmInvite = async (response: boolean) => {
+    const temp = [...invitationData];
+    try {
+      await inviteResponse(`${INVITATIONS}/${id}`, 'PUT', {
+        inviteAccepted: response,
+      });
+      setInvitationData((prevData) => prevData.filter((data) => data.id !== id));
+    } catch (error) {
+      setInvitationData(temp);
+      console.log(inviteConfirmError);
+    }
   };
 
-  const onRejectClick = () => {
-    rejectInvitation(id);
+  const onAcceptClick = async () => {
+    await onConfirmInvite(true);
+  };
+
+  const onRejectClick = async () => {
+    await onConfirmInvite(false);
   };
 
   return (

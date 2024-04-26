@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import CommentInput from '@/components/Modal/ModalInput/CommentInput/CommentInput';
-import Profile from '@/components/common/Profile/Profile';
-import styles from './Comments.module.scss';
+
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { CommentProps } from '@/types/DashboardTypes';
+import { COMMENTS } from '@/constants/ApiUrl';
+import CommentInput from '@/components/Modal/ModalInput/CommentInput';
+import Profile from '@/components/common/Profile';
+import styles from './Comments.module.scss';
 
 interface Comment {
   cardId: number;
@@ -14,11 +16,11 @@ interface Comment {
 export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const { fetchWithToken } = useFetchWithToken();
   const [comments, setComments] = useState<CommentProps[]>([]);
-  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
 
   const fetchComments = useCallback(async () => {
     try {
-      const result = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/comments?cardId=${cardId}`, 'GET');
+      const result = await fetchWithToken(`${COMMENTS}?cardId=${cardId}`, 'GET');
       setComments(result.comments);
     } catch (error) {
       console.error('Failed to fetch comments:', error);
@@ -27,7 +29,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
 
   const handlePostComment = useCallback(
     async (content: string) => {
-      const url = `https://sp-taskify-api.vercel.app/4-20/comments`;
+      const url = COMMENTS;
       const body = {
         content,
         cardId,
@@ -46,7 +48,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
 
   const handlePutComment = useCallback(
     async (content: string, id: number) => {
-      const url = `https://sp-taskify-api.vercel.app/4-20/comments/${id}`;
+      const url = `${COMMENTS}/${id}`;
       const body = { content };
       try {
         await fetchWithToken(url, 'PUT', body);
@@ -62,7 +64,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const handleDeleteComment = useCallback(
     async (id: number) => {
       try {
-        const url = `https://sp-taskify-api.vercel.app/4-20/comments/${id}`;
+        const url = `${COMMENTS}/${id}`;
         await fetchWithToken(url, 'DELETE');
         // 서버에서 삭제 후 상태 업데이트로 댓글 목록에서 바로 제거
         setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
@@ -88,7 +90,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
 
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
-          <Profile profileImageUrl={comment.author.profileImageUrl} />
+          <Profile profileImageUrl={comment.author.profileImageUrl || undefined} />
           <div className={styles.commentBox}>
             <div className={styles.commentHeader}>
               <span className={styles.nickname}>{comment.author.nickname}</span>
@@ -98,7 +100,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
               <div className={styles.commentBody}>
                 <div>
                   <CommentInput
-                    onCommentSubmit={(content) => handlePutComment(content, comment.id)}
+                    onCommentSubmit={(content: string) => handlePutComment(content, comment.id)}
                     initialContent={comment.content}
                     style={{ width: '400px' }}
                   />

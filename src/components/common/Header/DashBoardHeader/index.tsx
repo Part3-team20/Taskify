@@ -1,5 +1,6 @@
-import styles from './DashBoardHeader.module.scss';
+import Link from 'next/link';
 import Profile from '../../Profile';
+import styles from './DashBoardHeader.module.scss';
 
 const mockData = {
   id: 1,
@@ -14,10 +15,12 @@ export default function DashBoardHeader() {
   return (
     <header className={styles.header}>
       내 대시보드
-      <div className={styles.profile}>
-        <Profile profileImageUrl={mockData.profileImageUrl} />
-        <span className={styles.nickname}>{mockData.nickname}</span>
-      </div>
+      <Link href="/mypage">
+        <div className={styles.profile}>
+          <Profile profileImageUrl={mockData.profileImageUrl} />
+          <span className={styles.nickname}>{mockData.nickname}</span>
+        </div>
+      </Link>
     </header>
   );
 }

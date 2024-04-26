@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import arrowDown from '@/../public/images/dropdown_icon.svg';
+import check from '@/../public/images/check.svg';
 import styles from './MemberDropDown.module.scss';
-import arrowDown from '../../../../public/images/dropdown_icon.svg';
-import check from '../../../../public/images/check.svg';
 
 export default function MembersDropDown() {
   // 일단 mock 데이터로 작업함
