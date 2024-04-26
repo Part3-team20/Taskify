@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import CommentInput from '@/components/Modal/ModalInput/CommentInput/CommentInput';
-import Profile from '@/components/common/Profile/Profile';
-import styles from './Comments.module.scss';
+import CommentInput from '@/components/Modal/ModalInput/CommentInput/';
+import Profile from '@/components/common/Profile/';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { CommentProps } from '@/types/DashboardTypes';
+import styles from './Comments.module.scss';
 
 interface Comment {
   cardId: number;

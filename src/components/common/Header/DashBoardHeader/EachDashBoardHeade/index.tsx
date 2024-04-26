@@ -1,10 +1,10 @@
 'use client';
 
-import Profile from '@/components/common/Profile/Profile';
-import styles from './EachDashBoardHeader.module.scss';
+import { useEffect, useState } from 'react';
+import Profile from '@/components/common/Profile';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import styles from './EachDashBoardHeader.module.scss';
 
 const mockUser = {
   id: 1,

@@ -1,5 +1,5 @@
 import styles from './DashBoardHeader.module.scss';
-import Profile from '../../Profile/Profile';
+import Profile from '../../Profile';
 
 const mockData = {
   id: 1,
