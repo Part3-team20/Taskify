@@ -48,7 +48,7 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, o
 
   return (
     <div>
-      <Modal isOpen={isOpen} onClose={onClose} style={{ width: '760px', height: 'auto', maxHeight: '730px' }}>
+      <Modal isOpen={isOpen} onClose={onClose} style={{ width: 'auto', height: 'auto', maxHeight: '730px' }}>
         <div className={styles.taskModal}>
           <div className={styles.modalHeader}>
             <h2>{cardDetails.title}</h2>
@@ -76,8 +76,7 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, o
                 <div className={styles.contents}>{cardDetails.description}</div>
                 {cardDetails.imageUrl && (
                   <div className={styles.imgBox}>
-                    <img src={cardDetails.imageUrl} alt="본문 첨부 이미지" />
-                    {/* <Image src={imageUrl} alt="본문 첨부 이미지" className={styles.img} /> */}
+                    <Image src={cardDetails.imageUrl} alt="본문 첨부 이미지" layout="fill" objectFit="cover" />
                   </div>
                 )}
                 <div className={styles.comments}>
