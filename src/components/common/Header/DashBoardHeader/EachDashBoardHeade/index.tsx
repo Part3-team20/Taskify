@@ -1,10 +1,10 @@
 'use client';
 
-import Profile from '@/components/common/Profile';
-import styles from './EachDashBoardHeader.module.scss';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import Profile from '@/components/common/Profile';
+import styles from './EachDashBoardHeader.module.scss';
 
 const mockUser = {
   id: 1,
@@ -71,7 +71,7 @@ export default function EachDashBoardHeader() {
       {/* 개별 대시보드 제목 */}
       <div className={styles.dashBoardTitle}>
         {mockDashBoard.title}{' '}
-        {mockDashBoard.createdByMe && <Image src={'/images/crown_icon.svg'} alt="crown" width={20} height={16} />}
+        {mockDashBoard.createdByMe && <Image src="/images/crown_icon.svg" alt="crown" width={20} height={16} />}
       </div>
 
       <div className={styles.nav}>
@@ -79,12 +79,12 @@ export default function EachDashBoardHeader() {
         <div className={styles.buttons}>
           {mockDashBoard.createdByMe && (
             <Link href={`/dashboard/${mockDashBoard.id}/edit`} className={styles.button}>
-              <Image src={'/images/settings_icon.svg'} alt="dashboard-setting" width={20} height={20} />
+              <Image src="/images/settings_icon.svg" alt="dashboard-setting" width={20} height={20} />
               관리
             </Link>
           )}
           <div className={styles.button}>
-            <Image src={'/images/add_box.svg'} alt="dashboard-invitation" width={20} height={20} />
+            <Image src="/images/add_box.svg" alt="dashboard-invitation" width={20} height={20} />
             초대하기
           </div>
         </div>
@@ -98,17 +98,15 @@ export default function EachDashBoardHeader() {
               : { width: `${mockMembers.totalCount > 2 ? 100 : 31 * mockMembers.totalCount + 7}px` }
           }
         >
-          {mockMembers.members.slice(0, 4).map((member, index) => {
-            return (
-              <li
-                key={member.id}
-                className={`${styles.member} ${index > 1 ? styles.onlyVisibleOnPC : ''}`}
-                style={{ left: `-${index * 7}px` }}
-              >
-                <Profile profileImageUrl={member.profileImageUrl} />
-              </li>
-            );
-          })}
+          {mockMembers.members.slice(0, 4).map((member, index) => (
+            <li
+              key={member.id}
+              className={`${styles.member} ${index > 1 ? styles.onlyVisibleOnPC : ''}`}
+              style={{ left: `-${index * 7}px` }}
+            >
+              <Profile profileImageUrl={member.profileImageUrl} />
+            </li>
+          ))}
           {deviceType === 'PC'
             ? mockMembers.totalCount > 4 && <li className={styles.excess}>{`+${mockMembers.totalCount - 4}`}</li>
             : mockMembers.totalCount > 2 && <li className={styles.excess}>{`+${mockMembers.totalCount - 2}`}</li>}

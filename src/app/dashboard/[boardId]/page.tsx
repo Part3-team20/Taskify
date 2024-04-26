@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react';
 import { Dashboard as Column } from '@/types/DashboardTypes';
 import CommonLayout from '@/layouts/CommonLayout';
-import styles from './Dashboard.module.scss';
 import ColumnComponent from '@/components/Column';
 import AddButton from '@/components/common/Button/AddButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import CreateColumn from '@/components/Modal/CreateColumn';
+import styles from './Dashboard.module.scss';
 
 export default function Dashboard({ params }: { params: { boardId: number } }) {
   const { fetchWithToken } = useFetchWithToken();

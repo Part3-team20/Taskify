@@ -5,14 +5,15 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import Input from '@/components/common/input';
+import Input from '@/components/common/Input';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
-import PasswordInput from '@/components/common/input/PasswordInput';
+import PasswordInput from '@/components/common/Input/PasswordInput';
 
 import styles from './Login.module.scss';
 
 export default function LoginPage() {
-  const { fetchWithToken, loading, error } = useFetchWithToken();
+  const { fetchWithToken } = useFetchWithToken();
+  // loading, error 삭제
   const router = useRouter();
 
   const [values, setValues] = useState({
@@ -22,14 +23,14 @@ export default function LoginPage() {
   const [isBtnActive, setIsBtnActive] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
 
-  function handleChange(e: any) {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
 
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
-  }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
