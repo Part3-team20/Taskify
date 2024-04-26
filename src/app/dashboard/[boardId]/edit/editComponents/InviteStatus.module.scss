@@ -1,45 +1,45 @@
 @import '@/styles/_color.scss';
 @import '@/styles/_responsive-styles.scss';
 .container {
-  width: 620px;
-  height: 477px;
-  border-radius: 8px;
+  width: 38.75rem;
+  height: 29.8125rem;
+  border-radius: 0.5rem;
   background: var(--white-white_FFFFFF, #fff);
-  margin: 12px 0;
-  padding: 33.5px 28px;
+  margin: 0.75rem 0;
+  padding: 2.0938rem 1.75rem;
   @include tablet {
-    width: 544px;
-    padding: 30px 20px;
+    width: 34rem;
+    padding: 1.875rem 1.25rem;
   }
   @include mobile {
-    width: 284px;
-    height: 395px;
+    width: 17.75rem;
+    height: 24.6875rem;
   }
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 33.5px;
+    margin-bottom: 2.0938rem;
     .title {
       color: var(--black-black_333236, #333236);
-      font-size: 24px;
+      font-size: 1.5rem;
       font-weight: 700;
       @include mobile {
-        font-size: 18px;
+        font-size: 1.125rem;
       }
     }
     .pagination {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 1rem;
       @include mobile {
-        gap: 12px;
+        gap: 0.75rem;
       }
       .paginationNumber {
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: 400;
         @include mobile {
-          font-size: 10px;
+          font-size: 0.625rem;
         }
       }
       @include mobile {
@@ -55,16 +55,16 @@
     justify-content: space-between;
 
     @include mobile {
-      margin-bottom: 28px;
+      margin-bottom: 1.75rem;
     }
     .email {
       color: var(--gray-gray_9FA6B2, #9fa6b2);
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 400;
-      margin-bottom: 33.5px;
+      margin-bottom: 2.0938rem;
 
       @include mobile {
-        font-size: 14px;
+        font-size: 0.875rem;
         margin-bottom: 0;
         display: flex;
       }
@@ -78,27 +78,27 @@
   }
 
   .emailSection {
-    margin-bottom: 25.5px;
+    margin-bottom: 1.5938rem;
     @include mobile {
-      margin-bottom: 5.5px;
+      margin-bottom: 0.3438rem;
     }
     .emailList {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 25.5px;
+      margin-bottom: 1.5938rem;
       @include mobile {
-        margin-bottom: 18.5px;
+        margin-bottom: 1.1563rem;
       }
       .inviteEmail {
         @include mobile {
-          font-size: 14px;
+          font-size: 0.875rem;
         }
       }
     }
     .contour {
       border: none;
-      height: 1px;
+      height: 0.0625rem;
       background-color: #d9d9d9;
     }
   }
