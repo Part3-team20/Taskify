@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import ModalInvite from '@/components/Modal/ModalInvite';
@@ -33,10 +34,7 @@ export default function InviteStatus() {
 
   const handleCancelInvite = async (userId: number) => {
     try {
-      await fetchWithToken(
-        `https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}/invitations/${userId}`,
-        'DELETE'
-      );
+      await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations/${userId}`, 'DELETE');
       setInviteData((prevInvites) => prevInvites.filter((invite) => invite.id !== userId));
     } catch (e) {
       console.error(e);
@@ -46,10 +44,7 @@ export default function InviteStatus() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchWithToken(
-          `https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}/invitations`,
-          'GET'
-        );
+        const responseData = await fetchWithToken(`${DASHBOARDS}}/${boardId}/invitations`, 'GET');
         setInviteData(responseData.invitations);
       } catch (e) {
         console.error(e);

@@ -2,6 +2,7 @@
 
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
 import Image from 'next/image';
@@ -26,7 +27,7 @@ export default function ModalInvite() {
   const handlePostInvite = async () => {
     /* TODO : 초대하기  로직 */
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}/invitations`, 'POST', {
+      await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'POST', {
         email: emailValue,
       });
       window.location.reload();

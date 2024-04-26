@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
@@ -31,7 +32,7 @@ export default function DashboaradChange() {
   const handlePutDashboard = async () => {
     console.log('전송 값 : ', boardId, selectedColor, dashboardName);
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`, 'PUT', {
+      await fetchWithToken(`${DASHBOARDS}/${boardId}`, 'PUT', {
         title: pendingInput,
         color: selectedColor,
       });
@@ -44,10 +45,7 @@ export default function DashboaradChange() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchWithToken(
-          `https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`,
-          'GET'
-        );
+        const responseData = await fetchWithToken(`${DASHBOARDS}/${boardId}`, 'GET');
         console.log(responseData);
         setDashboardName(responseData.title);
         setSelectedColor(responseData.color);

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
+import { MEMBERS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import Profile from '@/components/common/Profile';
@@ -33,7 +34,7 @@ export default function MemberManagement() {
 
   const handleDeleteMember = async (memberId: number) => {
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members/${memberId}`, 'DELETE');
+      await fetchWithToken(`${MEMBERS}/${memberId}`, 'DELETE');
       // const updatedMemberData = memberData.filter((member) => member.userId !== userId);
       // setMemberData(updatedMemberData);
 
@@ -45,10 +46,7 @@ export default function MemberManagement() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchWithToken(
-          `https://sp-taskify-api.vercel.app/4-20/members?page=1&size=20&dashboardId=${boardId}`,
-          'GET'
-        );
+        const responseData = await fetchWithToken(`${MEMBERS}?page=1&size=20&dashboardId=${boardId}`, 'GET');
         console.log(responseData);
         setMemberData(responseData.members);
       } catch (e) {

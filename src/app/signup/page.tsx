@@ -1,12 +1,13 @@
 'use client';
 
 import React, { FormEvent, useEffect, useState } from 'react';
+import { SIGNIN } from '@/constants/ApiUrl';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
-import Input from '@/components/common/input';
-import PasswordInput from '@/components/common/input/PasswordInput';
+import Input from '@/components/common/Input';
+import PasswordInput from '@/components/common/Input/PasswordInput';
 import styles from './Signup.module.scss';
 
 export default function SignUpPage() {
@@ -35,7 +36,7 @@ export default function SignUpPage() {
     const { email, nickname, password } = values;
 
     try {
-      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/users', 'POST', {
+      const responseData = await fetchWithToken(SIGNIN, 'POST', {
         email,
         nickname,
         password,

@@ -4,12 +4,12 @@ import { useParams, useRouter } from 'next/navigation';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import IdProvider from '@/contexts/idContext';
 import CommonLayout from '@/layouts/CommonLayout';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import DeleteDashboardButton from '@/components/common/Button/DeleteDashboardButton';
 import PreviosPageButton from './editComponents/PreviousPageButton';
 import MemberManagement from './editComponents/MemberManagement';
 import InviteStatus from './editComponents/InviteStatus';
 import DashboaradChange from './editComponents/DashboardChange';
-
 import styles from './BoardEdit.module.scss';
 
 export default function BoardEdit() {
@@ -25,7 +25,7 @@ export default function BoardEdit() {
   const handleDeleteDashboard = async (dashboardId: number) => {
     /* 대쉬보드 삭제  */
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${dashboardId}`, 'DELETE');
+      await fetchWithToken(`${DASHBOARDS}/${dashboardId}`, 'DELETE');
       router.push('/mydashboard');
     } catch (e) {
       console.error(e);
