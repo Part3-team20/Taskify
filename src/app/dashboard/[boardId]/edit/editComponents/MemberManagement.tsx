@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useBoardId } from '@/contexts/idContext';
+import { MEMBERS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import Profile from '@/components/common/Profile';
@@ -11,8 +13,10 @@ interface Member {
   id: number;
   nickname: string;
   userId: number;
+  memberId: number;
 }
-export default function MemberManagement({ boardId }: { boardId: number }) {
+export default function MemberManagement() {
+  const boardId = useBoardId();
   const { fetchWithToken } = useFetchWithToken();
   const [memberData, setMemberData] = useState<Member[]>([]);
   console.log(boardId);
@@ -28,10 +32,13 @@ export default function MemberManagement({ boardId }: { boardId: number }) {
     setCurrentPage(page);
   };
 
-  const handleDeleteMember = async (userId: number) => {
-    console.log(userId, '해당 멤버 삭제');
+  const handleDeleteMember = async (memberId: number) => {
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members/${userId}`, 'DELETE');
+      await fetchWithToken(`${MEMBERS}/${memberId}`, 'DELETE');
+      // const updatedMemberData = memberData.filter((member) => member.userId !== userId);
+      // setMemberData(updatedMemberData);
+
+      setMemberData((prevMember) => prevMember.filter((member) => member.memberId !== memberId));
     } catch (e) {
       console.error(e);
     }
@@ -39,10 +46,7 @@ export default function MemberManagement({ boardId }: { boardId: number }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchWithToken(
-          `https://sp-taskify-api.vercel.app/4-20/members?page=1&size=20&dashboardId=${boardId}`,
-          'GET'
-        );
+        const responseData = await fetchWithToken(`${MEMBERS}?page=1&size=20&dashboardId=${boardId}`, 'GET');
         console.log(responseData);
         setMemberData(responseData.members);
       } catch (e) {
@@ -78,7 +82,7 @@ export default function MemberManagement({ boardId }: { boardId: number }) {
                 <Profile />
                 <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
-              <Button color="white" handleClick={() => handleDeleteMember(member.userId)}>
+              <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
                 삭제
               </Button>
             </div>

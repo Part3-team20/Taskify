@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CardProps } from '@/types/DashboardTypes';
+import { CARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import styles from './Column.module.scss';
 import Card from '../Card/Card';
@@ -44,7 +45,7 @@ export default function Column({
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const cardsResponse = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards?columnId=${columnId}`);
+        const cardsResponse = await fetchWithToken(`${CARDS}?columnId=${columnId}`);
         setCards(cardsResponse.cards || []);
       } catch (error) {
         console.error(`Failed to fetch cards for column ${columnId}:`, error);

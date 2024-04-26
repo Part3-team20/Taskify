@@ -115,7 +115,7 @@ export default function EachDashBoardHeader() {
         <hr className={styles.boundary} />
 
         {/* 내 프로필 */}
-        <Link href={'/mypage'}>
+        <Link href="/mypage">
           <div className={styles.profile}>
             <Profile profileImageUrl={mockUser.profileImageUrl} />
             <span className={styles.nickname}>{mockUser.nickname}</span>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import Modal from '@/components/Modal';
 import ModalInput from '@/components/Modal/ModalInput/index';
@@ -30,7 +31,7 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
 
     if (values.title.trim() === '') return;
 
-    await postDashboard(`https://sp-taskify-api.vercel.app/4-20/dashboards`, 'POST', values);
+    await postDashboard(DASHBOARDS, 'POST', values);
 
     if (error) {
       console.log(error);
