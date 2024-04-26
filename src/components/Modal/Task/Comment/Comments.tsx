@@ -14,7 +14,7 @@ interface Comment {
 export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const { fetchWithToken } = useFetchWithToken();
   const [comments, setComments] = useState<CommentProps[]>([]);
-  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
 
   const fetchComments = useCallback(async () => {
     try {
@@ -98,7 +98,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
               <div className={styles.commentBody}>
                 <div>
                   <CommentInput
-                    onCommentSubmit={(content) => handlePutComment(content, comment.id)}
+                    onCommentSubmit={(content: string) => handlePutComment(content, comment.id)}
                     initialContent={comment.content}
                     style={{ width: '400px' }}
                   />
