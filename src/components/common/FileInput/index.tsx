@@ -1,26 +1,47 @@
 'use client';
 
-import { InputHTMLAttributes, useEffect, useState } from 'react';
+import { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './FileInput.module.scss';
 
-interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface FileInputPropsInModal extends InputHTMLAttributes<HTMLInputElement> {
   setFile: React.Dispatch<React.SetStateAction<string | null | undefined>>;
-  defaultImage?: string | null | undefined;
+  defaultImage: string | null | undefined;
+  usageLocation: 'modal';
+  columnId: number;
 }
 
-export default function FileInput({ className, setFile, defaultImage, ...props }: FileInputProps) {
+interface FileInputPropsInMypage extends InputHTMLAttributes<HTMLInputElement> {
+  setFile: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  defaultImage: string | null | undefined;
+  usageLocation: 'mypage';
+  columnId?: number;
+}
+
+export default function FileInput({
+  className,
+  setFile,
+  defaultImage,
+  usageLocation,
+  columnId,
+  ...props
+}: FileInputPropsInModal | FileInputPropsInMypage) {
   const [preview, setPreview] = useState<string | null>(defaultImage || null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
+    const apiUrl =
+      usageLocation === 'mypage'
+        ? 'https://sp-taskify-api.vercel.app/4-20/users/me/image'
+        : `https://sp-taskify-api.vercel.app/4-20/columns/${columnId}/card-image`;
 
     if (file) {
       try {
         const accessToken = localStorage.getItem('accessToken');
         const formData = new FormData();
         formData.append('image', file);
-        const response = await fetch('https://sp-taskify-api.vercel.app/4-20/users/me/image', {
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -39,28 +60,43 @@ export default function FileInput({ className, setFile, defaultImage, ...props }
     }
   };
 
+  const handleFileClear = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      setPreview(null);
+      setFile(null);
+    }
+  };
+
   useEffect(() => {
     setPreview(defaultImage || null);
   }, [defaultImage]);
 
   return (
-    <label className={`${styles.previewContainer} ${className}`}>
-      <Image
-        src={preview || '/images/add_btn.svg'}
-        alt="preview"
-        fill={!!preview}
-        width={preview ? undefined : 28}
-        height={preview ? undefined : 28}
-        className={styles.preview}
-      />
-      <input
-        {...props}
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        defaultValue={defaultImage ? defaultImage : undefined}
-        className={styles.fileInput}
-      />
-    </label>
+    <div>
+      <label className={`${styles.previewContainer} ${className}`}>
+        <Image
+          src={preview || '/images/add_btn.svg'}
+          alt="preview"
+          fill={!!preview}
+          width={preview ? undefined : 28}
+          height={preview ? undefined : 28}
+          className={styles.preview}
+        />
+        <input
+          {...props}
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className={styles.fileInput}
+          ref={fileInputRef}
+        />
+      </label>
+      <div className={styles.clear}>
+        <button onClick={handleFileClear} className={styles.clearButton}>
+          초기화
+        </button>
+      </div>
+    </div>
   );
 }

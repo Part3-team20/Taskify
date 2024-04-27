@@ -1,7 +1,7 @@
 'use client';
 
 // 추후 삭제
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
@@ -10,7 +10,6 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import { CHANGE_PASSWORD, USERS } from '@/constants/ApiUrl';
 import { useRouter } from 'next/navigation';
 import Toast from '@/util/Toast';
-
 import styles from './MyPage.module.scss';
 
 export default function MyPage() {
@@ -20,7 +19,7 @@ export default function MyPage() {
     nickName: '',
     profileImageUrl: '',
   });
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<string | null | undefined>(undefined);
   const [passwords, setPasswords] = useState({ password: '', newPassword: '', passwordCheck: '' });
   const [email, setEmail] = useState<string | undefined>('');
 
@@ -47,30 +46,21 @@ export default function MyPage() {
 
   const handleProfileSubmit = async () => {
     try {
-      const formData = new FormData();
-      const profileBody = {
+      const body = {
         nickname: profile.nickName,
-        profileImageUrl: undefined,
+        profileImageUrl: imageFile,
       };
-      const ImageBody = formData;
-      const accessToken = localStorage.getItem('accessToken');
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', profileBody);
-      await fetch(`https://sp-taskify-api.vercel.app/4-20/users/me/image`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: ImageBody,
-      });
-    } catch (error) {
-      console.error('Failed to update profile:', error);
+      console.log(body);
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', body);
+      Toast.success('프로필을 변경했습니다');
+      router.refresh();
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
-  const handlePasswordSubmit = async (e: any) => {
-    e.preventDefault();
-
+  const handlePasswordSubmit = async () => {
     const { password, newPassword } = passwords;
 
     try {
@@ -104,7 +94,8 @@ export default function MyPage() {
           <FileInput
             setFile={setImageFile}
             className={styles.fileInput}
-            defaultImage={profile?.profileImageUrl || ''}
+            defaultImage={profile?.profileImageUrl || null}
+            usageLocation="mypage"
           />
           <div className={styles.textInputs}>
             <Input labelName="이메일" name="email" placeholder={email} disabled />
