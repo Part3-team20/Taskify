@@ -5,44 +5,58 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Profile from '@/components/common/Profile';
 import styles from './EachDashBoardHeader.module.scss';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import { Dashboard } from '@/types/DashboardTypes';
 
-const mockUser = {
-  id: 1,
-  email: 'cksdyd324@gmail.com',
-  nickname: '진찬용',
-  profileImageUrl: undefined,
-  createdAt: '2024-04-19T12:30:21.029Z',
-  updatedAt: '2024-04-19T12:30:21.029Z',
+type User = {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImageUrl: string | undefined;
+  createdAt: string;
+  updatedAt: string;
 };
 
-const mockDashBoard = {
-  id: 1,
-  title: '비브리지',
-  color: 'blue',
-  createdAt: '2024-04-20T01:16:07.710Z',
-  updatedAt: '2024-04-20T01:16:07.710Z',
-  createdByMe: true,
-  userId: 1,
+type Members = {
+  members: {
+    id: number;
+    userId: number;
+    email: string;
+    nickname: string;
+    profileImageUrl: string | undefined;
+    createdAt: string;
+    updatedAt: string;
+    isOwner: boolean;
+  }[];
+  totalCount: number;
 };
 
-const mockMember = {
-  userId: 0,
-  email: 'cksdyd324@gmail.com',
-  nickname: '진찬용',
-  profileImageUrl: undefined,
-  createdAt: '2024-04-20T05:52:24.247Z',
-  updatedAt: '2024-04-20T05:52:24.248Z',
-  isOwner: true,
-};
-
-const mockMembers = {
-  members: Array.from({ length: 5 }, (_, index) => ({ id: index, ...mockMember })),
-  totalCount: 5,
-};
-
-export default function EachDashBoardHeader() {
+export default function EachDashBoardHeader({ params }: { params: { boardId: number } }) {
+  const { fetchWithToken } = useFetchWithToken();
+  const { boardId } = params;
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
+  const [user, setUser] = useState<User>({
+    id: 0,
+    email: '',
+    nickname: '',
+    profileImageUrl: undefined,
+    createdAt: '',
+    updatedAt: '',
+  });
+  const [dashboard, setDashboard] = useState<Dashboard>({
+    id: 0,
+    title: '',
+    color: '',
+    createdAt: '',
+    updatedAt: '',
+    userId: 0,
+    createdByMe: false,
+  });
+  const [members, setMembers] = useState<Members>({
+    members: [],
+    totalCount: 0,
+  });
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -66,39 +80,82 @@ export default function EachDashBoardHeader() {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
+        setUser(response);
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+      }
+    };
+
+    fetchUser();
+  }, [fetchWithToken]);
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`);
+        setDashboard(response);
+      } catch (error) {
+        console.error('Failed to fetch dashboard:', error);
+      }
+    };
+
+    if (boardId) {
+      fetchDashboard();
+    }
+  }, [boardId, fetchWithToken]);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members?dashboardId=${boardId}`);
+        setMembers(response);
+      } catch (error) {
+        console.error('Failed to fetch dashboard mebers:', error);
+      }
+    };
+
+    if (boardId) {
+      fetchMembers();
+    }
+  }, [boardId, fetchWithToken]);
+
   return (
     <header className={styles.header}>
       {/* 개별 대시보드 제목 */}
       <div className={styles.dashBoardTitle}>
-        {mockDashBoard.title}{' '}
-        {mockDashBoard.createdByMe && <Image src="/images/crown_icon.svg" alt="crown" width={20} height={16} />}
+        {dashboard?.title}{' '}
+        {dashboard?.createdByMe && <Image src="/images/crown_icon.svg" alt="crown" width={20} height={16} />}
       </div>
 
       <div className={styles.nav}>
         {/* 관리, 초대하기 버튼 */}
-        <div className={styles.buttons}>
-          {mockDashBoard.createdByMe && (
-            <Link href={`/dashboard/${mockDashBoard.id}/edit`} className={styles.button}>
+        {dashboard?.createdByMe && (
+          <div className={styles.buttons}>
+            <Link href={`/dashboard/${dashboard?.id}/edit`} className={styles.button}>
               <Image src="/images/settings_icon.svg" alt="dashboard-setting" width={20} height={20} />
               관리
             </Link>
-          )}
-          <div className={styles.button}>
-            <Image src="/images/add_box.svg" alt="dashboard-invitation" width={20} height={20} />
-            초대하기
+            <div className={styles.button}>
+              <Image src="/images/add_box.svg" alt="dashboard-invitation" width={20} height={20} />
+              초대하기
+            </div>
           </div>
-        </div>
+        )}
 
         {/* 대시보드 멤버 목록. PC 에선 4명, Tablet이나 Mobile 에서는 2명까지 보여주고, 그 이상은 숫자로 표시해줌. */}
         <ul
           className={styles.members}
           style={
             deviceType === 'PC'
-              ? { width: `${mockMembers.totalCount > 4 ? 162 : 31 * mockMembers.totalCount + 7}px` }
-              : { width: `${mockMembers.totalCount > 2 ? 100 : 31 * mockMembers.totalCount + 7}px` }
+              ? { width: `${members?.totalCount > 4 ? 162 : 31 * members?.totalCount + 7}px` }
+              : { width: `${members?.totalCount > 2 ? 100 : 31 * members?.totalCount + 7}px` }
           }
         >
-          {mockMembers.members.slice(0, 4).map((member, index) => (
+          {members?.members.slice(0, 4).map((member, index) => (
             <li
               key={member.id}
               className={`${styles.member} ${index > 1 ? styles.onlyVisibleOnPC : ''}`}
@@ -108,8 +165,8 @@ export default function EachDashBoardHeader() {
             </li>
           ))}
           {deviceType === 'PC'
-            ? mockMembers.totalCount > 4 && <li className={styles.excess}>{`+${mockMembers.totalCount - 4}`}</li>
-            : mockMembers.totalCount > 2 && <li className={styles.excess}>{`+${mockMembers.totalCount - 2}`}</li>}
+            ? members?.totalCount > 4 && <li className={styles.excess}>{`+${members?.totalCount - 4}`}</li>
+            : members?.totalCount > 2 && <li className={styles.excess}>{`+${members?.totalCount - 2}`}</li>}
         </ul>
 
         <hr className={styles.boundary} />
@@ -117,8 +174,8 @@ export default function EachDashBoardHeader() {
         {/* 내 프로필 */}
         <Link href={'/mypage'}>
           <div className={styles.profile}>
-            <Profile profileImageUrl={mockUser.profileImageUrl} />
-            <span className={styles.nickname}>{mockUser.nickname}</span>
+            <Profile profileImageUrl={user?.profileImageUrl} />
+            <span className={styles.nickname}>{user?.nickname}</span>
           </div>
         </Link>
       </div>
