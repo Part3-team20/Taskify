@@ -15,10 +15,6 @@
     color: $white_FFFFFF;
     gap: 6.25rem;
 
-    @include tablet {
-      width: 100vw;
-    }
-
     .topContent {
       width: 100%;
       @include flex-center;
@@ -35,6 +31,7 @@
 
       .description {
         p {
+          line-height: 1.5rem;
           font-size: 1.125rem;
           text-align: center;
           padding-bottom: 0.5rem;
@@ -124,12 +121,18 @@
             height: 7.75rem;
             background-color: $black_171717;
             border-radius: 0 0 0.5rem 0.5rem;
+
+            p {
+              font-size: 0.875rem;
+            }
           }
         }
       }
     }
 
     @include tablet {
+      width: 100vw;
+
       .topContent {
         .imageContent {
           width: 70vw;
@@ -140,13 +143,14 @@
           font-size: 3.5rem;
           span {
             font-size: 4.375rem;
+            color: $violet_5534DA;
           }
         }
 
         .description {
           width: 80vw;
           p {
-            font-size: 1rem;
+            font-size: 0.875rem;
           }
         }
       }
@@ -220,7 +224,7 @@
 
         .description {
           p {
-            font-size: 0.75rem;
+            font-size: 0.875rem;
           }
         }
 
