@@ -42,6 +42,16 @@ export default function Column({
     setIsEditModalOpen(false);
   };
 
+  const handleDeleteCard = async (cardId: number) => {
+    try {
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${cardId}`, 'DELETE');
+      // 성공적으로 삭제 후 상태 업데이트
+      setCards((currentCards) => currentCards.filter((card) => card.id !== cardId));
+    } catch (error) {
+      console.error('Failed to delete card:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchCards = async () => {
       try {
@@ -85,6 +95,7 @@ export default function Column({
               dueDate={card.dueDate}
               dashboardId={dashboardId}
               columnId={columnId}
+              onDeleteCard={handleDeleteCard}
             />
           ))}
       </div>
