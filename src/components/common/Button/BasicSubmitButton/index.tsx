@@ -4,12 +4,14 @@ import styles from './BasicSubmitButton.module.scss';
 
 const cx = classNames.bind(styles);
 
+type SubmitButtonType = 'submit' | 'reset' | 'button';
+
 interface BasicSubmitButtonProps {
   color: 'violet' | 'white';
   children: ReactNode;
   isActive: boolean;
   handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  type?: 'submit' | 'reset' | 'button';
+  type?: SubmitButtonType;
 }
 
 export default function BasicSubmitButton({
