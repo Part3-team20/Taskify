@@ -106,6 +106,7 @@ export default function Column({
           existingTitles={existingTitles}
           onChange={(newTitle) => onUpdate(columnId, newTitle)}
           onDelete={() => onDelete(columnId)}
+          columnTitle={title}
         />
       )}
     </div>
