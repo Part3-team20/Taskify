@@ -1,6 +1,7 @@
+// 추후 삭제
 import React from 'react';
-import '@/styles/globals.scss';
 import { ToastContainer } from 'react-toastify';
+import '@/styles/globals.scss';
 
 export const metadata = {
   title: 'Taskify',
