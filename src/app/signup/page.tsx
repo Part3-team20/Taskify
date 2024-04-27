@@ -76,7 +76,7 @@ export default function SignUpPage() {
   return (
     <div className={styles.container}>
       <Link href="/">
-        <Image className={styles.logo} src="/images/fullLogo.svg" alt="logo" width={200} height={280} priority />
+        <Image className={styles.logo} src="/images/fullLogo.svg" alt="logo" width={200} height={280} />
       </Link>
       <p className={styles.greetingText}>첫 방문을 환영합니다!</p>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -101,7 +101,6 @@ export default function SignUpPage() {
           type="password"
           placeholder="비밀번호를 입력해주세요"
           name="password"
-          autoComplete="new-password"
           onChange={handleChange}
           error={isPasswordError}
           errorMessage="비밀번호를 8자 이상 입력해주세요"
@@ -112,7 +111,6 @@ export default function SignUpPage() {
           type="password"
           placeholder="비밀번호를 한번 더 입력해주세요"
           name="confirmPassword"
-          autoComplete="new-password"
           onChange={handleChange}
           required
         />

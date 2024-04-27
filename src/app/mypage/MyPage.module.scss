@@ -3,8 +3,6 @@
 @import '@/styles/_responsive-styles.scss';
 
 .container {
-  display: flex;
-  flex-direction: column;
   padding: 1.25rem 1.25rem 7.8125rem 1.25rem;
 
   @include mobile {
@@ -112,11 +110,12 @@
 }
 
 .logout {
-  align-self: flex-end;
+  max-width: 38.75rem;
+  display: flex;
+  justify-content: right;
   color: $gray_9FA6B2;
   text-decoration-line: underline;
   text-underline-offset: 0.3rem;
   margin-top: 2rem;
-  padding-bottom: 0.25rem;
   cursor: pointer;
 }
