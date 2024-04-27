@@ -5,7 +5,7 @@ import LabelChip from '@/components/common/Chip/LabelChip';
 import styles from './TagInput.module.scss';
 
 // tag input
-export default function TagInput() {
+export default function TagInput({ onChange }: { onChange: (key: string, value: string[]) => void }) {
   const [tag, setTag] = useState('');
   const [tagList, setTagList] = useState<string[]>([]);
 
@@ -24,6 +24,7 @@ export default function TagInput() {
       if (!tagList.includes(tag.trim())) {
         // 중복되는 태그 검사
         setTagList([...tagList, tag.trim()]);
+        onChange('tags', [...tagList, tag.trim()]);
         setTag('');
       }
       setTag('');

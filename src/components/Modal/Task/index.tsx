@@ -5,6 +5,7 @@ import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Modal from '@/components/Modal';
 import { CardProps } from '@/types/DashboardTypes';
+import { CARDS } from '@/constants/ApiUrl';
 import LabelChip from '@/components/common/Chip/LabelChip';
 import Profile from '@/components/common/Profile';
 import Comments from './Comment/Comments';
@@ -17,9 +18,10 @@ interface TaskProps {
   cardId: number;
   onClose: () => void;
   isOpen: boolean;
+  onDeleteCard: (cardId: number) => Promise<void>;
 }
 
-export default function Task({ dashboardId, columnId, cardId, onClose, isOpen }: TaskProps) {
+export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, onDeleteCard }: TaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [cardDetails, setCardDetails] = useState<CardProps | null>(null);
 
@@ -33,7 +35,7 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen }:
 
     const fetchCardDetails = async () => {
       try {
-        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${cardId}`);
+        const response = await fetchWithToken(`${CARDS}/${cardId}`);
         setCardDetails(response); // 상태에 카드 정보 저장
       } catch (error) {
         console.error('Failed to fetch card details:', error);
@@ -47,13 +49,13 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen }:
 
   return (
     <div>
-      <Modal isOpen={isOpen} onClose={onClose} style={{ width: '760px', height: 'auto', maxHeight: '730px' }}>
+      <Modal isOpen={isOpen} onClose={onClose} style={{ width: 'auto', height: 'auto', maxHeight: '730px' }}>
         <div className={styles.taskModal}>
           <div className={styles.modalHeader}>
             <h2>{cardDetails.title}</h2>
             <div className={styles.buttons}>
               <div className={styles.kabob}>
-                <KebobMenu />
+                <KebobMenu onDelete={() => onDeleteCard(cardId)} />
               </div>
               <button onClick={handleButtonClose} type="button">
                 <Image src="/images/close_icon.svg" alt="닫기 버튼" width={32} height={32} />
@@ -75,8 +77,7 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen }:
                 <div className={styles.contents}>{cardDetails.description}</div>
                 {cardDetails.imageUrl && (
                   <div className={styles.imgBox}>
-                    <img src={cardDetails.imageUrl} alt="본문 첨부 이미지" />
-                    {/* <Image src={imageUrl} alt="본문 첨부 이미지" className={styles.img} /> */}
+                    <Image src={cardDetails.imageUrl} alt="본문 첨부 이미지" layout="fill" objectFit="cover" />
                   </div>
                 )}
                 <div className={styles.comments}>

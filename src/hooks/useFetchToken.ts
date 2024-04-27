@@ -2,46 +2,41 @@ import { useCallback, useState } from 'react';
 
 function useFetchWithToken() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any>(null); // setError에서 오류 발생해서 임시로 any 처리
 
   const fetchWithToken = useCallback(async (url: string | URL | Request, method: string = 'GET', body: any = null) => {
     setLoading(true);
-    setError(null);
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const headers = new Headers({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      });
 
-      const config: RequestInit = {
-        method,
-        headers,
-        body: body ? JSON.stringify(body) : null,
-      };
+    const accessToken = localStorage.getItem('accessToken');
 
-      const response = await fetch(url, config);
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const contentType = response.headers.get('content-type');
-      let data = null;
+    const config: RequestInit = {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null,
+    };
 
-      if (contentType && contentType.indexOf('application/json') !== -1) {
-        data = await response.json();
-      }
+    const response = await fetch(url, config);
 
-      setLoading(false);
-      return data;
-    } catch (err) {
-      setError(err);
-      setLoading(false);
-      throw err;
+    // PUT 요청시, 204 상태는 response 값이 없으므로 바로 return
+    if (response.status === 204) return null;
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const errorMessage = responseData.message;
+      throw new Error(errorMessage);
     }
+
+    setLoading(false);
+
+    return responseData;
   }, []);
 
-  return { fetchWithToken, loading, error };
+  return { fetchWithToken, loading };
 }
 
 export default useFetchWithToken;

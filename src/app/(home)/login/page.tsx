@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { LOGIN } from '@/constants/ApiUrl';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Input from '@/components/common/Input';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import PasswordInput from '@/components/common/Input/PasswordInput';
+import Toast from '@/util/Toast';
 
 import styles from './Login.module.scss';
 
@@ -38,15 +40,16 @@ export default function LoginPage() {
     const { email, password } = values;
 
     try {
-      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/auth/login', 'POST', {
+      const responseData = await fetchWithToken(`${LOGIN}`, 'POST', {
         email,
         password,
       });
-      console.log(responseData);
       localStorage.setItem('accessToken', responseData.accessToken);
       router.push('/mydashboard');
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      // Error 객체에서 Message만 추출
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 

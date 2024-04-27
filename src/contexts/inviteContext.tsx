@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { INVITATIONS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 
 interface InviteProviderProps {
@@ -80,9 +81,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
   const fetchMoreData = async (keyword?: string) => {
     const query = isSearched ? `${cursorId}&title=${keyword}` : cursorId;
     try {
-      const response = await getInvitations(
-        `https://sp-taskify-api.vercel.app/4-20/invitations?size=2&cursorId=${query}`
-      );
+      const response = await getInvitations(`${INVITATIONS}?size=2&cursorId=${query}`);
       const newData: InvitationData[] = formatInviteData(response?.invitations);
       setCursorId(response?.cursorId);
       setInvitationData((prevData) => [...prevData, ...newData]);
@@ -96,7 +95,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
       setIsSearched(false);
 
       try {
-        const response = await getInvitations(`https://sp-taskify-api.vercel.app/4-20/invitations?size=2`);
+        const response = await getInvitations(`${INVITATIONS}?size=2`);
         setCursorId(response.cursorId);
         setInvitationData(formatInviteData(response?.invitations));
       } catch (error) {
@@ -107,9 +106,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
 
     try {
       setIsSearched(true);
-      const response = await getInvitations(
-        `https://sp-taskify-api.vercel.app/4-20/invitations?size=2&title=${keyword}`
-      );
+      const response = await getInvitations(`${INVITATIONS}?size=2&title=${keyword}`);
       setCursorId(response.cursorId);
       setInvitationData(formatInviteData(response?.invitations));
     } catch (error) {
@@ -120,7 +117,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getInvitations('https://sp-taskify-api.vercel.app/4-20/invitations?size=2');
+        const response = await getInvitations(`${INVITATIONS}?size=2`);
         if (response) {
           setCursorId(response.cursorId);
           setInvitationData(formatInviteData(response.invitations));

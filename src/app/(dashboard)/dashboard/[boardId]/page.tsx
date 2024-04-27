@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Dashboard as Column } from '@/types/DashboardTypes';
+import { COLUMNS } from '@/constants/ApiUrl';
 import ColumnComponent from '@/components/Column';
 import AddButton from '@/components/common/Button/AddButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -25,7 +26,7 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
   useEffect(() => {
     const fetchColumns = async () => {
       try {
-        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/columns?dashboardId=${boardId}`);
+        const response = await fetchWithToken(`${COLUMNS}?dashboardId=${boardId}`);
         setColumns(response.data);
       } catch (error) {
         console.error('Failed to fetch columns:', error);
@@ -43,7 +44,7 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
         title,
         dashboardId: Number(boardId),
       };
-      const newColumn = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/columns`, 'POST', body);
+      const newColumn = await fetchWithToken(`${COLUMNS}`, 'POST', body);
       setColumns((prevColumns) => [...prevColumns, newColumn]); // 직접 새 컬럼을 상태에 추가
       setIsCreateModalOpen(false); // 성공 후 모달 닫기
     } catch (error) {
@@ -53,7 +54,7 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
 
   const handleUpdateColumn = async (columnId: any, newTitle: any) => {
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/columns/${columnId}`, 'PUT', { title: newTitle });
+      await fetchWithToken(`${COLUMNS}/${columnId}`, 'PUT', { title: newTitle });
       const updatedColumns = columns.map((column) =>
         column.id === columnId ? { ...column, title: newTitle } : column
       );
@@ -65,7 +66,7 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
 
   const handleDeleteColumn = async (columnId: any) => {
     try {
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/columns/${columnId}`, 'DELETE');
+      await fetchWithToken(`${COLUMNS}/${columnId}`, 'DELETE');
       const filteredColumns = columns.filter((column) => column.id !== columnId);
       setColumns(filteredColumns);
     } catch (error) {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useInvite } from '@/contexts/inviteContext';
+import { INVITATIONS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
 import styles from './InviteListItem.module.scss';
@@ -28,7 +29,7 @@ export default function InviteListItem({ title, id, nickname }: InviteListItemPr
   const onConfirmInvite = async (response: boolean) => {
     const temp = [...invitationData];
     try {
-      await inviteResponse(`https://sp-taskify-api.vercel.app/4-20/invitations/${id}`, 'PUT', {
+      await inviteResponse(`${INVITATIONS}/${id}`, 'PUT', {
         inviteAccepted: response,
       });
       setInvitationData((prevData) => prevData.filter((data) => data.id !== id));
