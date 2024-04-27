@@ -1,5 +1,6 @@
 import React from 'react';
 import '@/styles/globals.scss';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata = {
   title: 'Taskify',
@@ -12,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <div id="modal-root" />
+        <ToastContainer />
       </body>
     </html>
   );

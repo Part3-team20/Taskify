@@ -1,47 +1,48 @@
 'use client';
 
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 import CommonLayout from '@/layouts/CommonLayout';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
-import styles from './MyPage.module.scss';
 import useFetchWithToken from '@/hooks/useFetchToken';
+import { CHANGE_PASSWORD, USERS } from '@/constants/ApiUrl';
+import { useRouter } from 'next/navigation';
+import Toast from '@/util/Toast';
 
-type User = {
-  id: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string | null | undefined;
-  createdAt: string;
-  updatedAt: string;
-};
+import styles from './MyPage.module.scss';
 
 export default function MyPage() {
+  const router = useRouter();
   const { fetchWithToken } = useFetchWithToken();
-  const [user, setUser] = useState<User>({
-    id: 0,
-    email: '',
-    nickname: '',
-    profileImageUrl: null,
-    createdAt: '',
-    updatedAt: '',
-  });
-
-  const [profile, setProfile] = useState<{ nickName: string; profileImageUrl: string | null }>({
+  const [profile, setProfile] = useState<{ nickName: string; profileImageUrl: string | undefined }>({
     nickName: '',
     profileImageUrl: '',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [password, setPassword] = useState({ password: '', newPassword: '', passwordCheck: '' });
+  const [passwords, setPasswords] = useState({ password: '', newPassword: '', passwordCheck: '' });
+  const [email, setEmail] = useState<string | undefined>('');
+
+  const fetchUserData = useCallback(async () => {
+    try {
+      const result = await fetchWithToken(`${USERS}`, 'GET');
+      setProfile({
+        nickName: result.nickname,
+        profileImageUrl: result.profileImageUrl,
+      });
+      setEmail(result.email);
+    } catch (error) {
+      console.error('Failed to fetch comments:', error);
+    }
+  }, []);
 
   const handleNickNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setProfile((prev) => ({ ...prev, nickName: e.target.value }));
   };
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handlePasswordChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    setPasswords((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleProfileSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -67,35 +68,33 @@ export default function MyPage() {
     }
   };
 
-  const handlePasswordSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handlePasswordSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { password, newPassword } = passwords;
+
     try {
-      const body = {
-        password: password.password,
-        newPassword: password.newPassword,
-      };
-      const newPassword = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/auth/password`, 'PUT', body);
-    } catch (error) {
-      console.error('Failed to update password:', error);
+      await fetchWithToken(`${CHANGE_PASSWORD}`, 'PUT', {
+        password,
+        newPassword,
+      });
+      Toast.success('비밀번호를 변경했습니다');
+      router.refresh();
+    } catch (err: any) {
+      // Error 객체에서 Message만 추출
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
-  const handleLogoutClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleLogoutClick = () => {
     window.localStorage.removeItem('accessToken');
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
-        setUser(response);
-        setProfile({ nickName: response?.nickname, profileImageUrl: response?.profileImageUrl });
-      } catch (error) {
-        console.error('Failed to fetch user:', error);
-      }
-    };
+    fetchUserData();
+  }, []);
 
-    fetchUser();
-  }, [fetchWithToken]);
 
   return (
     <CommonLayout>
@@ -110,7 +109,7 @@ export default function MyPage() {
               defaultImage={profile?.profileImageUrl || ''}
             />
             <div className={styles.textInputs}>
-              <Input labelName="이메일" name="email" placeholder={user?.email} disabled />
+              <Input labelName="이메일" name="email" placeholder={email} disabled />
               <Input
                 labelName="닉네임"
                 name="nickName"

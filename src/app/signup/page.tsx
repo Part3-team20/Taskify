@@ -8,10 +8,13 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import LoginSubmitButton from '@/components/common/Button/LoginSubmitButton';
 import Input from '@/components/common/Input';
 import PasswordInput from '@/components/common/Input/PasswordInput';
+import Toast from '@/util/Toast';
+import { useRouter } from 'next/navigation';
 import styles from './Signup.module.scss';
 
 export default function SignUpPage() {
-  const { fetchWithToken, loading, error } = useFetchWithToken();
+  const { fetchWithToken } = useFetchWithToken();
+  const router = useRouter();
   const [values, setValues] = useState({
     email: '',
     nickname: '',
@@ -41,9 +44,12 @@ export default function SignUpPage() {
         nickname,
         password,
       });
-      console.log('responsedata', responseData);
-    } catch (err) {
-      console.log('Error submitting data:', err);
+      Toast.success('가입이 완료되었습니다!');
+      router.push('/login');
+    } catch (err: any) {
+      // Error 객체에서 Message만 추출
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
