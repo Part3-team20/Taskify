@@ -82,17 +82,15 @@ export default function InviteStatus() {
 
       {inviteList
         .filter((invite) => !invite.inviteAccepted)
-        .map((invite) => (
-          <div className={styles.emailSection}>
+        .map((invite, index) => (
+          <div key={invite.id} className={styles.emailSection}>
             <div className={styles.emailList}>
-              <p key={invite.id} className={styles.inviteEmail}>
-                {invite.invitee.email}
-              </p>
+              <p className={styles.inviteEmail}>{invite.invitee.email}</p>
               <Button color="white" handleClick={() => handleCancelInvite(invite.id)}>
                 취소
               </Button>
             </div>
-            <hr className={styles.contour} />
+            {index !== inviteList.length - 1 && <hr className={styles.contour} />}
           </div>
         ))}
     </div>
