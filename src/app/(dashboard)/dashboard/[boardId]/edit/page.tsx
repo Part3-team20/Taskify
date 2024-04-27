@@ -3,7 +3,6 @@
 import { useParams, useRouter } from 'next/navigation';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import IdProvider from '@/contexts/idContext';
-import CommonLayout from '@/layouts/CommonLayout';
 import { DASHBOARDS } from '@/constants/ApiUrl';
 import DeleteDashboardButton from '@/components/common/Button/DeleteDashboardButton';
 import PreviosPageButton from './editComponents/PreviousPageButton';
@@ -34,15 +33,13 @@ export default function BoardEdit() {
 
   return (
     <IdProvider boardId={id}>
-      <CommonLayout>
-        <div className={styles.container}>
-          <PreviosPageButton />
-          <DashboaradChange />
-          <MemberManagement />
-          <InviteStatus />
-          <DeleteDashboardButton handleDelete={() => handleDeleteDashboard(id)} />
-        </div>
-      </CommonLayout>
+      <div className={styles.container}>
+        <PreviosPageButton />
+        <DashboaradChange />
+        <MemberManagement />
+        <InviteStatus />
+        <DeleteDashboardButton handleDelete={() => handleDeleteDashboard(id)} />
+      </div>
     </IdProvider>
   );
 }

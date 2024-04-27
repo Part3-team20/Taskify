@@ -62,17 +62,12 @@ export default function LoginPage() {
       setIsPasswordError(false);
     }
     setIsBtnActive(isLoginValid);
-
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      router.push('/mydashboard');
-    }
   }, [values]);
 
   return (
     <div className={styles.container}>
       <Link href="/">
-        <Image className={styles.logo} src="/images/fullLogo.svg" alt="logo" width={200} height={280} />
+        <Image className={styles.logo} src="/images/fullLogo.svg" alt="logo" width={200} height={280} priority />
       </Link>
       <p className={styles.greetingText}>오늘도 만나서 반가워요!</p>
       <form className={styles.form} onSubmit={handleSubmit}>
