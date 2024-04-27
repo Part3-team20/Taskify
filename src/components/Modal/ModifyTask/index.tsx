@@ -48,11 +48,8 @@ export default function ModifyTask({ columnId, isOpen, onClose }: ModifyTaskProp
           </div>
           <textarea className={styles.textarea} placeholder="설명을 입력해 주세요" />
         </label>
-        <DeadLineInput />
-        <TagInput />
         <label className={styles.formSection}>
           <div className={styles.labelName}>이미지</div>
-          <FileInput />
         </label>
         <div className={styles.buttons}>
           <ModalSubmitButton isActive className={styles.cancelButton} onClick={onClose} type="button">
