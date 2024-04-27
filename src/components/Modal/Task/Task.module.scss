@@ -1,4 +1,5 @@
 @import '@/styles/_color.scss';
+@import '@/styles/_responsive-styles.scss';
 
 // task
 .taskModal {
@@ -43,6 +44,7 @@
         display: flex;
         align-items: center;
         gap: 20px;
+        overflow: hidden;
         .divide {
           display: block;
           width: 1px;
@@ -62,19 +64,20 @@
         font-style: normal;
         font-weight: 400;
         line-height: 24px;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .imgBox {
         margin-top: 16px;
         display: flex;
         width: 450px;
+        height: 262px;
         flex-shrink: 0;
         border-radius: 6px;
         overflow: hidden;
-        img {
-          border-radius: 6px;
-          max-width: 100%;
-        }
+        position: relative;
       }
       .comments {
         margin-top: 24px;
@@ -129,6 +132,86 @@
             font-weight: 400;
             line-height: normal;
           }
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .taskModal {
+    padding: 20px;
+    width: 90vh;
+    max-height: 90vh;
+    max-width: 95vw;
+
+    .modalHeader {
+      margin-top: 0px;
+      h2 {
+        margin-top: 28px;
+        font-size: 20px;
+      }
+
+      .buttons {
+        margin-top: -20px;
+        gap: 16px;
+      }
+    }
+
+    .modalContainer {
+      flex-direction: column-reverse;
+
+      .information {
+        position: static;
+        display: flex;
+        width: 100%;
+        height: 64px;
+        padding: 10px 16px;
+
+        ul {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          .infoBox {
+            gap: 4px;
+
+            .subtitle {
+              font-size: 12px;
+              font-weight: 600;
+            }
+            .assignee {
+              .name {
+                font-size: 12px;
+              }
+            }
+            .dueDate {
+              font-size: 12px;
+              margin-top: 6px;
+              margin-right: 32px;
+            }
+          }
+        }
+      }
+
+      .contentArea {
+        .labels {
+          gap: 12px;
+        }
+        .contents {
+          max-width: 600px;
+          width: auto;
+          margin-top: 16px;
+          font-size: 12px;
+          line-height: 22px;
+        }
+
+        .imgBox {
+          height: 300px;
+          width: auto;
+          min-width: 300px;
         }
       }
     }

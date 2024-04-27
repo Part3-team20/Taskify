@@ -34,7 +34,7 @@ const MEMBERS = `${BASE_URL}/members`;
 // 카드
 const CARDS = `${BASE_URL}/cards`;
 
-export { SIGNIN, LOGIN, CHANGE_PASSWORD, PROFILE, DASHBOARDS, COLUMNS, COMMENTS, INVITATIONS, MEMBERS, CARDS };
+export { SIGNIN, LOGIN, CHANGE_PASSWORD, USERS, PROFILE, DASHBOARDS, COLUMNS, COMMENTS, INVITATIONS, MEMBERS, CARDS };
 
 // 쿼리파라미터나 패스 파라미터는 추가하지 않고 기존 파일에서 쓰는게 날거같아 추가하지 않았습니
 // `${COLUMNS}?dashboardId=${boardId}`;
