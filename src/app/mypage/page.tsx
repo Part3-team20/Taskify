@@ -13,7 +13,7 @@ type User = {
   id: number;
   email: string;
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageUrl: string | null | undefined;
   createdAt: string;
   updatedAt: string;
 };
@@ -46,11 +46,23 @@ export default function MyPage() {
 
   const handleProfileSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     try {
-      const body = {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      const profileBody = {
         nickname: profile.nickName,
-        profileImageUrl: imageFile ? URL.createObjectURL(imageFile) : '',
+        profileImageUrl: undefined,
       };
-      const newProfile = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', body);
+      const ImageBody = formData;
+      const accessToken = localStorage.getItem('accessToken');
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', profileBody);
+      await fetch(`https://sp-taskify-api.vercel.app/4-20/users/me/image`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: ImageBody,
+      });
     } catch (error) {
       console.error('Failed to update profile:', error);
     }

@@ -6,10 +6,9 @@ import styles from './CommentInput.module.scss';
 interface CommentInputProps {
   onCommentSubmit: (content: string) => void;
   initialContent: string;
-  style?: React.CSSProperties;
 }
 
-export default function CommentInput({ onCommentSubmit, initialContent = '', style }: CommentInputProps) {
+export default function CommentInput({ onCommentSubmit, initialContent = '' }: CommentInputProps) {
   const [comment, setComment] = useState(initialContent);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,7 +26,7 @@ export default function CommentInput({ onCommentSubmit, initialContent = '', sty
 
   return (
     <div className={styles.commentForm}>
-      <form onSubmit={(e) => e.preventDefault()} style={style}>
+      <form className={styles.postForm} onSubmit={(e) => e.preventDefault()}>
         <textarea
           className={styles.textarea}
           placeholder="댓글 작성하기"

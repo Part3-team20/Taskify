@@ -42,7 +42,7 @@ export default function DashBoardHeader() {
   return (
     <header className={styles.header}>
       내 대시보드
-      <Link href={'/mypage'}>
+      <Link href="/mypage">
         <div className={styles.profile}>
           <Profile profileImageUrl={user?.profileImageUrl} />
           <span className={styles.nickname}>{user?.nickname}</span>

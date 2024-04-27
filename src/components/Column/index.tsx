@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CardProps } from '@/types/DashboardTypes';
+import { CARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import styles from './Column.module.scss';
 import Card from '../Card/Card';
@@ -41,10 +42,20 @@ export default function Column({
     setIsEditModalOpen(false);
   };
 
+  const handleDeleteCard = async (cardId: number) => {
+    try {
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${cardId}`, 'DELETE');
+      // 성공적으로 삭제 후 상태 업데이트
+      setCards((currentCards) => currentCards.filter((card) => card.id !== cardId));
+    } catch (error) {
+      console.error('Failed to delete card:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const cardsResponse = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards?columnId=${columnId}`);
+        const cardsResponse = await fetchWithToken(`${CARDS}?columnId=${columnId}`);
         setCards(cardsResponse.cards || []);
       } catch (error) {
         console.error(`Failed to fetch cards for column ${columnId}:`, error);
@@ -84,6 +95,7 @@ export default function Column({
               dueDate={card.dueDate}
               dashboardId={dashboardId}
               columnId={columnId}
+              onDeleteCard={handleDeleteCard}
             />
           ))}
       </div>

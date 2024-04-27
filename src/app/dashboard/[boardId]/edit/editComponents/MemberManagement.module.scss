@@ -1,51 +1,51 @@
 @import '@/styles/_color.scss';
 @import '@/styles/_responsive-styles.scss';
 .container {
-  width: 620px;
-  height: 404px;
-  border-radius: 8px;
+  width: 38.75rem;
+  height: 25.25rem;
+  border-radius: 0.5rem;
   background: var(--white-white_FFFFFF, #fff);
-  padding: 31.5px 28px;
-  margin: 12px 0;
+  padding: 1.9688rem 1.75rem;
+  margin: 0.75rem 0;
   @include tablet {
-    width: 544px;
+    width: 34rem;
   }
   @include mobile {
-    width: 284px;
-    height: 377px;
+    width: 17.75rem;
+    height: 23.5625rem;
   }
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32.5px;
+    margin-bottom: 2.0313rem;
     .memberTitle {
-      font-size: 24px;
+      font-size: 1.5rem;
       font-weight: 700;
       @include mobile {
-        font-size: 20px;
+        font-size: 1.125rem;
       }
     }
     .pagination {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       .pageNum {
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: 400;
         @include mobile {
-          font-size: 12px;
+          font-size: 0.625rem;
         }
       }
     }
   }
   .name {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     color: var(--gray-gray_9FA6B2, #9fa6b2);
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
     @include mobile {
-      font-size: 14px;
+      font-size: 0.875rem;
     }
   }
 
@@ -55,22 +55,22 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 16px;
+        margin-bottom: 1rem;
         .profile {
-          gap: 12px;
+          gap: 0.75rem;
           display: flex;
           align-items: center;
           .memberNickname {
-            font-size: 16px;
+            font-size: 1rem;
             @include mobile {
-              font-size: 14px;
+              font-size: 0.875rem;
             }
           }
         }
       }
       .contour {
         border: none;
-        height: 1px;
+        height: 0.0625rem;
         background-color: #d9d9d9;
       }
     }
