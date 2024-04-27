@@ -1,6 +1,24 @@
 // 추후 삭제
+@import '@/styles/_color.scss';
+@import '@/styles/_responsive-styles.scss';
 
 .container {
   background-color: #fafafa;
   margin: 0 1.25rem;
+}
+.modalText {
+  color: $black_333236;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.modalSubText {
+  color: $black_333236;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }

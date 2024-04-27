@@ -6,6 +6,8 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import IdProvider from '@/contexts/idContext';
 import { DASHBOARDS, USERS } from '@/constants/ApiUrl';
 import DeleteDashboardButton from '@/components/common/Button/DeleteDashboardButton';
+import ConfirmModal from '@/components/Modal/ConfirmModal';
+import Toast from '@/util/Toast';
 import PreviosPageButton from './editComponents/PreviousPageButton';
 import MemberManagement from './editComponents/MemberManagement';
 import InviteStatus from './editComponents/InviteStatus';
@@ -23,14 +25,16 @@ export default function BoardEdit() {
   const id = Number(boardId);
 
   const [createDashboardUserId, setCreateDashboardUserId] = useState<number | undefined>(undefined);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const handleDeleteDashboard = async (dashboardId: number) => {
     /* 대쉬보드 삭제  */
     try {
       await fetchWithToken(`${DASHBOARDS}/${dashboardId}`, 'DELETE');
       router.push('/mydashboard');
-    } catch (e) {
-      console.error(e);
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
@@ -45,8 +49,9 @@ export default function BoardEdit() {
         if (createUserId !== currentUserId) {
           router.push('./');
         }
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
+        const errorMessage = err.toString().substr(7);
+        Toast.error(errorMessage);
       }
     };
     fetchData();
@@ -59,8 +64,16 @@ export default function BoardEdit() {
         <DashboaradChange />
         <MemberManagement createUserId={createDashboardUserId || 0} />
         <InviteStatus />
-        <DeleteDashboardButton handleDelete={() => handleDeleteDashboard(id)} />
+        <DeleteDashboardButton handleDelete={() => setIsConfirmOpen(true)} />
       </div>
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        onConfirm={() => handleDeleteDashboard(id)}
+      >
+        <p className={styles.modalText}>정말로 삭제하시겠습니까?</p>
+        <p className={styles.modalSubText}>대시보드의 모든 정보가 삭제됩니다.</p>
+      </ConfirmModal>
     </IdProvider>
   );
 }
