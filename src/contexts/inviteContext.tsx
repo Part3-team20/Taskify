@@ -69,13 +69,10 @@ export function InviteProvider({ children }: InviteProviderProps) {
   /**
    * @TODO
    * -로딩 관련 처리?
-   * -url env
    */
 
   const {
-    fetchWithToken: getInvitations,
-    error: getInvitationError,
-    // loading: getInvitatioLoading,
+    fetchWithToken: getInvitations, // loading: getInvitatioLoading,
   } = useFetchWithToken();
 
   const fetchMoreData = async (keyword?: string) => {
@@ -123,7 +120,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
           setInvitationData(formatInviteData(response.invitations));
         }
       } catch (error) {
-        console.log(getInvitationError);
+        console.log(error);
       }
     };
     fetchData();
