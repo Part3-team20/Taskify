@@ -1,5 +1,6 @@
 'use client';
 
+// 추후 삭제
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
 import { DASHBOARDS } from '@/constants/ApiUrl';

@@ -1,5 +1,6 @@
 'use client';
 
+// 추후 삭제
 import { useParams, useRouter } from 'next/navigation';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import IdProvider from '@/contexts/idContext';

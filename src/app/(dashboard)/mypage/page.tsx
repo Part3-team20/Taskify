@@ -1,5 +1,6 @@
 'use client';
 
+// 추후 삭제
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';

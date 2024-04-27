@@ -1,5 +1,6 @@
 'use client';
 
+// 추후 삭제
 import { useEffect, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
 import { MEMBERS } from '@/constants/ApiUrl';

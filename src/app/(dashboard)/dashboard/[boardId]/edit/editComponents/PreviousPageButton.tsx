@@ -1,3 +1,5 @@
+// 추후 삭제
+
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './PreviousPageButton.module.scss';

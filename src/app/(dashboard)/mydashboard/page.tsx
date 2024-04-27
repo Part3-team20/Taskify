@@ -1,3 +1,4 @@
+// 추후 삭제
 import { InviteProvider } from '@/contexts/inviteContext';
 import InvitedBoard from '@/components/InvitedBoard';
 import MyDashboardList from '@/components/MyDashboardList';

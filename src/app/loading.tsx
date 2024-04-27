@@ -1,3 +1,4 @@
+// 추후 삭제
 import Image from 'next/image';
 import styles from './defaultPageStyle.module.scss';
 

@@ -1,5 +1,7 @@
 'use client';
 
+// 추후 삭제
+
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
