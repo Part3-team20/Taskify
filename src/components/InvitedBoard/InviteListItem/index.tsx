@@ -2,6 +2,7 @@
 
 import { useInvite } from '@/contexts/inviteContext';
 import { INVITATIONS } from '@/constants/ApiUrl';
+import { useDashboard } from '@/contexts/dashboardContext';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
 import styles from './InviteListItem.module.scss';
@@ -14,12 +15,13 @@ interface InviteListItemProps {
 
 export default function InviteListItem({ title, id, nickname }: InviteListItemProps) {
   const { invitationData, setInvitationData } = useInvite();
-
   const {
-    fetchWithToken: inviteResponse,
-    error: inviteConfirmError,
-    // loading: inviteConfirmLoading,
-  } = useFetchWithToken();
+    reloadDashboard,
+    myDashboards: { page: myDashboardsPage },
+    sideDashboards: { page: sideDashboardsPage },
+  } = useDashboard();
+
+  const { fetchWithToken: inviteResponse } = useFetchWithToken();
 
   /**
    * @TODO
@@ -35,12 +37,13 @@ export default function InviteListItem({ title, id, nickname }: InviteListItemPr
       setInvitationData((prevData) => prevData.filter((data) => data.id !== id));
     } catch (error) {
       setInvitationData(temp);
-      console.log(inviteConfirmError);
+      console.log(error);
     }
   };
 
   const onAcceptClick = async () => {
     await onConfirmInvite(true);
+    reloadDashboard(myDashboardsPage, sideDashboardsPage);
   };
 
   const onRejectClick = async () => {

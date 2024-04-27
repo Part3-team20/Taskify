@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DASHBOARDS } from '@/constants/ApiUrl';
+import { useDashboard } from '@/contexts/dashboardContext';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import Modal from '@/components/Modal';
 import ModalInput from '@/components/Modal/ModalInput/index';
@@ -23,22 +24,29 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
   const initialValues = { title: '', color: '#7ac555' };
   const [values, setValues] = useState(initialValues);
   const [isActive, setIsActive] = useState(false);
+  const {
+    reloadDashboard,
+    myDashboards: { page: myDashboardsPage },
+    sideDashboards: { page: sideDashboardsPage },
+  } = useDashboard();
 
-  const { fetchWithToken: postDashboard, loading, error } = useFetchWithToken();
+  const { fetchWithToken: postDashboard, loading } = useFetchWithToken();
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (values.title.trim() === '') return;
 
-    await postDashboard(DASHBOARDS, 'POST', values);
+    try {
+      await postDashboard(DASHBOARDS, 'POST', values);
 
-    if (error) {
+      setValues(() => initialValues);
+    } catch (error) {
       console.log(error);
+    } finally {
+      onClose();
+      reloadDashboard(myDashboardsPage, sideDashboardsPage);
     }
-
-    setValues(() => initialValues);
-    onClose();
   };
 
   const handleClose = () => {
