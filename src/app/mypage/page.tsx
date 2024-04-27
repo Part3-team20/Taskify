@@ -47,7 +47,6 @@ export default function MyPage() {
   const handleProfileSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     try {
       const formData = new FormData();
-      formData.append('image', imageFile);
       const profileBody = {
         nickname: profile.nickName,
         profileImageUrl: undefined,
