@@ -1,10 +1,10 @@
 'use client';
 
-// 추후 삭제
+import { useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import IdProvider from '@/contexts/idContext';
-import { DASHBOARDS } from '@/constants/ApiUrl';
+import { DASHBOARDS, USERS } from '@/constants/ApiUrl';
 import DeleteDashboardButton from '@/components/common/Button/DeleteDashboardButton';
 import PreviosPageButton from './editComponents/PreviousPageButton';
 import MemberManagement from './editComponents/MemberManagement';
@@ -31,6 +31,22 @@ export default function BoardEdit() {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dashboardUser = await fetchWithToken(`${DASHBOARDS}/${boardId}`);
+        const currentUser = await fetchWithToken(`${USERS}`);
+        console.log('대쉬보드생성자id:', dashboardUser.userId, '현재사용자id:', currentUser.id);
+        if (dashboardUser.userId !== currentUser.id) {
+          router.push('./');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <IdProvider boardId={id}>
