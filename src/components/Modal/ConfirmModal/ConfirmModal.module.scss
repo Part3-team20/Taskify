@@ -11,22 +11,13 @@
   align-items: center;
   justify-content: center;
 
-  .deleteText {
+  .text {
     color: $black_333236;
     text-align: center;
     align-self: center;
     font-style: normal;
     line-height: normal;
     margin-bottom: 50px;
-
-    span {
-      font-size: 18px;
-      font-weight: 500;
-    }
-    p {
-      font-size: 16px;
-      font-weight: 400;
-    }
   }
   .buttons {
     display: flex;

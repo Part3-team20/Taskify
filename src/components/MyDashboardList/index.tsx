@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import AddButton from '../common/Button/AddButton';
 import DashboardButton from '../common/Button/DashboardButton';
@@ -42,7 +43,7 @@ export default function MyDashboardList() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getDashboardList(
-        `https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination&page=${page.page}&size=5`,
+        `${DASHBOARDS}?navigationMethod=pagination&page=${page.page}&size=5`,
         'GET'
       );
       if (response) {

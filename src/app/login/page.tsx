@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { LOGIN } from '@/constants/ApiUrl';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -38,7 +39,7 @@ export default function LoginPage() {
     const { email, password } = values;
 
     try {
-      const responseData = await fetchWithToken('https://sp-taskify-api.vercel.app/4-20/auth/login', 'POST', {
+      const responseData = await fetchWithToken(`${LOGIN}`, 'POST', {
         email,
         password,
       });

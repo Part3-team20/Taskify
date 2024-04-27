@@ -3,9 +3,9 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './CreateTask.module.scss';
 import Modal from '@/components/Modal';
+import FileInput from '@/components/common/FileInput';
 import DeadLineInput from '../ModalInput/DeadlineInput';
 import TagInput from '../ModalInput/TagInput';
-import FileInput from '@/components/common/FileInput';
 import ModalSubmitButton from '../ModalButton/SubmitButton';
 import ModalInput from '../ModalInput';
 import AssigneeInput from '../ModalInput/AssigneeInput';

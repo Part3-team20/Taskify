@@ -1,5 +1,6 @@
 @import '@/styles/color.scss';
 @import '@/styles/_mixins.scss';
+@import '@/styles/_responsive-styles.scss';
 
 .container {
   display: flex;
@@ -13,7 +14,10 @@
     height: 2.5rem;
     padding: 0.75rem;
     background-color: $white_FFFFFF;
-
+    @include mobile {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
     &.left {
       transform: rotate(-180deg);
     }
