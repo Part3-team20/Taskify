@@ -91,7 +91,7 @@ export default function MemberManagement({ createUserId }: { createUserId: numbe
                   삭제
                 </Button>
               ) : (
-                <div>
+                <div className={styles.crownIcon}>
                   <Image src="/images/crown_icon.svg" alt="왕관 이미지" width={20} height={20} />
                 </div>
               )}
