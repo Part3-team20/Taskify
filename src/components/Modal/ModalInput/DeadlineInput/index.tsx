@@ -7,11 +7,12 @@ import styles from './DeadlineInput.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // dueDate
-export default function DeadLineInput() {
+export default function DeadLineInput({ onChange }: { onChange: (key: string, value: string) => void }) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
+    onChange('dueDate', date ? date.toISOString() : '');
   };
 
   return (

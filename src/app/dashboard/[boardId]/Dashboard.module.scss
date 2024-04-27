@@ -5,7 +5,7 @@
   background-color: $gray_FAFAFA;
   display: flex;
   overflow-y: auto;
-  height: 90vh;
+  height: calc(100vh - 4.375rem);
 
   .columnBox {
     display: flex;
@@ -16,5 +16,47 @@
     padding: 4.25rem 1.25rem;
     width: 23.4375rem;
     flex-shrink: 0;
+  }
+}
+
+@include mobile {
+  .container {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+
+    .columnBox {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+    }
+
+    .btnBox {
+      width: 95%;
+    }
+  }
+}
+
+@include tablet {
+  .container {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+
+    .columnBox {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+    }
+
+    .btnBox {
+      width: 95%;
+    }
   }
 }
