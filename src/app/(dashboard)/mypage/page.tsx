@@ -44,7 +44,7 @@ export default function MyPage() {
     setPasswords((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleProfileSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleProfileSubmit = async () => {
     try {
       const formData = new FormData();
       const profileBody = {
@@ -67,7 +67,7 @@ export default function MyPage() {
     }
   };
 
-  const handlePasswordSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handlePasswordSubmit = async (e: any) => {
     e.preventDefault();
 
     const { password, newPassword } = passwords;
@@ -159,7 +159,7 @@ export default function MyPage() {
           <BasicSubmitButton
             color="violet"
             isActive={Boolean(
-              password?.password && password?.newPassword && password?.newPassword === password.passwordCheck
+              passwords?.password && passwords?.newPassword && passwords?.newPassword === passwords.passwordCheck
             )}
             handleClick={handlePasswordSubmit}
             type="button"
