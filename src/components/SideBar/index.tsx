@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { DASHBOARDS } from '@/constants/ApiUrl';
 import Link from 'next/link';
 import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -45,7 +46,7 @@ export default function SideBar() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getDashboardList(
-        `https://sp-taskify-api.vercel.app/4-20/dashboards?navigationMethod=pagination&page=${page.page}&size=12`,
+        `${DASHBOARDS}?navigationMethod=pagination&page=${page.page}&size=12`,
         'GET'
       );
       if (response) {

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Modal from '@/components/Modal';
 import { CardProps } from '@/types/DashboardTypes';
+import { CARDS } from '@/constants/ApiUrl';
 import LabelChip from '@/components/common/Chip/LabelChip';
 import Profile from '@/components/common/Profile';
 import Comments from './Comment/Comments';
@@ -34,7 +35,7 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, o
 
     const fetchCardDetails = async () => {
       try {
-        const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${cardId}`);
+        const response = await fetchWithToken(`${CARDS}/${cardId}`);
         setCardDetails(response); // 상태에 카드 정보 저장
       } catch (error) {
         console.error('Failed to fetch card details:', error);
