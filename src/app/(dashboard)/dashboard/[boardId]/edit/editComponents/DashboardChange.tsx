@@ -7,6 +7,7 @@ import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
+import Toast from '@/util/Toast';
 import styles from './DashboardChange.module.scss';
 
 export default function DashboaradChange() {
@@ -35,9 +36,11 @@ export default function DashboaradChange() {
         title: pendingInput,
         color: selectedColor,
       });
+
       window.location.reload();
-    } catch (e) {
-      console.error(e);
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
@@ -47,8 +50,9 @@ export default function DashboaradChange() {
         const responseData = await fetchWithToken(`${DASHBOARDS}/${boardId}`, 'GET');
         setDashboardName(responseData.title);
         setSelectedColor(responseData.color);
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
+        const errorMessage = err.toString().substr(7);
+        Toast.error(errorMessage);
       }
     };
     fetchData();

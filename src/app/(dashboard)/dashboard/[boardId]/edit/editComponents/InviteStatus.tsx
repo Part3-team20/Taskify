@@ -8,6 +8,7 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import ModalInvite from '@/components/Modal/ModalInvite';
 import Button from '@/components/common/Button/Button';
+import Toast from '@/util/Toast';
 import styles from './InviteStatus.module.scss';
 
 interface Invite {
@@ -37,8 +38,10 @@ export default function InviteStatus() {
     try {
       await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations/${userId}`, 'DELETE');
       setInviteData((prevInvites) => prevInvites.filter((invite) => invite.id !== userId));
-    } catch (e) {
-      console.error(e);
+      Toast.success('삭제되었습니다.');
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
@@ -47,8 +50,9 @@ export default function InviteStatus() {
       try {
         const responseData = await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'GET');
         setInviteData(responseData.invitations);
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
+        const errorMessage = err.toString().substr(7);
+        Toast.error(errorMessage);
       }
     };
     fetchData();

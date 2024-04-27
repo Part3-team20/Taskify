@@ -8,6 +8,7 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import Profile from '@/components/common/Profile';
 import Button from '@/components/common/Button/Button';
+import Toast from '@/util/Toast';
 import styles from './MemberManagement.module.scss';
 
 interface Member {
@@ -41,8 +42,9 @@ export default function MemberManagement({ createUserId }: { createUserId: numbe
       // setMemberData(updatedMemberData);
       // setMemberData((prevMember) => prevMember.filter((member) => member.memberId !== memberId));
       window.location.reload();
-    } catch (e) {
-      console.error(e);
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
   useEffect(() => {
@@ -50,8 +52,9 @@ export default function MemberManagement({ createUserId }: { createUserId: numbe
       try {
         const responseData = await fetchWithToken(`${MEMBERS}?page=1&size=20&dashboardId=${boardId}`, 'GET');
         setMemberData(responseData.members);
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
+        const errorMessage = err.toString().substr(7);
+        Toast.error(errorMessage);
       }
     };
     fetchData();

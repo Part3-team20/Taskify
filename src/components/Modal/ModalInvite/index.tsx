@@ -7,6 +7,7 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
 import Image from 'next/image';
 import Modal from '@/components/Modal';
+import Toast from '@/util/Toast';
 import styles from './ModalInvite.module.scss';
 
 export default function ModalInvite() {
@@ -31,10 +32,13 @@ export default function ModalInvite() {
         email: emailValue,
       });
       window.location.reload();
-    } catch (e) {
-      console.error(e);
+      Toast.success('해당 유저를 초대하였습니다');
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handlePostInvite();
