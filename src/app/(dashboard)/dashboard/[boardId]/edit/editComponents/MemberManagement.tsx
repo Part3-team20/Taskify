@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
 import { MEMBERS } from '@/constants/ApiUrl';
+import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import Profile from '@/components/common/Profile';
@@ -85,10 +86,14 @@ export default function MemberManagement({ createUserId }: { createUserId: numbe
                 <Profile profileImageUrl={member.profileImageUrl} />
                 <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
-              {member.userId !== createUserId && (
+              {member.userId !== createUserId ? (
                 <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
                   삭제
                 </Button>
+              ) : (
+                <div>
+                  <Image src="/images/crown_icon.svg" alt="왕관 이미지" width={20} height={20} />
+                </div>
               )}
             </div>
             {index !== memberList.length - 1 && <hr className={styles.contour} />}
