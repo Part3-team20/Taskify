@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Dashboard as Column } from '@/types/DashboardTypes';
 import { COLUMNS } from '@/constants/ApiUrl';
+import CommonLayout from '@/layouts/CommonLayout';
 import ColumnComponent from '@/components/Column';
 import AddButton from '@/components/common/Button/AddButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -75,34 +76,36 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.columnBox}>
-        {columns.map((column) => (
-          <ColumnComponent
-            key={column.id}
-            columnId={column.id}
-            title={column.title}
-            onAddCard={() => console.log('Add card button clicked!')}
-            onUpdate={handleUpdateColumn}
-            onDelete={handleDeleteColumn}
-            existingTitles={columns.map((c) => c.title)}
-            dashboardId={boardId}
-          />
-        ))}
+    <CommonLayout>
+      <div className={styles.container}>
+        <div className={styles.columnBox}>
+          {columns.map((column) => (
+            <ColumnComponent
+              key={column.id}
+              columnId={column.id}
+              title={column.title}
+              onAddCard={() => console.log('Add card button clicked!')}
+              onUpdate={handleUpdateColumn}
+              onDelete={handleDeleteColumn}
+              existingTitles={columns.map((c) => c.title)}
+              dashboardId={boardId}
+            />
+          ))}
+        </div>
+        <div className={styles.btnBox}>
+          {/* eslint-disable-next-line react/no-children-prop */}
+          <AddButton handleClick={handleAddColumn}>새로운 컬럼 추가하기</AddButton>
+          {/* Modal component rendered conditionally */}
+          {isCreateModalOpen && (
+            <CreateColumn
+              isOpen={isCreateModalOpen}
+              onClose={handleCloseModal}
+              onCreate={handleCreateColumn}
+              existingTitles={columns.map((column) => column.title)}
+            />
+          )}
+        </div>
       </div>
-      <div className={styles.btnBox}>
-        {/* eslint-disable-next-line react/no-children-prop */}
-        <AddButton handleClick={handleAddColumn}>새로운 컬럼 추가하기</AddButton>
-        {/* Modal component rendered conditionally */}
-        {isCreateModalOpen && (
-          <CreateColumn
-            isOpen={isCreateModalOpen}
-            onClose={handleCloseModal}
-            onCreate={handleCreateColumn}
-            existingTitles={columns.map((column) => column.title)}
-          />
-        )}
-      </div>
-    </div>
+    </CommonLayout>
   );
 }

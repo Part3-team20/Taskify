@@ -3,10 +3,7 @@
 @import '@/styles/_responsive-styles.scss';
 
 .goBackButton {
-  display: inline-flex;
-  align-items: center;
-  justify-self: flex-start;
-  max-width: 5.75rem;
+  @include flex-center;
   gap: 0.375rem;
   font-size: 1rem;
   font-weight: 500;
