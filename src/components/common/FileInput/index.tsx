@@ -6,10 +6,11 @@ import styles from './FileInput.module.scss';
 
 interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
+  defaultImage?: string | undefined;
 }
 
-export default function FileInput({ className, setFile, ...props }: FileInputProps) {
-  const [preview, setPreview] = useState<string | null>(null);
+export default function FileInput({ className, setFile, defaultImage, ...props }: FileInputProps) {
+  const [preview, setPreview] = useState<string | null>(defaultImage || null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
