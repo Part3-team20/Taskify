@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './numberChip.module.scss';
+import styles from './NumberChip.module.scss';
 
 // number
 interface NumberChipProps {

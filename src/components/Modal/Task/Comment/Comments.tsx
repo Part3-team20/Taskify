@@ -6,6 +6,7 @@ import { COMMENTS } from '@/constants/ApiUrl';
 import CommentInput from '@/components/Modal/ModalInput/CommentInput';
 import Profile from '@/components/common/Profile';
 import styles from './Comments.module.scss';
+import ConfirmModal from '../../ConfirmModal';
 
 interface Comment {
   cardId: number;
@@ -13,15 +14,39 @@ interface Comment {
   dashboardId: number;
 }
 
+function formatDateTime(dateString: string) {
+  if (!dateString) return '';
+
+  const date = new Date(dateString);
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth() + 1;
+  const day = date.getUTCDate();
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+
+  const paddedMonth = month.toString().padStart(2, '0');
+  const paddedDay = day.toString().padStart(2, '0');
+  const paddedHours = hours.toString().padStart(2, '0');
+  const paddedMinutes = minutes.toString().padStart(2, '0');
+
+  return `${year}.${paddedMonth}.${paddedDay} ${paddedHours}:${paddedMinutes}`;
+}
+
 export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const { fetchWithToken } = useFetchWithToken();
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [deleteCommentId, setDeleteCommentId] = useState<number | null>(null);
 
   const fetchComments = useCallback(async () => {
     try {
-      const result = await fetchWithToken(`${COMMENTS}?cardId=${cardId}`, 'GET');
-      setComments(result.comments);
+      const result = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/comments?cardId=${cardId}`, 'GET');
+      const formattedComments = result.comments.map((comment: any) => ({
+        ...comment,
+        createdAt: formatDateTime(comment.createdAt),
+      }));
+      setComments(formattedComments);
     } catch (error) {
       console.error('Failed to fetch comments:', error);
     }
@@ -68,16 +93,18 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
         await fetchWithToken(url, 'DELETE');
         // 서버에서 삭제 후 상태 업데이트로 댓글 목록에서 바로 제거
         setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
+        setIsConfirmOpen(false);
       } catch (error) {
         console.error('Failed to delete comment:', error);
       }
     },
-    [fetchWithToken, setComments]
+    [fetchWithToken]
   );
 
-  useEffect(() => {
-    console.log('Comments updated:', comments);
-  }, [comments]);
+  const openConfirmModal = (id: number) => {
+    setDeleteCommentId(id);
+    setIsConfirmOpen(true);
+  };
 
   useEffect(() => {
     fetchComments();
@@ -86,7 +113,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   return (
     <div className={styles.comments}>
       <p className={styles.commentTitle}>댓글</p>
-      <CommentInput onCommentSubmit={handlePostComment} initialContent="" style={{ width: '450px' }} />
+      <CommentInput onCommentSubmit={handlePostComment} initialContent="" />
 
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
@@ -94,15 +121,15 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
           <div className={styles.commentBox}>
             <div className={styles.commentHeader}>
               <span className={styles.nickname}>{comment.author.nickname}</span>
+              {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
               <span className={styles.createdAt}>{comment.createdAt}</span>
             </div>
             {editingCommentId === comment.id ? (
               <div className={styles.commentBody}>
-                <div>
+                <div className={styles.editing}>
                   <CommentInput
                     onCommentSubmit={(content: string) => handlePutComment(content, comment.id)}
                     initialContent={comment.content}
-                    style={{ width: '400px' }}
                   />
                 </div>
                 <div className={styles.btnBox}>
@@ -118,7 +145,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
                   <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                     수정
                   </button>
-                  <button className={styles.commentBtn} type="button" onClick={() => handleDeleteComment(comment.id)}>
+                  <button className={styles.commentBtn} type="button" onClick={() => openConfirmModal(comment.id)}>
                     삭제
                   </button>
                 </div>
@@ -127,6 +154,15 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
           </div>
         </div>
       ))}
+      {isConfirmOpen && (
+        <ConfirmModal
+          isOpen={isConfirmOpen}
+          onClose={() => setIsConfirmOpen(false)}
+          onConfirm={() => deleteCommentId && handleDeleteComment(deleteCommentId)}
+        >
+          <p className={styles.modalSubText}>댓글을 삭제할까요?</p>
+        </ConfirmModal>
+      )}
     </div>
   );
 }

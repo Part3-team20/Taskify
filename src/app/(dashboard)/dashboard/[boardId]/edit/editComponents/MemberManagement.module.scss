@@ -1,0 +1,80 @@
+@import '@/styles/_color.scss';
+@import '@/styles/_responsive-styles.scss';
+
+// 추후 삭제
+.container {
+  width: 38.75rem;
+  height: 25.25rem;
+  border-radius: 0.5rem;
+  background: var(--white-white_FFFFFF, #fff);
+  padding: 1.9688rem 1.75rem;
+  margin: 0.75rem 0;
+  @include tablet {
+    width: 34rem;
+  }
+  @include mobile {
+    width: 17.75rem;
+    height: 23.5625rem;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.0313rem;
+    .memberTitle {
+      font-size: 1.5rem;
+      font-weight: 700;
+      @include mobile {
+        font-size: 1.125rem;
+      }
+    }
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      .pageNum {
+        font-size: 0.875rem;
+        font-weight: 400;
+        @include mobile {
+          font-size: 0.625rem;
+        }
+      }
+    }
+  }
+  .name {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--gray-gray_9FA6B2, #9fa6b2);
+    margin-bottom: 1.5rem;
+    @include mobile {
+      font-size: 0.875rem;
+    }
+  }
+
+  .member {
+    .memberSection {
+      .memberList {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        .profile {
+          gap: 0.75rem;
+          display: flex;
+          align-items: center;
+          .memberNickname {
+            font-size: 1rem;
+            @include mobile {
+              font-size: 0.875rem;
+            }
+          }
+        }
+      }
+      .contour {
+        border: none;
+        height: 0.0625rem;
+        background-color: #d9d9d9;
+      }
+    }
+  }
+}
