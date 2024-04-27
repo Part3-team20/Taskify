@@ -33,6 +33,9 @@ export default function Column({
   const { fetchWithToken } = useFetchWithToken();
   const [cards, setCards] = useState<CardProps[]>([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<CardProps[]>([]); // 보여지는 카드들의 배열
+  const [startIndex, setStartIndex] = useState(0); // 보여지는 카드들의 시작 인덱스
+  const cardsPerPage = 3; // 한 페이지당 보여질 카드 수
 
   const handleOpenEditModal = () => {
     setIsEditModalOpen(true);
@@ -42,6 +45,12 @@ export default function Column({
     setIsEditModalOpen(false);
   };
 
+  // 카드 더보기 버튼 클릭 시 호출되는 함수
+  const handleShowMoreCards = () => {
+    const endSliceIndex = Math.min(startIndex + cardsPerPage, cards.length);
+    setVisibleCards((prevVisibleCards) => [...prevVisibleCards, ...cards.slice(startIndex, endSliceIndex)]);
+    setStartIndex(startIndex + cardsPerPage);
+  };
   const handleDeleteCard = async (cardId: number) => {
     try {
       await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${cardId}`, 'DELETE');
@@ -65,6 +74,14 @@ export default function Column({
     fetchCards();
   }, [columnId, fetchWithToken]);
 
+  useEffect(() => {
+    // 기존의 useEffect 코드는 그대로 사용
+
+    // 보여지는 카드들을 업데이트하기 위해 startIndex와 cardsPerPage를 이용하여 슬라이싱
+    const endSliceIndex = Math.min(startIndex + cardsPerPage, cards.length);
+    setVisibleCards(cards.slice(startIndex, endSliceIndex));
+  }, [cards, startIndex]);
+
   return (
     <div className={styles.column}>
       <div className={styles.columnHeader}>
@@ -83,21 +100,26 @@ export default function Column({
         <div className={styles.addBtn}>
           <AddButton handleClick={onAddCard} />
         </div>
-        {cards.length > 0 &&
-          cards.map((card) => (
-            <Card
-              key={card.id}
-              id={card.id}
-              title={card.title}
-              tags={card.tags}
-              assignee={card.assignee}
-              imageUrl={card.imageUrl}
-              dueDate={card.dueDate}
-              dashboardId={dashboardId}
-              columnId={columnId}
-              onDeleteCard={handleDeleteCard}
-            />
-          ))}
+        {/* visibleCards 배열을 렌더링하여 보여줌 */}
+        {visibleCards.map((card) => (
+          <Card
+            key={card.id}
+            id={card.id}
+            title={card.title}
+            tags={card.tags}
+            assignee={card.assignee}
+            imageUrl={card.imageUrl}
+            dueDate={card.dueDate}
+            dashboardId={dashboardId}
+            columnId={columnId}
+            onDeleteCard={handleDeleteCard}
+          />
+        ))}
+        {cards.length > startIndex + cardsPerPage && (
+          <button type="button" onClick={handleShowMoreCards} className={styles.showMoreButton}>
+            더보기
+          </button>
+        )}
       </div>
       {isEditModalOpen && (
         <ChangeColumn

@@ -45,6 +45,15 @@
     flex-direction: column;
     align-items: center;
 
+    .showMoreButton {
+      width: 19.625rem;
+      border-radius: 0.375rem;
+      border: 1px solid $gray_D9D9D9;
+      background: $white_FFFFFF;
+      padding: 1.25rem;
+      font-size: 14px;
+    }
+
     .addBtn {
       display: flex;
       width: 314px;
@@ -60,6 +69,16 @@
     border-bottom: 1px solid $gray_EEEEEE;
     .columnBody {
       margin-bottom: 16px;
+
+      .showMoreButton {
+        width: 90%;
+        padding: 12px;
+        gap: 0;
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+      }
+
       .addBtn {
         width: 90%;
         height: 40px;
@@ -85,6 +104,16 @@
     }
     .columnBody {
       margin-bottom: 16px;
+
+      .showMoreButton {
+        width: 90%;
+        padding: 12px;
+        gap: 0;
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+      }
+
       .addBtn {
         width: 90%;
         height: 40px;
