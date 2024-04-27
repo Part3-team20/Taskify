@@ -33,7 +33,7 @@ export default function MyPage() {
     nickName: '',
     profileImageUrl: '',
   });
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<string | undefined | null>(undefined);
   const [password, setPassword] = useState({ password: '', newPassword: '', passwordCheck: '' });
 
   const handleNickNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,24 +46,14 @@ export default function MyPage() {
 
   const handleProfileSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     try {
-      const formData = new FormData();
-      const profileBody = {
+      const body = {
         nickname: profile.nickName,
-        profileImageUrl: undefined,
+        profileImageUrl: imageFile,
       };
-      const ImageBody = formData;
-      const accessToken = localStorage.getItem('accessToken');
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', profileBody);
-      await fetch(`https://sp-taskify-api.vercel.app/4-20/users/me/image`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: ImageBody,
-      });
+      console.log(body);
+      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', body);
     } catch (error) {
-      console.error('Failed to update profile:', error);
+      console.error('Failed to update password:', error);
     }
   };
 
@@ -107,7 +97,7 @@ export default function MyPage() {
             <FileInput
               setFile={setImageFile}
               className={styles.fileInput}
-              defaultImage={profile?.profileImageUrl || ''}
+              defaultImage={profile?.profileImageUrl || null}
             />
             <div className={styles.textInputs}>
               <Input labelName="이메일" name="email" placeholder={user?.email} disabled />

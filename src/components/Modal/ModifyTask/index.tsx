@@ -60,6 +60,7 @@ export default function ModifyTask({ columnId, isOpen, onClose }: ModifyTaskProp
           </ModalSubmitButton>
         </div>
       </form>
+      .
     </Modal>
   );
 }
