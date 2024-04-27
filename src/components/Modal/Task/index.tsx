@@ -81,7 +81,12 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, o
                   </div>
                 )}
                 <div className={styles.comments}>
-                  <Comments cardId={cardId} columnId={columnId} dashboardId={dashboardId} />
+                  <Comments
+                    cardId={cardId}
+                    columnId={columnId}
+                    dashboardId={dashboardId}
+                    currentUserId={cardDetails.assignee.id}
+                  />
                 </div>
               </div>
               <div className={styles.information}>
