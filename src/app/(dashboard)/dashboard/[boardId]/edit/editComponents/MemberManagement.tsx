@@ -15,8 +15,9 @@ interface Member {
   nickname: string;
   userId: number;
   memberId: number;
+  profileImageUrl: string;
 }
-export default function MemberManagement() {
+export default function MemberManagement({ createUserId }: { createUserId: number }) {
   const boardId = useBoardId();
   const { fetchWithToken } = useFetchWithToken();
   const [memberData, setMemberData] = useState<Member[]>([]);
@@ -34,11 +35,12 @@ export default function MemberManagement() {
 
   const handleDeleteMember = async (memberId: number) => {
     try {
+      // 10582
       await fetchWithToken(`${MEMBERS}/${memberId}`, 'DELETE');
-      // const updatedMemberData = memberData.filter((member) => member.userId !== userId);
+      // const updatedMemberData = memberData.filter((member) => member.memberId !== memberId);
       // setMemberData(updatedMemberData);
-
-      setMemberData((prevMember) => prevMember.filter((member) => member.memberId !== memberId));
+      // setMemberData((prevMember) => prevMember.filter((member) => member.memberId !== memberId));
+      window.location.reload();
     } catch (e) {
       console.error(e);
     }
@@ -73,19 +75,20 @@ export default function MemberManagement() {
       </div>
       <p className={styles.name}>이름</p>
       <div className={styles.member}>
-        {memberList.map((member) => (
+        {memberList.map((member, index) => (
           <div className={styles.memberSection} key={member.id}>
             <div className={styles.memberList}>
               <div className={styles.profile}>
-                {/* <Profile profileImageUrl={member.profileImageUrl} /> */}
-                <Profile />
+                <Profile profileImageUrl={member.profileImageUrl} />
                 <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
-              <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
-                삭제
-              </Button>
+              {member.userId !== createUserId && (
+                <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
+                  삭제
+                </Button>
+              )}
             </div>
-            <hr className={styles.contour} />
+            {index !== memberList.length - 1 && <hr className={styles.contour} />}
           </div>
         ))}
       </div>

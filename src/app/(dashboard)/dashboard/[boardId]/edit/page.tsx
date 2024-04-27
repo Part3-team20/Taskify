@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import IdProvider from '@/contexts/idContext';
@@ -22,6 +22,8 @@ export default function BoardEdit() {
 
   const id = Number(boardId);
 
+  const [createDashboardUserId, setCreateDashboardUserId] = useState<number | undefined>(undefined);
+
   const handleDeleteDashboard = async (dashboardId: number) => {
     /* 대쉬보드 삭제  */
     try {
@@ -35,10 +37,12 @@ export default function BoardEdit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dashboardUser = await fetchWithToken(`${DASHBOARDS}/${boardId}`);
+        const createUser = await fetchWithToken(`${DASHBOARDS}/${boardId}`);
         const currentUser = await fetchWithToken(`${USERS}`);
-        console.log('대쉬보드생성자id:', dashboardUser.userId, '현재사용자id:', currentUser.id);
-        if (dashboardUser.userId !== currentUser.id) {
+        const createUserId = createUser.userId;
+        const currentUserId = currentUser.id;
+        setCreateDashboardUserId(createUserId); // props 전달위해 ..
+        if (createUserId !== currentUserId) {
           router.push('./');
         }
       } catch (e) {
@@ -53,7 +57,7 @@ export default function BoardEdit() {
       <div className={styles.container}>
         <PreviosPageButton />
         <DashboaradChange />
-        <MemberManagement />
+        <MemberManagement createUserId={createDashboardUserId || 0} />
         <InviteStatus />
         <DeleteDashboardButton handleDelete={() => handleDeleteDashboard(id)} />
       </div>
