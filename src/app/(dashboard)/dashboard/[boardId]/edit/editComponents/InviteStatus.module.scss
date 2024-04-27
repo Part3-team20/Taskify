@@ -1,0 +1,107 @@
+@import '@/styles/_color.scss';
+@import '@/styles/_responsive-styles.scss';
+
+// 추후 삭제
+.container {
+  width: 38.75rem;
+  height: 29.8125rem;
+  border-radius: 0.5rem;
+  background: var(--white-white_FFFFFF, #fff);
+  margin: 0.75rem 0;
+  padding: 2.0938rem 1.75rem;
+  @include tablet {
+    width: 34rem;
+    padding: 1.875rem 1.25rem;
+  }
+  @include mobile {
+    width: 17.75rem;
+    height: 24.6875rem;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.0938rem;
+    .title {
+      color: var(--black-black_333236, #333236);
+      font-size: 1.5rem;
+      font-weight: 700;
+      @include mobile {
+        font-size: 1.125rem;
+      }
+    }
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      @include mobile {
+        gap: 0.75rem;
+      }
+      .paginationNumber {
+        font-size: 0.875rem;
+        font-weight: 400;
+        @include mobile {
+          font-size: 0.625rem;
+        }
+      }
+      @include mobile {
+        .onPcSize {
+          display: none;
+        }
+      }
+    }
+  }
+  .subcontainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include mobile {
+      margin-bottom: 1.75rem;
+    }
+    .email {
+      color: var(--gray-gray_9FA6B2, #9fa6b2);
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 2.0938rem;
+
+      @include mobile {
+        font-size: 0.875rem;
+        margin-bottom: 0;
+        display: flex;
+      }
+    }
+    .onMobileSize {
+      display: none;
+      @include mobile {
+        display: flex;
+      }
+    }
+  }
+
+  .emailSection {
+    margin-bottom: 1.5938rem;
+    @include mobile {
+      margin-bottom: 0.3438rem;
+    }
+    .emailList {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5938rem;
+      @include mobile {
+        margin-bottom: 1.1563rem;
+      }
+      .inviteEmail {
+        @include mobile {
+          font-size: 0.875rem;
+        }
+      }
+    }
+    .contour {
+      border: none;
+      height: 0.0625rem;
+      background-color: #d9d9d9;
+    }
+  }
+}
