@@ -19,7 +19,6 @@ export default function MemberManagement() {
   const boardId = useBoardId();
   const { fetchWithToken } = useFetchWithToken();
   const [memberData, setMemberData] = useState<Member[]>([]);
-  console.log(boardId);
 
   const [currentPage, setCurrentPage] = useState(1);
   const PAGESIZE = 4;
@@ -47,7 +46,6 @@ export default function MemberManagement() {
     const fetchData = async () => {
       try {
         const responseData = await fetchWithToken(`${MEMBERS}?page=1&size=20&dashboardId=${boardId}`, 'GET');
-        console.log(responseData);
         setMemberData(responseData.members);
       } catch (e) {
         console.error(e);

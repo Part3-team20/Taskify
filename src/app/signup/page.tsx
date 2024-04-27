@@ -36,12 +36,11 @@ export default function SignUpPage() {
     const { email, nickname, password } = values;
 
     try {
-      const responseData = await fetchWithToken(SIGNIN, 'POST', {
+      await fetchWithToken(SIGNIN, 'POST', {
         email,
         nickname,
         password,
       });
-      console.log('responsedata', responseData);
     } catch (err) {
       console.log('Error submitting data:', err);
     }

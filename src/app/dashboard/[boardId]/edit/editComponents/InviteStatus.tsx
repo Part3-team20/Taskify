@@ -44,7 +44,7 @@ export default function InviteStatus() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchWithToken(`${DASHBOARDS}}/${boardId}/invitations`, 'GET');
+        const responseData = await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'GET');
         setInviteData(responseData.invitations);
       } catch (e) {
         console.error(e);

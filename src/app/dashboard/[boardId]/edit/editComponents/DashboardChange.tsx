@@ -17,9 +17,8 @@ export default function DashboaradChange() {
   const [pendingInput, setPendingInput] = useState(''); // 입력중인 값
   const { fetchWithToken } = useFetchWithToken();
 
-  const handleSelectColor = (color: any) => {
+  const handleSelectColor = (color: string) => {
     setSelectedColor(color);
-    console.log(selectedColor);
   };
 
   const handleChangeDashboardName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +29,6 @@ export default function DashboaradChange() {
 
   /* PUT 대시보드 정보 변경 */
   const handlePutDashboard = async () => {
-    console.log('전송 값 : ', boardId, selectedColor, dashboardName);
     try {
       await fetchWithToken(`${DASHBOARDS}/${boardId}`, 'PUT', {
         title: pendingInput,
@@ -46,7 +44,6 @@ export default function DashboaradChange() {
     const fetchData = async () => {
       try {
         const responseData = await fetchWithToken(`${DASHBOARDS}/${boardId}`, 'GET');
-        console.log(responseData);
         setDashboardName(responseData.title);
         setSelectedColor(responseData.color);
       } catch (e) {

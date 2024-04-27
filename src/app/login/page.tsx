@@ -43,7 +43,6 @@ export default function LoginPage() {
         email,
         password,
       });
-      console.log(responseData);
       localStorage.setItem('accessToken', responseData.accessToken);
       router.push('/mydashboard');
     } catch (err) {
