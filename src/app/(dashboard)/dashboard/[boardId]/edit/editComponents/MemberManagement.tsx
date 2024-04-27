@@ -83,7 +83,7 @@ export default function MemberManagement() {
                 <Profile />
                 <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
-              <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
+              <Button color="white" handleClick={() => handleDeleteMember(member.id)} cancel>
                 삭제
               </Button>
             </div>

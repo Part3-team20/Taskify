@@ -43,7 +43,7 @@ export default function ModalInvite() {
 
   return (
     <div>
-      <Button color="violet" handleClick={() => setIsOpen(true)}>
+      <Button color="violet" handleClick={() => setIsOpen(true)} invite>
         <Image className={styles.inviteIcon} src="/images/add_box.svg" width={16} height={16} alt="invite" />
         초대하기
       </Button>
