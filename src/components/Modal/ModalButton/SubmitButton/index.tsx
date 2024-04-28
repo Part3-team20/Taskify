@@ -18,6 +18,7 @@ export default function ModalSubmitButton({
   type = 'submit',
 }: ModalSubmitButtonProps) {
   return (
+    // eslint-disable-next-line react/button-has-type
     <button type={type} className={`${styles.container} ${className}`} disabled={!isActive} onClick={onClick}>
       {children}
     </button>
