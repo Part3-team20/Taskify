@@ -2,6 +2,7 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { DASHBOARDS } from '@/constants/ApiUrl';
 import { Dashboard } from '@/types/DashboardTypes';
+import { useParams } from 'next/navigation';
 
 interface DashboardContextProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ interface DashboardState {
 }
 
 interface DashboardValues {
+  dashboardId: number | null;
   myDashboards: DashboardState;
   setMyDashboards: (newData: DashboardState | ((prevState: DashboardState) => DashboardState)) => void;
   sideDashboards: DashboardState;
@@ -23,6 +25,7 @@ interface DashboardValues {
 }
 
 const defaultValues: DashboardValues = {
+  dashboardId: null,
   myDashboards: { dashboards: [], totalCount: 0, page: 1 },
   setMyDashboards: () => {},
   sideDashboards: { dashboards: [], totalCount: 0, page: 1 },
@@ -37,6 +40,9 @@ export function DashboardProvider({ children }: DashboardContextProps) {
   const initialDashboards = { dashboards: [], totalCount: 0, page: 1 };
   const [sideDashboards, setSideDashboards] = useState<DashboardState>(initialDashboards);
   const [myDashboards, setMyDashboards] = useState<DashboardState>(initialDashboards);
+  const [dashboardId, setDashboardId] = useState<number | null>(null);
+
+  const params = useParams();
 
   const { fetchWithToken: getDashboards } = useFetchWithToken();
 
@@ -69,8 +75,15 @@ export function DashboardProvider({ children }: DashboardContextProps) {
     getDashboardsData(10, setSideDashboards);
   }, []);
 
+  useEffect(() => {
+    if (params) {
+      setDashboardId(Number(params.boardId));
+    }
+  }, [params]);
+
   const value = useMemo(
     () => ({
+      dashboardId,
       myDashboards,
       setMyDashboards,
       sideDashboards,
@@ -78,7 +91,7 @@ export function DashboardProvider({ children }: DashboardContextProps) {
       getDashboardsData,
       reloadDashboard,
     }),
-    [myDashboards.dashboards, sideDashboards.dashboards]
+    [myDashboards.dashboards, sideDashboards.dashboards, dashboardId]
   );
 
   return <dashboardContext.Provider value={value}>{children}</dashboardContext.Provider>;

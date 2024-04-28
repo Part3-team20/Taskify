@@ -61,7 +61,7 @@ export default function Card({
               </div>
             )}
             <div className={styles.profile}>
-              <Profile profileImageUrl={assignee.profileImageUrl} />
+              <Profile profileImageUrl={assignee?.profileImageUrl} />
             </div>
           </div>
         </div>
