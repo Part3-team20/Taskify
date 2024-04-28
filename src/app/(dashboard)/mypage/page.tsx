@@ -1,17 +1,16 @@
 'use client';
 
-// 추후 삭제
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
-import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { CHANGE_PASSWORD, USERS } from '@/constants/ApiUrl';
 import { useRouter } from 'next/navigation';
 import Toast from '@/util/Toast';
 import styles from './MyPage.module.scss';
 import LogoutModal from '@/components/Modal/LogoutModal';
+import Button from '@/components/common/Button/Button';
 
 export default function MyPage() {
   const router = useRouter();
@@ -111,14 +110,9 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.button}>
-          <BasicSubmitButton
-            color="violet"
-            isActive={Boolean(profile?.nickName)}
-            handleClick={handleProfileSubmit}
-            type="button"
-          >
+          <Button color="violet" disabled={Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
             저장
-          </BasicSubmitButton>
+          </Button>
         </div>
       </form>
       <form onSubmit={(e) => e.preventDefault()} className={styles.passwordForm}>
@@ -150,16 +144,18 @@ export default function MyPage() {
           />
         </div>
         <div className={styles.button}>
-          <BasicSubmitButton
+          <Button
             color="violet"
-            isActive={Boolean(
-              passwords?.password && passwords?.newPassword && passwords?.newPassword === passwords.passwordCheck
-            )}
+            disabled={
+              !Boolean(
+                passwords?.password && passwords?.newPassword && passwords?.newPassword === passwords.passwordCheck
+              )
+            }
             handleClick={handlePasswordSubmit}
             type="button"
           >
             변경
-          </BasicSubmitButton>
+          </Button>
         </div>
       </form>
       <div className={styles.logout}>

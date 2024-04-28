@@ -3,11 +3,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import FileInput from '@/components/common/FileInput';
-import TitleInput from '../ModalInput/TitleInput';
-import MembersDropDown from '../ModalDropDown/MemberDropDown';
 import DeadLineInput from '../ModalInput/DeadlineInput';
 import TagInput from '../ModalInput/TagInput';
-import ModalSubmitButton from '../ModalButton/SubmitButton';
 import styles from './ModifyTask.module.scss';
 import AssigneeInput from '../ModalInput/AssigneeInput';
 import StateInput from '../ModalInput/StateInput';
@@ -15,6 +12,7 @@ import ModalInput from '../ModalInput';
 import { CardProps } from '@/types/DashboardTypes';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Toast from '@/util/Toast';
+import Button from '@/components/common/Button/Button';
 
 interface ModifyTaskProps {
   defaultCard: CardProps;
@@ -169,16 +167,17 @@ export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen,
         </div>
 
         <div className={styles.buttons}>
-          <ModalSubmitButton isActive className={styles.cancelButton} onClick={onClose} type="button">
+          <Button className={styles.cancelButton} handleClick={onClose} type="button" color="white">
             취소
-          </ModalSubmitButton>
-          <ModalSubmitButton
+          </Button>
+          <Button
+            disabled={!Boolean(form.title && form.description)}
+            handleClick={handleModifyTask}
             type="button"
-            isActive={Boolean(form.title && form.description)}
-            onClick={handleModifyTask}
+            color="violet"
           >
             생성
-          </ModalSubmitButton>
+          </Button>
         </div>
       </form>
     </Modal>

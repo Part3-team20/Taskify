@@ -6,11 +6,11 @@ import Modal from '@/components/Modal';
 import FileInput from '@/components/common/FileInput';
 import DeadLineInput from '../ModalInput/DeadlineInput';
 import TagInput from '../ModalInput/TagInput';
-import ModalSubmitButton from '../ModalButton/SubmitButton';
 import ModalInput from '../ModalInput';
 import AssigneeInput from '../ModalInput/AssigneeInput';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Toast from '@/util/Toast';
+import Button from '@/components/common/Button/Button';
 
 interface CreateTaskProps {
   dashboardId: number;
@@ -128,16 +128,17 @@ export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: C
         </div>
 
         <div className={styles.buttons}>
-          <ModalSubmitButton isActive className={styles.cancelButton} onClick={onClose} type="button">
+          <Button className={styles.cancelButton} handleClick={onClose} type="button" color="white">
             취소
-          </ModalSubmitButton>
-          <ModalSubmitButton
-            isActive={Boolean(form.title && form.description)}
-            onClick={handleCreateTask}
+          </Button>
+          <Button
+            disabled={!Boolean(form.title && form.description)}
+            handleClick={handleCreateTask}
             type="button"
+            color="violet"
           >
             생성
-          </ModalSubmitButton>
+          </Button>
         </div>
       </form>
     </Modal>
