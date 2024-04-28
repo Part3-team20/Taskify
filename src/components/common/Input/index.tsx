@@ -7,10 +7,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   labelName: string;
 }
 
-export default function Input({ labelName, error, errorMessage, ...props }: InputProps) {
+export default function Input({ labelName, error, errorMessage, className, ...props }: InputProps) {
   return (
-    <label className={styles.label}>
-      {labelName}
+    <label className={`${styles.label} ${className}`}>
+      <span>{labelName}</span>
       <input {...props} className={`${styles.input} ${error && styles.error}`} />
       {error && <div className={styles.errorMessage}>{errorMessage}</div>}
     </label>

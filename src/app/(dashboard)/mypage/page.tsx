@@ -99,8 +99,9 @@ export default function MyPage() {
             usageLocation="mypage"
           />
           <div className={styles.textInputs}>
-            <Input labelName="이메일" name="email" placeholder={email} disabled />
+            <Input className={styles.mypageInput} labelName="이메일" name="email" placeholder={email} disabled />
             <Input
+              className={styles.mypageInput}
               labelName="닉네임"
               name="nickName"
               value={profile?.nickName}
@@ -119,6 +120,7 @@ export default function MyPage() {
         <h1>비밀번호 변경</h1>
         <div className={styles.inputs}>
           <Input
+            className={styles.mypageInput}
             labelName="현재 비밀번호"
             name="password"
             placeholder="현재 비밀번호 입력"
@@ -127,6 +129,7 @@ export default function MyPage() {
             required
           />
           <Input
+            className={styles.mypageInput}
             labelName="새 비밀번호"
             name="newPassword"
             placeholder="새 비밀번호 입력"
@@ -135,6 +138,7 @@ export default function MyPage() {
             required
           />
           <Input
+            className={styles.mypageInput}
             labelName="새 비밀번호 확인"
             name="passwordCheck"
             placeholder="새 비밀번호 입력"
