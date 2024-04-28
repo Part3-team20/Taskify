@@ -9,7 +9,7 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
 import styles from './EachDashBoardHeader.module.scss';
 
-interface Profile {
+interface ProfileProps {
   nickname: string;
   profileImageUrl?: string;
 }
@@ -33,7 +33,7 @@ export default function EachDashBoardHeader() {
   const { fetchWithToken } = useFetchWithToken();
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
-  const [profile, setProfile] = useState<Profile>({
+  const [profile, setProfile] = useState<ProfileProps>({
     nickname: '',
     profileImageUrl: '',
   });
@@ -79,6 +79,7 @@ export default function EachDashBoardHeader() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
         setProfile({ nickname: profile.nickname, profileImageUrl: profile.profileImageUrl });
       } catch (error: any) {
@@ -147,8 +148,10 @@ export default function EachDashBoardHeader() {
           className={styles.members}
           style={
             deviceType === 'PC'
-              ? { width: `${members?.totalCount > 4 ? 162 : 31 * members?.totalCount + 7}px` }
-              : { width: `${members?.totalCount > 2 ? 100 : 31 * members?.totalCount + 7}px` }
+              ? // eslint-disable-next-line no-unsafe-optional-chaining
+                { width: `${members?.totalCount > 4 ? 162 : 31 * members?.totalCount + 7}px` }
+              : // eslint-disable-next-line no-unsafe-optional-chaining
+                { width: `${members?.totalCount > 2 ? 100 : 31 * members?.totalCount + 7}px` }
           }
         >
           {members?.members.slice(0, 4).map((member, index) => (
@@ -161,8 +164,10 @@ export default function EachDashBoardHeader() {
             </li>
           ))}
           {deviceType === 'PC'
-            ? members?.totalCount > 4 && <li className={styles.excess}>{`+${members?.totalCount - 4}`}</li>
-            : members?.totalCount > 2 && <li className={styles.excess}>{`+${members?.totalCount - 2}`}</li>}
+            ? // eslint-disable-next-line no-unsafe-optional-chaining
+              members?.totalCount > 4 && <li className={styles.excess}>{`+${members?.totalCount - 4}`}</li>
+            : // eslint-disable-next-line no-unsafe-optional-chaining
+              members?.totalCount > 2 && <li className={styles.excess}>{`+${members?.totalCount - 2}`}</li>}
         </ul>
 
         <hr className={styles.boundary} />

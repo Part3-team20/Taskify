@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import styles from './StateInput.module.scss';
 import arrowDown from '@/../public/images/dropdown_icon.svg';
 import check from '@/../public/images/check.svg';
 import LabelChip from '@/components/common/Chip/LabelChip';
+import styles from './StateInput.module.scss';
 
 interface StateInputProps {
   columns: {
@@ -53,11 +53,11 @@ export default function StateInput({ columns, defaultColumnId, onChange }: State
 
   return (
     <div className={styles.container}>
-      <input className={styles.input} value={''} />
+      <input className={styles.input} value="" />
       <div className={styles.chip}>
         <LabelChip type="columns" label={selectedValue} />
       </div>
-      <Image src={arrowDown} alt={'arrow'} width={26} height={26} className={styles.arrow} onClick={handleToggle} />
+      <Image src={arrowDown} alt="arrow" width={26} height={26} className={styles.arrow} onClick={handleToggle} />
       {isOpen && <ul className={styles.selectList}>{options}</ul>}
     </div>
   );

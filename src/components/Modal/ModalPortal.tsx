@@ -16,7 +16,7 @@ function ModalPortal({ children }: { children: ReactElement | null }) {
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
   const el = document.getElementById('modal-root') as HTMLElement;
-
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return mounted ? createPortal(children, el) : <></>;
 }
 

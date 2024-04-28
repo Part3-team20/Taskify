@@ -3,16 +3,16 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import FileInput from '@/components/common/FileInput';
+import { CardProps } from '@/types/DashboardTypes';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import Toast from '@/util/Toast';
+import Button from '@/components/common/Button/Button';
 import DeadLineInput from '../ModalInput/DeadlineInput';
 import TagInput from '../ModalInput/TagInput';
 import styles from './ModifyTask.module.scss';
 import AssigneeInput from '../ModalInput/AssigneeInput';
 import StateInput from '../ModalInput/StateInput';
 import ModalInput from '../ModalInput';
-import { CardProps } from '@/types/DashboardTypes';
-import useFetchWithToken from '@/hooks/useFetchToken';
-import Toast from '@/util/Toast';
-import Button from '@/components/common/Button/Button';
 
 interface ModifyTaskProps {
   defaultCard: CardProps;
@@ -181,6 +181,7 @@ export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen,
             취소
           </Button>
           <Button
+            // eslint-disable-next-line no-extra-boolean-cast
             disabled={!Boolean(form.title && form.description)}
             handleClick={handleModifyTask}
             type="button"
