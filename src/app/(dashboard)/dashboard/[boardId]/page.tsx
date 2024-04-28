@@ -1,6 +1,5 @@
 'use client';
 
-// 추후 삭제
 import { useEffect, useState } from 'react';
 import { Dashboard as Column } from '@/types/DashboardTypes';
 import { COLUMNS } from '@/constants/ApiUrl';
