@@ -92,7 +92,7 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, o
                     cardId={cardId}
                     columnId={columnId}
                     dashboardId={dashboardId}
-                    currentUserId={cardDetails.assignee.id}
+                    currentUserId={cardDetails.assignee?.id}
                   />
                 </div>
               </div>

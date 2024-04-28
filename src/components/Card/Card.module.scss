@@ -90,6 +90,7 @@
         gap: 1rem;
         .tags {
           margin: 0;
+          flex-wrap: wrap;
         }
         .bottom {
           flex-grow: 1;

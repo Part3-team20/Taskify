@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DASHBOARDS } from '@/constants/ApiUrl';
 import { useDashboard } from '@/contexts/dashboardContext';
+import Toast from '@/util/Toast';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import Modal from '@/components/Modal';
 import ModalInput from '@/components/Modal/ModalInput/index';
@@ -41,8 +42,9 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
       await postDashboard(DASHBOARDS, 'POST', values);
 
       setValues(() => initialValues);
+      Toast.success('대시보드 생성!');
     } catch (error) {
-      console.log(error);
+      Toast.error(error);
     } finally {
       onClose();
       reloadDashboard(myDashboardsPage, sideDashboardsPage);
@@ -75,7 +77,10 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
             <span className={styles.label}>대시보드 이름</span>
             <ModalInput placeholder="새로운 대시보드" value={values.title} onChange={onChangeInput} />
           </div>
-          <ColorChip onSelect={(newColor) => setValues((prevValues) => ({ ...prevValues, color: newColor }))} />
+          <ColorChip
+            mode="create"
+            onSelect={(newColor) => setValues((prevValues) => ({ ...prevValues, color: newColor }))}
+          />
           <div className={styles.buttonBox}>
             <ModalButton color="white" handleClick={handleClose}>
               취소

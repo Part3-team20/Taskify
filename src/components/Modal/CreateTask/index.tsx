@@ -46,7 +46,7 @@ export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: C
   const [members, setMembers] = useState<Members[]>([]);
   const [imageFile, setImageFile] = useState<string | undefined>(undefined);
   const [form, setForm] = useState<Form>({
-    dashboardId: dashboardId,
+    dashboardId: Number(dashboardId),
     columnId,
     title: '',
     description: '',

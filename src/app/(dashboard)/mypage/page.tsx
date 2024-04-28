@@ -19,7 +19,7 @@ export default function MyPage() {
     nickName: '',
     profileImageUrl: '',
   });
-  const [imageFile, setImageFile] = useState<string | null | undefined>(undefined);
+  const [imageFile, setImageFile] = useState<string | undefined>(undefined);
   const [passwords, setPasswords] = useState({ password: '', newPassword: '', passwordCheck: '' });
   const [email, setEmail] = useState<string | undefined>('');
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -110,7 +110,7 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.button}>
-          <Button color="violet" disabled={Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
+          <Button color="violet" disabled={!Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
             저장
           </Button>
         </div>

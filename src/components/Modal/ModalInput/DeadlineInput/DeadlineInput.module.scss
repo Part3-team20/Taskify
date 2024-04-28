@@ -16,7 +16,7 @@
       left: 0.875rem;
     }
     .datePicker {
-      width: 28.125rem;
+      width: 27.1875rem;
       height: 3rem;
       border: 0.0625rem solid var(--gray-gray_D9D9D9, $gray_D9D9D9);
       background: var(--white-white_FFFFFF, $white_FFFFFF);
@@ -28,7 +28,7 @@
       }
 
       @include mobile {
-        width: 20.5rem;
+        width: 19.5625rem;
       }
     }
   }
