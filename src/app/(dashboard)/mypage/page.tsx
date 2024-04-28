@@ -11,17 +11,19 @@ import { CHANGE_PASSWORD, USERS } from '@/constants/ApiUrl';
 import { useRouter } from 'next/navigation';
 import Toast from '@/util/Toast';
 import styles from './MyPage.module.scss';
+import LogoutModal from '@/components/Modal/LogoutModal';
 
 export default function MyPage() {
   const router = useRouter();
   const { fetchWithToken } = useFetchWithToken();
-  const [profile, setProfile] = useState<{ nickName: string; profileImageUrl: string | undefined }>({
+  const [profile, setProfile] = useState<{ nickName: string; profileImageUrl?: string }>({
     nickName: '',
     profileImageUrl: '',
   });
   const [imageFile, setImageFile] = useState<string | null | undefined>(undefined);
   const [passwords, setPasswords] = useState({ password: '', newPassword: '', passwordCheck: '' });
   const [email, setEmail] = useState<string | undefined>('');
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -32,7 +34,7 @@ export default function MyPage() {
       });
       setEmail(result.email);
     } catch (error) {
-      console.error('Failed to fetch comments:', error);
+      console.error('Failed to fetch user:', error);
     }
   }, []);
 
@@ -50,7 +52,6 @@ export default function MyPage() {
         nickname: profile.nickName,
         profileImageUrl: imageFile,
       };
-      console.log(body);
       await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', body);
       Toast.success('프로필을 변경했습니다');
       router.refresh();
@@ -79,6 +80,7 @@ export default function MyPage() {
 
   const handleLogoutClick = () => {
     window.localStorage.removeItem('accessToken');
+    router.push('/');
   };
 
   useEffect(() => {
@@ -160,9 +162,18 @@ export default function MyPage() {
           </BasicSubmitButton>
         </div>
       </form>
-      <button type="button" className={styles.logout} onClick={handleLogoutClick}>
-        로그아웃
-      </button>
+      <div className={styles.logout}>
+        <button type="button" className={styles.logoutButton} onClick={() => setIsLogoutModalOpen(true)}>
+          로그아웃
+        </button>
+      </div>
+      {isLogoutModalOpen && (
+        <LogoutModal
+          isOpen={isLogoutModalOpen}
+          onClose={() => setIsLogoutModalOpen(false)}
+          onConfirm={handleLogoutClick}
+        />
+      )}
     </div>
   );
 }
