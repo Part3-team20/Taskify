@@ -63,7 +63,7 @@ export default function DashboaradChange() {
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.title}>{dashboardName}</p>
-        <ColorChip onSelect={handleSelectColor} />
+        <ColorChip mode="edit" onSelect={handleSelectColor} />
       </div>
       <p className={styles.dashboardName}>대시보드 이름</p>
       <input

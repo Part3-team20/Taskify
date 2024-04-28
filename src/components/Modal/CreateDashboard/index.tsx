@@ -77,7 +77,10 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
             <span className={styles.label}>대시보드 이름</span>
             <ModalInput placeholder="새로운 대시보드" value={values.title} onChange={onChangeInput} />
           </div>
-          <ColorChip onSelect={(newColor) => setValues((prevValues) => ({ ...prevValues, color: newColor }))} />
+          <ColorChip
+            mode="create"
+            onSelect={(newColor) => setValues((prevValues) => ({ ...prevValues, color: newColor }))}
+          />
           <div className={styles.buttonBox}>
             <ModalButton color="white" handleClick={handleClose}>
               취소
