@@ -15,7 +15,7 @@ interface ColumnProps {
   dashboardId: number;
   columnId: number;
   title: string;
-  onAddCard: () => void;
+  onAddCard: (columnId: number) => void;
   existingTitles: string[];
   onUpdate: (columnId: number, newTitle: string) => void;
   onDelete: (columnId: number) => void;
@@ -98,7 +98,7 @@ export default function Column({
       </div>
       <div className={styles.columnBody}>
         <div className={styles.addBtn}>
-          <AddButton handleClick={onAddCard} />
+          <AddButton handleClick={() => onAddCard(columnId)} />
         </div>
         {/* visibleCards 배열을 렌더링하여 보여줌 */}
         {visibleCards.map((card) => (
