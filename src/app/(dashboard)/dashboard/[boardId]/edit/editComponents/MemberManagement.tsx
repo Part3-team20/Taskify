@@ -37,12 +37,9 @@ export default function MemberManagement({ createUserId }: { createUserId: numbe
 
   const handleDeleteMember = async (memberId: number) => {
     try {
-      // 10582
       await fetchWithToken(`${MEMBERS}/${memberId}`, 'DELETE');
-      // const updatedMemberData = memberData.filter((member) => member.memberId !== memberId);
-      // setMemberData(updatedMemberData);
-      // setMemberData((prevMember) => prevMember.filter((member) => member.memberId !== memberId));
-      window.location.reload();
+      setMemberData((prevMember) => prevMember.filter((member) => member.id !== memberId));
+      Toast.success('해당 멤버가 삭제되었습니다');
     } catch (err: any) {
       const errorMessage = err.toString().substr(7);
       Toast.error(errorMessage);
