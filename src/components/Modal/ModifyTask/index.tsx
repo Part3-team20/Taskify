@@ -1,19 +1,20 @@
 'use client';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Modal from '@/components/Modal';
+import { CardProps } from '@/types/DashboardTypes';
 import FileInput from '@/components/common/FileInput';
+import Toast from '@/util/Toast';
+import useFetchWithToken from '@/hooks/useFetchToken';
 import DeadLineInput from '../ModalInput/DeadlineInput';
 import TagInput from '../ModalInput/TagInput';
-import styles from './ModifyTask.module.scss';
 import AssigneeInput from '../ModalInput/AssigneeInput';
 import StateInput from '../ModalInput/StateInput';
 import ModalInput from '../ModalInput';
-import { CardProps } from '@/types/DashboardTypes';
-import useFetchWithToken from '@/hooks/useFetchToken';
-import Toast from '@/util/Toast';
-import Button from '@/components/common/Button/Button';
-import { useRouter } from 'next/navigation';
+import ModalButton from '../ModalButton/Button';
+import styles from './ModifyTask.module.scss';
+
 
 interface ModifyTaskProps {
   defaultCard: CardProps;
@@ -180,17 +181,12 @@ export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen,
         </div>
 
         <div className={styles.buttons}>
-          <Button className={styles.cancelButton} handleClick={onClose} type="button" color="white">
+          <ModalButton handleClick={onClose} color="white">
             취소
-          </Button>
-          <Button
-            disabled={!Boolean(form.title && form.description)}
-            handleClick={handleModifyTask}
-            type="button"
-            color="violet"
-          >
+          </ModalButton>
+          <ModalButton color="violet" handleClick={handleModifyTask} disabled={!form.title || !form.description}>
             생성
-          </Button>
+          </ModalButton>
         </div>
       </form>
     </Modal>

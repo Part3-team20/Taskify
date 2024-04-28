@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import styles from './AssigneeInput.module.scss';
 import arrowDown from '@/../public/images/dropdown_icon.svg';
 import check from '@/../public/images/check.svg';
 import Profile from '@/components/common/Profile';
+import styles from './AssigneeInput.module.scss';
 
 interface AssigneeInputProps {
   members: {
@@ -63,16 +63,17 @@ export default function AssigneeInput({ members, onChange }: AssigneeInputProps)
         value={selectedValue.nickname}
         placeholder="담당자를 선택해주세요"
       />
-      <Image src={arrowDown} alt={'arrow'} width={26} height={26} className={styles.arrow} onClick={handleToggle} />
+      <Image src={arrowDown} alt="arrow" width={26} height={26} className={styles.arrow} onClick={handleToggle} />
       {isOpen && <ul className={styles.selectList}>{options}</ul>}
       <div className={styles.clearButton}>
+        {/* eslint-disable-next-line react/button-has-type */}
         <button
           onClick={() => {
             setSelectedValue({ nickname: '', profileImageUrl: '' });
             onChange('assigneeUserId', undefined);
           }}
         >
-          <Image src={'/images/remove_icon.svg'} alt="clear" fill style={{ objectFit: 'cover' }} />
+          <Image src="/images/remove_icon.svg" alt="clear" fill style={{ objectFit: 'cover' }} />
         </button>
       </div>
     </div>

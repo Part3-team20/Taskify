@@ -7,9 +7,10 @@ import { useDashboard } from '@/contexts/dashboardContext';
 import Profile from '@/components/common/Profile';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
+import ModalInvite from '@/components/Modal/ModalInvite';
 import styles from './EachDashBoardHeader.module.scss';
 
-interface Profile {
+interface ProfileProps {
   nickname: string;
   profileImageUrl?: string;
 }
@@ -33,7 +34,7 @@ export default function EachDashBoardHeader() {
   const { fetchWithToken } = useFetchWithToken();
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
-  const [profile, setProfile] = useState<Profile>({
+  const [profile, setProfile] = useState<ProfileProps>({
     nickname: '',
     profileImageUrl: '',
   });
@@ -52,7 +53,8 @@ export default function EachDashBoardHeader() {
     members: [],
     totalCount: 0,
   });
-  const { dashboardId: boardId } = useDashboard();
+  const { dashboardId: dashId } = useDashboard();
+  const boardId = Number(dashId);
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -79,6 +81,7 @@ export default function EachDashBoardHeader() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
         setProfile({ nickname: response.nickname, profileImageUrl: response.profileImageUrl });
       } catch (error: any) {
@@ -99,9 +102,7 @@ export default function EachDashBoardHeader() {
       }
     };
 
-    if (boardId) {
-      fetchDashboard();
-    }
+    fetchDashboard();
   }, [boardId, fetchWithToken]);
 
   useEffect(() => {
@@ -114,9 +115,7 @@ export default function EachDashBoardHeader() {
       }
     };
 
-    if (boardId) {
-      fetchMembers();
-    }
+    fetchMembers();
   }, [boardId, fetchWithToken]);
 
   return (
@@ -135,10 +134,7 @@ export default function EachDashBoardHeader() {
               <Image src="/images/settings_icon.svg" alt="dashboard-setting" width={20} height={20} />
               관리
             </Link>
-            <div className={styles.button}>
-              <Image src="/images/add_box.svg" alt="dashboard-invitation" width={20} height={20} />
-              초대하기
-            </div>
+            <ModalInvite btnColor="white" boardId={boardId} />
           </div>
         )}
 
@@ -147,8 +143,10 @@ export default function EachDashBoardHeader() {
           className={styles.members}
           style={
             deviceType === 'PC'
-              ? { width: `${members?.totalCount > 4 ? 162 : 31 * members?.totalCount + 7}px` }
-              : { width: `${members?.totalCount > 2 ? 100 : 31 * members?.totalCount + 7}px` }
+              ? // eslint-disable-next-line no-unsafe-optional-chaining
+                { width: `${members?.totalCount > 4 ? 162 : 31 * members?.totalCount + 7}px` }
+              : // eslint-disable-next-line no-unsafe-optional-chaining
+                { width: `${members?.totalCount > 2 ? 100 : 31 * members?.totalCount + 7}px` }
           }
         >
           {members?.members.slice(0, 4).map((member, index) => (
@@ -161,8 +159,10 @@ export default function EachDashBoardHeader() {
             </li>
           ))}
           {deviceType === 'PC'
-            ? members?.totalCount > 4 && <li className={styles.excess}>{`+${members?.totalCount - 4}`}</li>
-            : members?.totalCount > 2 && <li className={styles.excess}>{`+${members?.totalCount - 2}`}</li>}
+            ? // eslint-disable-next-line no-unsafe-optional-chaining
+              members?.totalCount > 4 && <li className={styles.excess}>{`+${members?.totalCount - 4}`}</li>
+            : // eslint-disable-next-line no-unsafe-optional-chaining
+              members?.totalCount > 2 && <li className={styles.excess}>{`+${members?.totalCount - 2}`}</li>}
         </ul>
 
         <hr className={styles.boundary} />
