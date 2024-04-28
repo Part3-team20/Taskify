@@ -1,6 +1,7 @@
 'use client';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Modal from '@/components/Modal';
 import { CardProps } from '@/types/DashboardTypes';
 import FileInput from '@/components/common/FileInput';
@@ -13,6 +14,7 @@ import StateInput from '../ModalInput/StateInput';
 import ModalInput from '../ModalInput';
 import ModalButton from '../ModalButton/Button';
 import styles from './ModifyTask.module.scss';
+
 
 interface ModifyTaskProps {
   defaultCard: CardProps;
@@ -52,6 +54,7 @@ interface Form {
 }
 
 export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen, onClose }: ModifyTaskProps) {
+  const router = useRouter();
   const { fetchWithToken } = useFetchWithToken();
   const [members, setMembers] = useState<Members[]>([]);
   const [columns, setColumns] = useState<Columns[]>([]);
@@ -79,6 +82,7 @@ export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen,
       const body = { ...form, imageUrl: imageFile };
       await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${defaultCard.id}`, 'PUT', body);
       Toast.success('카드를 수정했습니다');
+      router.refresh();
       onClose();
     } catch (err: any) {
       const errorMessage = err.toString().substr(7);

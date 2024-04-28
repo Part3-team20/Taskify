@@ -17,6 +17,7 @@ interface CreateTaskProps {
   columnId: number;
   isOpen: boolean;
   onClose: () => void;
+  onAddCard: any;
 }
 
 interface Members {
@@ -41,12 +42,12 @@ interface Form {
   imageUrl?: string;
 }
 
-export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: CreateTaskProps) {
+export default function CreateTask({ dashboardId, columnId, isOpen, onClose, onAddCard }: CreateTaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [members, setMembers] = useState<Members[]>([]);
   const [imageFile, setImageFile] = useState<string | undefined>(undefined);
   const [form, setForm] = useState<Form>({
-    dashboardId: 0,
+    dashboardId: Number(dashboardId),
     columnId,
     title: '',
     description: '',
@@ -64,8 +65,9 @@ export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: C
   const handleCreateTask = async () => {
     try {
       const body = { ...form, imageUrl: imageFile };
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards`, 'POST', body);
+      const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards`, 'POST', body);
       Toast.success('카드를 생성했습니다');
+      onAddCard(response);
       onClose();
     } catch (err: any) {
       const errorMessage = err.toString().substr(7);

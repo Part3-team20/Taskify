@@ -5,6 +5,7 @@ import Modal from '..';
 import styles from './CreateColumn.module.scss';
 import NameInput from '../ModalInput/NameInput';
 import ModalSubmitButton from '../ModalButton/SubmitButton';
+import ModalButton from '../ModalButton/Button';
 
 type CreateColumnProps = {
   isOpen: boolean;
@@ -37,8 +38,11 @@ export default function CreateColumn({ isOpen, onClose, onCreate, existingTitles
           <NameInput value={title} onChange={(e) => setTitle(e.target.value)} existingTitles={existingTitles} />
         </div>
         <div className={styles.buttons}>
+          <ModalButton color="white" handleClick={onClose}>
+            취소
+          </ModalButton>
           <ModalSubmitButton isActive={isValid} onClick={handleCreate}>
-            생성하기
+            생성
           </ModalSubmitButton>
         </div>
       </div>

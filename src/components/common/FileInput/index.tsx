@@ -49,7 +49,7 @@ export default function FileInput({
           body: formData,
         });
         const result = await response.json();
-        setFile(result.profileImageUrl);
+        setFile(usageLocation === 'mypage' ? result.profileImageUrl : result.imageUrl);
         setPreview(URL.createObjectURL(file));
       } catch (error) {
         console.log(error);
@@ -94,14 +94,14 @@ export default function FileInput({
       </label>
       {usageLocation === 'mypage' ? (
         <div className={styles.clearOnMypage}>
-          <button onClick={handleFileClear} className={styles.clearButton}>
+          <button type="button" onClick={handleFileClear} className={styles.clearButton}>
             초기화
           </button>
         </div>
       ) : (
         <div className={styles.clearOnModal}>
-          <button onClick={handleFileClear} className={styles.clearButton}>
-            <Image src={'/images/remove_icon.svg'} alt="clear" fill style={{ objectFit: 'cover' }} />
+          <button type="button" onClick={handleFileClear} className={styles.clearButton}>
+            <Image src="/images/remove_icon.svg" alt="clear" fill style={{ objectFit: 'cover' }} />
           </button>
         </div>
       )}

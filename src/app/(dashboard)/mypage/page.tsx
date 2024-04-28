@@ -19,7 +19,7 @@ export default function MyPage() {
     nickName: '',
     profileImageUrl: '',
   });
-  const [imageFile, setImageFile] = useState<string | null | undefined>(undefined);
+  const [imageFile, setImageFile] = useState<string | undefined>(undefined);
   const [passwords, setPasswords] = useState({ password: '', newPassword: '', passwordCheck: '' });
   const [email, setEmail] = useState<string | undefined>('');
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -99,8 +99,9 @@ export default function MyPage() {
             usageLocation="mypage"
           />
           <div className={styles.textInputs}>
-            <Input labelName="이메일" name="email" placeholder={email} disabled />
+            <Input className={styles.mypageInput} labelName="이메일" name="email" placeholder={email} disabled />
             <Input
+              className={styles.mypageInput}
               labelName="닉네임"
               name="nickName"
               value={profile?.nickName}
@@ -110,7 +111,7 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.button}>
-          <Button color="violet" disabled={Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
+          <Button color="violet" disabled={!Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
             저장
           </Button>
         </div>
@@ -119,6 +120,7 @@ export default function MyPage() {
         <h1>비밀번호 변경</h1>
         <div className={styles.inputs}>
           <Input
+            className={styles.mypageInput}
             labelName="현재 비밀번호"
             name="password"
             placeholder="현재 비밀번호 입력"
@@ -127,6 +129,7 @@ export default function MyPage() {
             required
           />
           <Input
+            className={styles.mypageInput}
             labelName="새 비밀번호"
             name="newPassword"
             placeholder="새 비밀번호 입력"
@@ -135,6 +138,7 @@ export default function MyPage() {
             required
           />
           <Input
+            className={styles.mypageInput}
             labelName="새 비밀번호 확인"
             name="passwordCheck"
             placeholder="새 비밀번호 입력"
