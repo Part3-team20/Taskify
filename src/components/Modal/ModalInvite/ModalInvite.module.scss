@@ -16,6 +16,12 @@
   font-weight: 500;
   gap: 8px;
   color: var(--gray-gray_787486, #787486);
+  .inviteIcon {
+    fill: #ffffff;
+    @include mobile {
+      display: none;
+    }
+  }
   @include tablet {
     width: 109px;
     height: 36px;
@@ -35,13 +41,6 @@
   font-size: 14px;
   gap: 6px;
   border-radius: 4px;
-}
-
-.inviteIcon {
-  fill: #ffffff;
-  @include mobile {
-    display: none;
-  }
 }
 
 .modalContainer {
