@@ -1,27 +1,17 @@
 import { MouseEventHandler, ReactNode } from 'react';
 import styles from './ModalSubmitButton.module.scss';
 
-// button
-type ModalButtonType = 'reset' | 'submit' | 'button';
-
 interface ModalSubmitButtonProps {
   children: ReactNode;
   isActive: boolean;
   className?: string;
   onClick?: MouseEventHandler;
-  type?: ModalButtonType;
 }
 
-export default function ModalSubmitButton({
-  children,
-  isActive,
-  className,
-  onClick,
-  type = 'submit',
-}: ModalSubmitButtonProps) {
+export default function ModalSubmitButton({ children, isActive, className, onClick }: ModalSubmitButtonProps) {
   return (
     // eslint-disable-next-line react/button-has-type
-    <button type={type} className={`${styles.container} ${className}`} disabled={!isActive} onClick={onClick}>
+    <button type="submit" className={`${styles.container} ${className}`} disabled={!isActive} onClick={onClick}>
       {children}
     </button>
   );
