@@ -15,7 +15,7 @@ interface ColumnProps {
   dashboardId: number;
   columnId: number;
   title: string;
-  onAddCard: () => void;
+  onAddCard: (columnId: number) => void;
   existingTitles: string[];
   onUpdate: (columnId: number, newTitle: string) => void;
   onDelete: (columnId: number) => void;
@@ -81,7 +81,7 @@ export default function Column({
       </div>
       <div className={styles.columnBody}>
         <div className={styles.addBtn}>
-          <AddButton handleClick={onAddCard} />
+          <AddButton handleClick={() => onAddCard(columnId)} />
         </div>
         {cards.length > 0 &&
           cards.map((card) => (

@@ -30,19 +30,27 @@ interface Members {
   isOwner: boolean;
 }
 
+interface Form {
+  assigneeUserId?: number;
+  dashboardId: number;
+  columnId: number;
+  title: string;
+  description: string;
+  dueDate?: string;
+  tags?: string[];
+  imageUrl?: string;
+}
+
 export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: CreateTaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [members, setMembers] = useState<Members[]>([]);
-  const [imageFile, setImageFile] = useState<string | null | undefined>(null);
-  const [form, setForm] = useState({
-    assigneeUserId: 0,
-    dashboardId,
+  const [imageFile, setImageFile] = useState<string | undefined>(undefined);
+  const [form, setForm] = useState<Form>({
+    dashboardId: dashboardId,
     columnId,
     title: '',
     description: '',
-    dueDate: '',
-    tags: [''],
-    imageUrl: '',
+    tags: [],
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -13,6 +13,7 @@ export default function KebobMenu({ onDelete }: KebobMenuProps) {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [IsModifyModalOpen, setIsModifyModalOpen] = useState(false);
 
   // 메뉴 바깥을 클릭하면 메뉴를 숨기는 로직
   useEffect(() => {
@@ -35,6 +36,10 @@ export default function KebobMenu({ onDelete }: KebobMenuProps) {
   const handleOptionClick = (option: MenuOption) => {
     console.log(`Option selected: ${option}`);
     setMenuVisible(false);
+
+    if (option === '수정하기') {
+      setIsModifyModalOpen(true); // 수정 모달 열기
+    }
 
     if (option === '삭제하기') {
       setIsDeleteModalOpen(true); // 삭제 모달 열기

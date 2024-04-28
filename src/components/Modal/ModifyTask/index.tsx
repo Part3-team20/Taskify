@@ -41,12 +41,22 @@ interface Columns {
   updatedAt: Date | string;
 }
 
+interface Form {
+  assigneeUserId?: number;
+  columnId: number;
+  title: string;
+  description?: string;
+  dueDate?: string;
+  tags?: string[];
+  imageUrl?: string;
+}
+
 export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen, onClose }: ModifyTaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [members, setMembers] = useState<Members[]>([]);
   const [columns, setColumns] = useState<Columns[]>([]);
-  const [imageFile, setImageFile] = useState<string | null | undefined>(null);
-  const [form, setForm] = useState({
+  const [imageFile, setImageFile] = useState<string | undefined>(undefined);
+  const [form, setForm] = useState<Form>({
     columnId,
     assigneeUserId: defaultCard.assignee?.id,
     title: defaultCard.title,

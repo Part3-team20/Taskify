@@ -85,6 +85,14 @@
     border: 0.0625rem solid $gray_D9D9D9;
     background: $white_FFFFFF;
     color: $gray_787486;
+    padding: 0.4375rem 1.8125rem;
+    border-radius: 0.25rem;
+
+    @include mobile {
+      width: 6.8125rem;
+      height: 1.75rem;
+      font-size: 0.75rem;
+    }
   }
 
   @include mobile {
