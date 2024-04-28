@@ -81,7 +81,7 @@ export default function EachDashBoardHeader() {
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
-        setProfile({ nickname: profile.nickname, profileImageUrl: profile.profileImageUrl });
+        setProfile({ nickname: response.nickname, profileImageUrl: response.profileImageUrl });
       } catch (error: any) {
         console.error('Failed to fetch user:', error);
       }
