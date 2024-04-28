@@ -61,10 +61,10 @@ export default function InviteListItem({ title, id, nickname }: InviteListItemPr
         {nickname}
       </div>
       <div className={styles.buttonBox}>
-        <Button color="violet" handleClick={onAcceptClick}>
+        <Button color="violet" handleClick={onAcceptClick} maxWidth>
           수락
         </Button>
-        <Button color="white" handleClick={onRejectClick}>
+        <Button color="white" handleClick={onRejectClick} maxWidth>
           거절
         </Button>
       </div>
