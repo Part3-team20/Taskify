@@ -1,15 +1,15 @@
 'use client';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import useFetchWithToken from '@/hooks/useFetchToken';
-import Toast from '@/util/Toast';
-import Button from '@/components/common/Button/Button';
 import Modal from '@/components/Modal';
 import FileInput from '@/components/common/FileInput';
-import ModalInput from '../ModalInput';
-import AssigneeInput from '../ModalInput/AssigneeInput';
+import useFetchWithToken from '@/hooks/useFetchToken';
+import Toast from '@/util/Toast';
 import DeadLineInput from '../ModalInput/DeadlineInput';
 import TagInput from '../ModalInput/TagInput';
+import ModalInput from '../ModalInput';
+import AssigneeInput from '../ModalInput/AssigneeInput';
+import ModalButton from '../ModalButton/Button';
 import styles from './CreateTask.module.scss';
 
 interface CreateTaskProps {
@@ -138,18 +138,12 @@ export default function CreateTask({ dashboardId, columnId, isOpen, onClose, onA
         </div>
 
         <div className={styles.buttons}>
-          <Button className={styles.cancelButton} handleClick={onClose} type="button" color="white">
+          <ModalButton handleClick={onClose} color="white">
             취소
-          </Button>
-          <Button
-            // eslint-disable-next-line no-extra-boolean-cast
-            disabled={!Boolean(form.title && form.description)}
-            handleClick={handleCreateTask}
-            type="button"
-            color="violet"
-          >
+          </ModalButton>
+          <ModalButton color="violet" handleClick={handleCreateTask} disabled={!form.title || !form.description}>
             생성
-          </Button>
+          </ModalButton>
         </div>
       </form>
     </Modal>
