@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useDashboard } from '@/contexts/dashboardContext';
 import Profile from '@/components/common/Profile';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
@@ -27,7 +28,8 @@ interface Members {
   totalCount: number;
 }
 
-export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
+// export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
+export default function EachDashBoardHeader() {
   const { fetchWithToken } = useFetchWithToken();
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
@@ -50,6 +52,7 @@ export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
     members: [],
     totalCount: 0,
   });
+  const { dashboardId: boardId } = useDashboard();
 
   useEffect(() => {
     const checkDeviceType = () => {
