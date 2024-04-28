@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import useFetchWithToken from '@/hooks/useFetchToken';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import { CommentProps } from '@/types/DashboardTypes';
 import { COMMENTS } from '@/constants/ApiUrl';
 import CommentInput from '@/components/Modal/ModalInput/CommentInput';
@@ -40,59 +39,73 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deleteCommentId, setDeleteCommentId] = useState<number | null>(null);
-  // const [hasMore, setHasMore] = useState(true);
-
+  const [hasMore, setHasMore] = useState(true);
+  const [cursorId, setCursorId] = useState<number | null>(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [size, setSize] = useState<number>(5);
+  const [size, setSize] = useState<number>(5);
+  const [loading, setLoading] = useState(false);
 
-  // const fetchMoreComments = useCallback(async () => {
-  //   try {
-  //     const result = await fetchWithToken(
-  //       `https://sp-taskify-api.vercel.app/4-20/comments?size=${size}&cardId=${cardId}`,
-  //       'GET'
-  //     );
-  //     const formattedComments = result.comments.map((comment: any) => ({
-  //       ...comment,
-  //       createdAt: formatDateTime(comment.createdAt),
-  //     }));
-  //     setComments((prevComments) => [...prevComments, ...formattedComments]);
-  //     // 무한 스크롤을 위해 hasMore를 적절히 설정
-  //     setHasMore(formattedComments.length === size);
-  //   } catch (error) {
-  //     console.error('더 많은 댓글을 불러오는 데 실패했습니다:', error);
-  //   }
-  // }, [fetchWithToken, cardId, size]);
-
-  const fetchComments = useCallback(async () => {
+  const fetchMoreComments = useCallback(async () => {
+    if (loading || !hasMore) return;
+    setLoading(true);
     try {
-      const result = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/comments?cardId=${cardId}`, 'GET');
-      const formattedComments = result.comments.map((comment: any) => ({
+      const url = `https://sp-taskify-api.vercel.app/4-20/comments?size=${size}&cardId=${cardId}${cursorId ? `&cursorId=${cursorId}` : ''}`;
+      const result = await fetchWithToken(url, 'GET');
+      const newComments = result.comments.map((comment: any) => ({
         ...comment,
         createdAt: formatDateTime(comment.createdAt),
       }));
-      setComments(formattedComments);
+      setComments((prevComments) => {
+        const existingIds = new Set(prevComments.map((c) => c.id));
+        const filteredNewComments = newComments.filter((c: any) => !existingIds.has(c.id));
+        return [...prevComments, ...filteredNewComments];
+      });
+      setCursorId(typeof result.cursorId === 'number' ? result.cursorId : null);
+      setHasMore(result.cursorId != null);
     } catch (error) {
-      console.error('Failed to fetch comments:', error);
+      console.error('Failed to load more comments:', error);
+    } finally {
+      setLoading(false);
     }
-  }, [fetchWithToken, cardId]);
+  }, [fetchWithToken, cardId, size, cursorId, loading]);
+
+  const loadMoreComments = async () => {
+    if (loading || !hasMore) return;
+    setLoading(true);
+    const url = `https://sp-taskify-api.vercel.app/4-20/comments?size=5&cardId=${cardId}${cursorId ? `&cursorId=${cursorId}` : ''}`;
+    try {
+      const result = await fetchWithToken(url, 'GET');
+      const newComments = result.comments.map((comment: any) => ({
+        ...comment,
+        createdAt: formatDateTime(comment.createdAt),
+      }));
+      setComments((prev) => [...prev, ...newComments]);
+      setCursorId(typeof result.cursorId === 'number' ? result.cursorId : null);
+      setHasMore(result.cursorId != null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!comments.length && hasMore) {
+      fetchMoreComments();
+    }
+  }, [fetchMoreComments, comments.length, hasMore]);
 
   const handlePostComment = useCallback(
     async (content: string) => {
       const url = COMMENTS;
-      const body = {
-        content,
-        cardId,
-        columnId,
-        dashboardId: Number(dashboardId),
-      };
+      const body = { content, cardId, columnId, dashboardId: Number(dashboardId) };
       try {
-        await fetchWithToken(url, 'POST', body);
-        fetchComments(); // 댓글 목록을 다시 불러옵니다
+        const newComment = await fetchWithToken(url, 'POST', body);
+        newComment.createdAt = formatDateTime(newComment.createdAt);
+        setComments((prevComments) => [newComment, ...prevComments]);
       } catch (error) {
         console.error('Failed to post comment:', error);
       }
     },
-    [fetchWithToken, cardId, columnId, dashboardId, fetchComments]
+    [fetchWithToken, cardId, columnId, dashboardId]
   );
 
   const handlePutComment = useCallback(
@@ -101,13 +114,15 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
       const body = { content };
       try {
         await fetchWithToken(url, 'PUT', body);
-        fetchComments(); // 댓글 목록을 다시 불러옵니다
-        setEditingCommentId(null); // 편집 상태를 초기화합니다
+        setComments((prevComments) =>
+          prevComments.map((comment) => (comment.id === id ? { ...comment, content } : comment))
+        );
+        setEditingCommentId(null); // 수정 후 인풋을 닫음
       } catch (error) {
         console.error('Failed to update comment:', error);
       }
     },
-    [fetchWithToken, fetchComments]
+    [fetchWithToken]
   );
 
   const handleDeleteComment = useCallback(
@@ -115,9 +130,8 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
       try {
         const url = `${COMMENTS}/${id}`;
         await fetchWithToken(url, 'DELETE');
-        // 서버에서 삭제 후 상태 업데이트로 댓글 목록에서 바로 제거
         setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
-        setIsConfirmOpen(false);
+        setIsConfirmOpen(false); // 모달을 닫음
       } catch (error) {
         console.error('Failed to delete comment:', error);
       }
@@ -125,42 +139,16 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
     [fetchWithToken]
   );
 
-  const openConfirmModal = (id: number) => {
+  const openConfirmModal = useCallback((id: number, isOpen: boolean) => {
     setDeleteCommentId(id);
-    setIsConfirmOpen(true);
-  };
-
-  useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
-
-  // // 스크롤 위치 감지하여 size 값을 업데이트하고 더 많은 댓글을 가져옴
-  // const handleScroll = () => {
-  //   const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-  //   const scrollHeight =
-  //     (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-  //   const clientHeight = document.documentElement.clientHeight || window.innerHeight;
-  //   const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-
-  //   if (scrolledToBottom) {
-  //     // 스크롤이 가장 아래에 도달하면 fetchMoreComments를 호출하여 새로운 댓글을 가져옴
-  //     fetchMoreComments();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
+    setIsConfirmOpen(isOpen);
+  }, []);
 
   return (
     <div className={styles.comments}>
       <p className={styles.commentTitle}>댓글</p>
       <CommentInput onCommentSubmit={handlePostComment} initialContent="" />
 
-      {/* <InfiniteScroll dataLength={comments.length} next={fetchMoreComments} hasMore={hasMore} loader={undefined}> */}
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
           <Profile profileImageUrl={comment.author.profileImageUrl || undefined} />
@@ -192,7 +180,11 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
                     <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                       수정
                     </button>
-                    <button className={styles.commentBtn} type="button" onClick={() => openConfirmModal(comment.id)}>
+                    <button
+                      className={styles.commentBtn}
+                      type="button"
+                      onClick={() => openConfirmModal(comment.id, true)}
+                    >
                       삭제
                     </button>
                   </div>
@@ -202,7 +194,11 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
           </div>
         </div>
       ))}
-      {/* </InfiniteScroll> */}
+      {hasMore && (
+        <button type="button" onClick={loadMoreComments} disabled={loading}>
+          댓글 더 보기
+        </button>
+      )}
       {isConfirmOpen && (
         <ConfirmModal
           isOpen={isConfirmOpen}

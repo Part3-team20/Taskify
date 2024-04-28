@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Modal from '@/components/Modal';
@@ -24,6 +24,7 @@ interface TaskProps {
 export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, onDeleteCard }: TaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [cardDetails, setCardDetails] = useState<CardProps | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleButtonClose = (event: { stopPropagation: () => void }) => {
     event.stopPropagation();
@@ -45,12 +46,18 @@ export default function Task({ dashboardId, columnId, cardId, onClose, isOpen, o
     fetchCardDetails();
   }, [cardId, isOpen, fetchWithToken]);
 
+  useEffect(() => {
+    if (isOpen && scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
+
   if (!cardDetails) return null; // 데이터가 없는 경우 아무것도 표시하지 않음
 
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose} style={{ width: 'auto', height: 'auto', maxHeight: '730px' }}>
-        <div className={styles.taskModal}>
+        <div className={styles.taskModal} ref={scrollRef}>
           <div className={styles.modalHeader}>
             <h2>{cardDetails.title}</h2>
             <div className={styles.buttons}>
