@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { DASHBOARDS } from '@/constants/ApiUrl';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import useFetchWithToken from '@/hooks/useFetchToken';
+import { useDashboard } from '@/contexts/dashboardContext';
 import CreateDashboard from '@/components/Modal/CreateDashboard';
 import ModalPortal from '@/components/Modal/ModalPortal';
 import IconTextButton from '../common/Button/IconTextButton';
@@ -12,58 +11,23 @@ import SideBarListItem from './SideBarListItem';
 import PaginationButton from '../common/Button/PaginationButton';
 import styles from './SideBar.module.scss';
 
-interface Dashboard {
-  id: number;
-  title: string;
-  color: string;
-  createdAt: string;
-  updatedAt: string;
-  createdByMe: boolean;
-  userId: number;
-}
-
-interface Cursor {
-  page: number;
-  totalCount: number;
-}
-
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [page, setPage] = useState<Cursor>({ page: 1, totalCount: 0 });
-  const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
+  const [page, setPage] = useState(1);
+  const {
+    sideDashboards: { dashboards, totalCount },
+    setSideDashboards,
+    getDashboardsData,
+  } = useDashboard();
 
-  const { fetchWithToken: getDashboardList, error } = useFetchWithToken();
-
-  const handlePageChange = (pageNumber: number) => {
-    setPage((prevPage) => ({ ...prevPage, page: pageNumber }));
+  const handlePageChange = async (pageNumber: number) => {
+    setPage(pageNumber);
+    getDashboardsData(10, setSideDashboards, pageNumber);
   };
-
-  /**
-   * @TODO
-   * -로딩 처리
-   * -dashboardList 데이터 전역 전환
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getDashboardList(
-        `${DASHBOARDS}?navigationMethod=pagination&page=${page.page}&size=12`,
-        'GET'
-      );
-      if (response) {
-        setDashboards(response.dashboards);
-        setPage((prevPage) => ({ ...prevPage, totalCount: response.totalCount }));
-      }
-      if (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [page.page]);
 
   return (
     <aside className={styles.container}>
-      <Link className={styles.logoLink} href="/">
+      <Link className={styles.logoLink} href="/mydashboard">
         <h1 className={styles.logo}>
           <Image width="29" height="33" src="/images/mainLogo.svg" alt="taskify" priority />
           <Image className={styles.logoText} width="80" height="22" src="/images/Taskify.svg" alt="taskify" priority />
@@ -79,11 +43,11 @@ export default function SideBar() {
         <ul className={styles.list}>
           {dashboards && dashboards.map((data) => <SideBarListItem key={data.id} data={data} />)}
         </ul>
-        {page.totalCount > 10 && (
+        {totalCount > 10 && (
           <PaginationButton
             className={styles.pagination}
-            hasNext={page.totalCount - page.page * 12 > 0}
-            currentPage={page.page}
+            hasNext={totalCount - page * 10 > 0}
+            currentPage={page}
             onPageChange={handlePageChange}
           />
         )}

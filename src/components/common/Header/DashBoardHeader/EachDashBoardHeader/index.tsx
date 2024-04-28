@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Profile from '@/components/common/Profile';
-import styles from './EachDashBoardHeader.module.scss';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
+import styles from './EachDashBoardHeader.module.scss';
 
 type User = {
   id: number;
@@ -31,9 +31,8 @@ type Members = {
   totalCount: number;
 };
 
-export default function EachDashBoardHeader({ params }: { params: { boardId: number } }) {
+export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
   const { fetchWithToken } = useFetchWithToken();
-  const { boardId } = params;
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
   const [user, setUser] = useState<User>({
@@ -172,7 +171,7 @@ export default function EachDashBoardHeader({ params }: { params: { boardId: num
         <hr className={styles.boundary} />
 
         {/* 내 프로필 */}
-        <Link href={'/mypage'}>
+        <Link href="/mypage">
           <div className={styles.profile}>
             <Profile profileImageUrl={user?.profileImageUrl} />
             <span className={styles.nickname}>{user?.nickname}</span>

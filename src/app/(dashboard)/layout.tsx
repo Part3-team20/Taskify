@@ -1,14 +1,18 @@
 'use client';
 
 // 추후 삭제
-import { useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { DashboardProvider } from '@/contexts/dashboardContext';
 import SideBar from '@/components/SideBar';
 import DashBoardHeader from '@/components/common/Header/DashBoardHeader';
+import EachDashBoardHeader from '@/components/common/Header/DashBoardHeader/EachDashBoardHeader';
 import styles from './layout.module.scss';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const path = usePathname();
+  const params = useParams();
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -19,14 +23,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, []);
 
   return (
-    <>
+    <DashboardProvider>
       <SideBar />
       <div className={styles.rightSide}>
         <div className={styles.header}>
-          <DashBoardHeader />
+          {path === '/mydashboard' ? <DashBoardHeader /> : <EachDashBoardHeader boardId={Number(params.boardId)} />}
         </div>
         <main className={styles.main}>{children}</main>
       </div>
-    </>
+    </DashboardProvider>
   );
 }

@@ -84,7 +84,7 @@ export default function MemberManagement({ createUserId }: { createUserId: numbe
                 <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
               {member.userId !== createUserId ? (
-                <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
+                <Button color="white" handleClick={() => handleDeleteMember(member.id)} cancel>
                   삭제
                 </Button>
               ) : (

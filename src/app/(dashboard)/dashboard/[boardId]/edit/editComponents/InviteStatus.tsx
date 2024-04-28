@@ -89,8 +89,10 @@ export default function InviteStatus() {
         .map((invite, index) => (
           <div key={invite.id} className={styles.emailSection}>
             <div className={styles.emailList}>
-              <p className={styles.inviteEmail}>{invite.invitee.email}</p>
-              <Button color="white" handleClick={() => handleCancelInvite(invite.id)}>
+              <p key={invite.id} className={styles.inviteEmail}>
+                {invite.invitee.email}
+              </p>
+              <Button color="white" handleClick={() => handleCancelInvite(invite.id)} cancel>
                 취소
               </Button>
             </div>

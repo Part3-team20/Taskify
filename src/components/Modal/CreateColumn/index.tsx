@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '..';
 import styles from './CreateColumn.module.scss';
-import ModalButton from '../ModalButton/Button/index';
 import NameInput from '../ModalInput/NameInput';
+import ModalSubmitButton from '../ModalButton/SubmitButton';
 
 type CreateColumnProps = {
   isOpen: boolean;
@@ -15,6 +15,12 @@ type CreateColumnProps = {
 
 export default function CreateColumn({ isOpen, onClose, onCreate, existingTitles }: CreateColumnProps) {
   const [title, setTitle] = useState('');
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    const isUnique = !existingTitles.includes(title);
+    setIsValid(title.trim() !== '' && isUnique);
+  }, [title, existingTitles]);
 
   const handleCreate = () => {
     onCreate(title);
@@ -31,9 +37,9 @@ export default function CreateColumn({ isOpen, onClose, onCreate, existingTitles
           <NameInput value={title} onChange={(e) => setTitle(e.target.value)} existingTitles={existingTitles} />
         </div>
         <div className={styles.buttons}>
-          <ModalButton color="violet" handleClick={handleCreate}>
+          <ModalSubmitButton isActive={isValid} onClick={handleCreate}>
             생성하기
-          </ModalButton>
+          </ModalSubmitButton>
         </div>
       </div>
     </Modal>
