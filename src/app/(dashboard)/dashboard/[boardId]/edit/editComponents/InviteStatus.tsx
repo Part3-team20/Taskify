@@ -73,14 +73,14 @@ export default function InviteStatus() {
             onPageChange={handlePageChange}
           />
           <div className={styles.onPcSize}>
-            <ModalInvite />
+            <ModalInvite btnColor="violet" />
           </div>
         </div>
       </div>
       <div className={styles.subcontainer}>
         <p className={styles.email}>이메일</p>
         <div className={styles.onMobileSize}>
-          <ModalInvite />
+          <ModalInvite btnColor="violet" />
         </div>
       </div>
 

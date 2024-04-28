@@ -10,7 +10,11 @@ import Modal from '@/components/Modal';
 import Toast from '@/util/Toast';
 import styles from './ModalInvite.module.scss';
 
-export default function ModalInvite() {
+interface ModalInviteProps {
+  btnColor: 'violet' | 'white';
+}
+
+export default function ModalInvite({ btnColor }: ModalInviteProps) {
   const boardId = useBoardId();
   const [isOpen, setIsOpen] = useState(false);
   const [emailValue, setEmailValue] = useState('');
@@ -59,7 +63,7 @@ export default function ModalInvite() {
 
   return (
     <div>
-      <Button color="violet" handleClick={() => setIsOpen(true)} invite>
+      <Button color={btnColor} handleClick={() => setIsOpen(true)} invite>
         <Image className={styles.inviteIcon} src="/images/add_box.svg" width={16} height={16} alt="invite" />
         초대하기
       </Button>
