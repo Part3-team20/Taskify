@@ -4,11 +4,10 @@
 
 .modal {
   width: 31.625rem !important;
-  height: 56.6875rem !important;
+  height: 80vh !important;
 
   @include mobile {
     width: 23rem !important;
-    height: 47.875rem !important;
   }
 }
 
@@ -20,6 +19,7 @@
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  overflow-y: scroll;
 
   .title {
     font-size: 1.5rem;
