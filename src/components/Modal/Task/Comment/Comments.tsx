@@ -196,7 +196,7 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
       ))}
       {hasMore && (
         <button className={styles.moreBtn} type="button" onClick={loadMoreComments} disabled={loading}>
-          더 보기
+          + 더 보기
         </button>
       )}
       {isConfirmOpen && (
