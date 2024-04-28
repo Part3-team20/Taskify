@@ -51,6 +51,16 @@ export default function Column({ columnId, title, onUpdate, onDelete, existingTi
     handleCloseCreateTaskModal(); // 생성 후 모달 닫기
   };
 
+  const handleModifyCard = (modifiedCard: any) => {
+    const indexOfCard = cards.findIndex((card) => card.id === modifiedCard);
+
+    if (indexOfCard !== -1) {
+      const updatedCards = [...cards];
+      updatedCards[indexOfCard] = modifiedCard;
+      setCards(updatedCards);
+    }
+  };
+
   // 카드 더보기 버튼 클릭 시 호출되는 함수
   const handleShowMoreCards = () => {
     const endSliceIndex = Math.min(startIndex + cardsPerPage, cards.length);
@@ -118,7 +128,9 @@ export default function Column({ columnId, title, onUpdate, onDelete, existingTi
             dueDate={card.dueDate}
             dashboardId={dashboardId}
             columnId={columnId}
+            description={card.description}
             onDeleteCard={handleDeleteCard}
+            onModifyCard={handleModifyCard}
           />
         ))}
         {cards.length > startIndex + cardsPerPage && (

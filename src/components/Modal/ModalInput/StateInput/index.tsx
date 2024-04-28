@@ -30,7 +30,7 @@ export default function StateInput({ columns, defaultColumnId, onChange }: State
   useEffect(() => {
     const defaultColumn = columns.find((column) => column.id === defaultColumnId);
     setSelectedValue(defaultColumn ? defaultColumn.title : '미정');
-  }, []);
+  }, [columns]);
 
   const options = columns.map((item) => (
     <li className={styles.selectItem} key={item.id}>
