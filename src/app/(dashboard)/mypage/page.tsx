@@ -8,9 +8,9 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import { CHANGE_PASSWORD, USERS } from '@/constants/ApiUrl';
 import { useRouter } from 'next/navigation';
 import Toast from '@/util/Toast';
-import styles from './MyPage.module.scss';
 import LogoutModal from '@/components/Modal/LogoutModal';
 import Button from '@/components/common/Button/Button';
+import styles from './MyPage.module.scss';
 
 export default function MyPage() {
   const router = useRouter();
@@ -111,7 +111,7 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.button}>
-          <Button color="violet" disabled={!Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
+          <Button color="violet" disabled={Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
             저장
           </Button>
         </div>
@@ -151,8 +151,10 @@ export default function MyPage() {
           <Button
             color="violet"
             disabled={
-              !Boolean(
-                passwords?.password && passwords?.newPassword && passwords?.newPassword === passwords.passwordCheck
+              !(
+                Boolean(passwords?.password) &&
+                Boolean(passwords?.newPassword) &&
+                passwords?.newPassword === passwords?.passwordCheck
               )
             }
             handleClick={handlePasswordSubmit}

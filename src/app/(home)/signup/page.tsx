@@ -25,14 +25,14 @@ export default function SignUpPage() {
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isBtnActive, setIsBtnActive] = useState(false);
 
-  function handleChange(e: any) {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
 
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
-  }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
