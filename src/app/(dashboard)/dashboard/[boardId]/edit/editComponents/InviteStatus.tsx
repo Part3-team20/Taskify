@@ -8,6 +8,7 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import ModalInvite from '@/components/Modal/ModalInvite';
 import Button from '@/components/common/Button/Button';
+import Toast from '@/util/Toast';
 import styles from './InviteStatus.module.scss';
 
 interface Invite {
@@ -37,18 +38,21 @@ export default function InviteStatus() {
     try {
       await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations/${userId}`, 'DELETE');
       setInviteData((prevInvites) => prevInvites.filter((invite) => invite.id !== userId));
-    } catch (e) {
-      console.error(e);
+      Toast.success('삭제되었습니다.');
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseData = await fetchWithToken(`${DASHBOARDS}}/${boardId}/invitations`, 'GET');
+        const responseData = await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'GET');
         setInviteData(responseData.invitations);
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
+        const errorMessage = err.toString().substr(7);
+        Toast.error(errorMessage);
       }
     };
     fetchData();
@@ -82,8 +86,8 @@ export default function InviteStatus() {
 
       {inviteList
         .filter((invite) => !invite.inviteAccepted)
-        .map((invite) => (
-          <div className={styles.emailSection}>
+        .map((invite, index) => (
+          <div key={invite.id} className={styles.emailSection}>
             <div className={styles.emailList}>
               <p key={invite.id} className={styles.inviteEmail}>
                 {invite.invitee.email}
@@ -92,7 +96,7 @@ export default function InviteStatus() {
                 취소
               </Button>
             </div>
-            <hr className={styles.contour} />
+            {index !== inviteList.length - 1 && <hr className={styles.contour} />}
           </div>
         ))}
     </div>

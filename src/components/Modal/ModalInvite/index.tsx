@@ -7,6 +7,7 @@ import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
 import Image from 'next/image';
 import Modal from '@/components/Modal';
+import Toast from '@/util/Toast';
 import styles from './ModalInvite.module.scss';
 
 export default function ModalInvite() {
@@ -25,16 +26,31 @@ export default function ModalInvite() {
   };
 
   const handlePostInvite = async () => {
-    /* TODO : 초대하기  로직 */
     try {
-      await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'POST', {
-        email: emailValue,
-      });
-      window.location.reload();
-    } catch (e) {
-      console.error(e);
+      const responseInviteData = await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`);
+
+      if (responseInviteData && responseInviteData.invitations) {
+        const isDuplicationInvitation = responseInviteData.invitations.map(
+          (invitation: any) => invitation.invitee.email
+        );
+        if (!isDuplicationInvitation.includes(emailValue)) {
+          await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'POST', {
+            email: emailValue,
+          });
+          window.location.reload();
+          Toast.success('해당 유저를 초대하였습니다');
+        } else {
+          Toast.error('이미 초대된 이메일입니다.');
+        }
+      } else {
+        Toast.error('잠시 후 다시 시도해주세요.');
+      }
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handlePostInvite();
