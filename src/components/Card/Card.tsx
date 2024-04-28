@@ -5,6 +5,7 @@ import Profile from '@/components/common/Profile';
 import Task from '@/components/Modal/Task';
 import styles from './Card.module.scss';
 import ModalPortal from '../Modal/ModalPortal';
+import ModifyTask from '../Modal/ModifyTask';
 
 interface CardDetail {
   id?: number;
@@ -34,6 +35,7 @@ export default function Card({
   onDeleteCard,
 }: CardDetail) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+  const [isModifyTaskModalOpen, setIsModifyTaskModalOpen] = useState(false);
 
   // 카드 클릭 핸들러
   const handleCardClick = () => {
@@ -67,16 +69,27 @@ export default function Card({
         </div>
       </div>
       <ModalPortal>
-        {isModalOpen && id !== undefined ? (
-          <Task
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            cardId={id}
-            dashboardId={dashboardId}
-            columnId={columnId}
-            onDeleteCard={onDeleteCard}
-          />
-        ) : null}
+        <div>
+          {isModalOpen && id !== undefined ? (
+            <Task
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              cardId={id}
+              dashboardId={dashboardId}
+              columnId={columnId}
+              onDeleteCard={onDeleteCard}
+            />
+          ) : null}
+          {isModifyTaskModalOpen && id !== undefined ? (
+            <ModifyTask
+              isOpen={isModifyTaskModalOpen}
+              onClose={() => setIsModifyTaskModalOpen(false)}
+              dashboardId={Number(dashboardId)}
+              columnId={columnId}
+              defaultCard={}
+            />
+          ) : null}
+        </div>
       </ModalPortal>
     </button>
   );
