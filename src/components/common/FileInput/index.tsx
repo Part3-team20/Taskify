@@ -49,7 +49,7 @@ export default function FileInput({
           body: formData,
         });
         const result = await response.json();
-        setFile(result.profileImageUrl);
+        setFile(usageLocation === 'mypage' ? result.profileImageUrl : result.imageUrl);
         setPreview(URL.createObjectURL(file));
       } catch (error) {
         console.log(error);
