@@ -27,7 +27,7 @@ export default function SideBar() {
 
   return (
     <aside className={styles.container}>
-      <Link className={styles.logoLink} href="/">
+      <Link className={styles.logoLink} href="/mydashboard">
         <h1 className={styles.logo}>
           <Image width="29" height="33" src="/images/mainLogo.svg" alt="taskify" priority />
           <Image className={styles.logoText} width="80" height="22" src="/images/Taskify.svg" alt="taskify" priority />

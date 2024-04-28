@@ -88,7 +88,7 @@ export default function InviteStatus() {
               <p key={invite.id} className={styles.inviteEmail}>
                 {invite.invitee.email}
               </p>
-              <Button color="white" handleClick={() => handleCancelInvite(invite.id)}>
+              <Button color="white" handleClick={() => handleCancelInvite(invite.id)} cancel>
                 취소
               </Button>
             </div>
