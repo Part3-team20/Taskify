@@ -122,7 +122,7 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
         )}
         {isCreateTaskModalOpen && (
           <CreateTask
-            dashboardId={boardId}
+            dashboardId={Number(boardId)}
             columnId={targetColumnId}
             isOpen={isCreateTaskModalOpen}
             onClose={handleCloseAddTaskModal}
