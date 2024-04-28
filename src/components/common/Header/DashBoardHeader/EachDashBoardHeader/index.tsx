@@ -7,6 +7,7 @@ import { useDashboard } from '@/contexts/dashboardContext';
 import Profile from '@/components/common/Profile';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
+import ModalInvite from '@/components/Modal/ModalInvite';
 import styles from './EachDashBoardHeader.module.scss';
 
 interface Profile {
@@ -52,7 +53,8 @@ export default function EachDashBoardHeader() {
     members: [],
     totalCount: 0,
   });
-  const { dashboardId: boardId } = useDashboard();
+  const { dashboardId: dashId } = useDashboard();
+  const boardId = Number(dashId);
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -99,9 +101,7 @@ export default function EachDashBoardHeader() {
       }
     };
 
-    if (boardId) {
-      fetchDashboard();
-    }
+    fetchDashboard();
   }, [boardId, fetchWithToken]);
 
   useEffect(() => {
@@ -114,9 +114,7 @@ export default function EachDashBoardHeader() {
       }
     };
 
-    if (boardId) {
-      fetchMembers();
-    }
+    fetchMembers();
   }, [boardId, fetchWithToken]);
 
   return (
@@ -135,10 +133,7 @@ export default function EachDashBoardHeader() {
               <Image src="/images/settings_icon.svg" alt="dashboard-setting" width={20} height={20} />
               관리
             </Link>
-            <div className={styles.button}>
-              <Image src="/images/add_box.svg" alt="dashboard-invitation" width={20} height={20} />
-              초대하기
-            </div>
+            <ModalInvite btnColor="white" boardId={boardId} />
           </div>
         )}
 

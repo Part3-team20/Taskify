@@ -20,7 +20,7 @@ interface Invite {
 }
 
 export default function InviteStatus() {
-  const boardId = useBoardId();
+  const boardId = useBoardId() || 0;
   const [inviteData, setInviteData] = useState<Invite[]>([]);
   const { fetchWithToken } = useFetchWithToken();
 
@@ -73,14 +73,14 @@ export default function InviteStatus() {
             onPageChange={handlePageChange}
           />
           <div className={styles.onPcSize}>
-            <ModalInvite btnColor="violet" />
+            <ModalInvite btnColor="violet" boardId={boardId} />
           </div>
         </div>
       </div>
       <div className={styles.subcontainer}>
         <p className={styles.email}>이메일</p>
         <div className={styles.onMobileSize}>
-          <ModalInvite btnColor="violet" />
+          <ModalInvite btnColor="violet" boardId={boardId} />
         </div>
       </div>
 

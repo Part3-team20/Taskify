@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { useBoardId } from '@/contexts/idContext';
+// import { useBoardId } from '@/contexts/idContext';
 import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Button from '@/components/common/Button/Button';
@@ -12,10 +12,11 @@ import styles from './ModalInvite.module.scss';
 
 interface ModalInviteProps {
   btnColor: 'violet' | 'white';
+  boardId: number;
 }
 
-export default function ModalInvite({ btnColor }: ModalInviteProps) {
-  const boardId = useBoardId();
+export default function ModalInvite({ btnColor, boardId }: ModalInviteProps) {
+  // const boardId = useBoardId();
   const [isOpen, setIsOpen] = useState(false);
   const [emailValue, setEmailValue] = useState('');
 
@@ -63,10 +64,10 @@ export default function ModalInvite({ btnColor }: ModalInviteProps) {
 
   return (
     <div>
-      <Button color={btnColor} handleClick={() => setIsOpen(true)} invite>
+      <button type="button" className={`${styles.inviteBtn} ${styles[btnColor]}`} onClick={() => setIsOpen(true)}>
         <Image className={styles.inviteIcon} src="/images/add_box.svg" width={16} height={16} alt="invite" />
         초대하기
-      </Button>
+      </button>
       <Modal isOpen={isOpen} onClose={handleClickCancel} style={{ width: 'auto', height: 'auto' }}>
         <div className={styles.modalContainer}>
           <p className={styles.invite}>초대하기</p>
