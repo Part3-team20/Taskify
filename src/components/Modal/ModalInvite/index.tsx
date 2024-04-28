@@ -26,13 +26,25 @@ export default function ModalInvite() {
   };
 
   const handlePostInvite = async () => {
-    /* TODO : 초대하기  로직 */
     try {
-      await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'POST', {
-        email: emailValue,
-      });
-      window.location.reload();
-      Toast.success('해당 유저를 초대하였습니다');
+      const responseInviteData = await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`);
+
+      if (responseInviteData && responseInviteData.invitations) {
+        const isDuplicationInvitation = responseInviteData.invitations.map(
+          (invitation: any) => invitation.invitee.email
+        );
+        if (!isDuplicationInvitation.includes(emailValue)) {
+          await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`, 'POST', {
+            email: emailValue,
+          });
+          window.location.reload();
+          Toast.success('해당 유저를 초대하였습니다');
+        } else {
+          Toast.error('이미 초대된 이메일입니다.');
+        }
+      } else {
+        Toast.error('잠시 후 다시 시도해주세요.');
+      }
     } catch (err: any) {
       const errorMessage = err.toString().substr(7);
       Toast.error(errorMessage);
