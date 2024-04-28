@@ -19,11 +19,15 @@ interface AssigneeInputProps {
     isOwner: boolean;
   }[];
   onChange: (key: string, value: number | undefined) => void;
+  defaultMember?: { id?: number; nickname?: string; profileImageUrl?: string };
 }
 
-export default function AssigneeInput({ members, onChange }: AssigneeInputProps) {
+export default function AssigneeInput({ members, onChange, defaultMember }: AssigneeInputProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState({ nickname: '', profileImageUrl: '' });
+  const [selectedValue, setSelectedValue] = useState({
+    nickname: defaultMember?.nickname,
+    profileImageUrl: defaultMember?.profileImageUrl,
+  });
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);

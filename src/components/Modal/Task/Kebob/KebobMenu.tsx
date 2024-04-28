@@ -7,9 +7,10 @@ type MenuOption = '수정하기' | '삭제하기';
 
 interface KebobMenuProps {
   onDelete: () => void;
+  handleModifyOpen: () => void;
 }
 
-export default function KebobMenu({ onDelete }: KebobMenuProps) {
+export default function KebobMenu({ onDelete, handleModifyOpen }: KebobMenuProps) {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -35,6 +36,10 @@ export default function KebobMenu({ onDelete }: KebobMenuProps) {
   const handleOptionClick = (option: MenuOption) => {
     console.log(`Option selected: ${option}`);
     setMenuVisible(false);
+
+    if (option === '수정하기') {
+      handleModifyOpen(); // 수정 모달 열기
+    }
 
     if (option === '삭제하기') {
       setIsDeleteModalOpen(true); // 삭제 모달 열기

@@ -21,6 +21,15 @@
   overflow-x: hidden;
   overflow-y: scroll;
 
+  &::-webkit-scrollbar {
+    display: block;
+  }
+  &::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+
   .title {
     font-size: 1.5rem;
   }

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Modal from '@/components/Modal';
 import { CardProps } from '@/types/DashboardTypes';
 import FileInput from '@/components/common/FileInput';
@@ -15,13 +14,13 @@ import ModalInput from '../ModalInput';
 import ModalButton from '../ModalButton/Button';
 import styles from './ModifyTask.module.scss';
 
-
 interface ModifyTaskProps {
   defaultCard: CardProps;
   columnId: number;
   dashboardId: number;
   isOpen: boolean;
   onClose: () => void;
+  onModifyCard: (modifiedCard: CardProps) => void;
 }
 
 interface Members {
@@ -53,8 +52,14 @@ interface Form {
   imageUrl?: string;
 }
 
-export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen, onClose }: ModifyTaskProps) {
-  const router = useRouter();
+export default function ModifyTask({
+  defaultCard,
+  columnId,
+  dashboardId,
+  isOpen,
+  onClose,
+  onModifyCard,
+}: ModifyTaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [members, setMembers] = useState<Members[]>([]);
   const [columns, setColumns] = useState<Columns[]>([]);
@@ -80,9 +85,13 @@ export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen,
   const handleModifyTask = async () => {
     try {
       const body = { ...form, imageUrl: imageFile };
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${defaultCard.id}`, 'PUT', body);
+      const response = await fetchWithToken(
+        `https://sp-taskify-api.vercel.app/4-20/cards/${defaultCard.id}`,
+        'PUT',
+        body
+      );
       Toast.success('카드를 수정했습니다');
-      router.refresh();
+      onModifyCard(response);
       onClose();
     } catch (err: any) {
       const errorMessage = err.toString().substr(7);
@@ -136,7 +145,7 @@ export default function ModifyTask({ defaultCard, columnId, dashboardId, isOpen,
           </label>
           <label className={styles.formSection}>
             <div className={styles.labelName}>담당자</div>
-            <AssigneeInput members={members} onChange={handleNotInputChange} />
+            <AssigneeInput defaultMember={defaultCard.assignee} members={members} onChange={handleNotInputChange} />
           </label>
         </div>
 
