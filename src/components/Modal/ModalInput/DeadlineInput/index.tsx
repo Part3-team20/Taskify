@@ -27,6 +27,7 @@ export default function DeadLineInput({
   defaultValue?: Date | string | null;
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
+    // eslint-disable-next-line no-nested-ternary
     typeof defaultValue === 'object' ? defaultValue : typeof defaultValue === 'string' ? new Date(defaultValue) : null
   );
 

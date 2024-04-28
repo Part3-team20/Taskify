@@ -1,22 +1,23 @@
 'use client';
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import styles from './CreateTask.module.scss';
-import Modal from '@/components/Modal';
-import FileInput from '@/components/common/FileInput';
-import DeadLineInput from '../ModalInput/DeadlineInput';
-import TagInput from '../ModalInput/TagInput';
-import ModalInput from '../ModalInput';
-import AssigneeInput from '../ModalInput/AssigneeInput';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Toast from '@/util/Toast';
 import Button from '@/components/common/Button/Button';
+import Modal from '@/components/Modal';
+import FileInput from '@/components/common/FileInput';
+import ModalInput from '../ModalInput';
+import AssigneeInput from '../ModalInput/AssigneeInput';
+import DeadLineInput from '../ModalInput/DeadlineInput';
+import TagInput from '../ModalInput/TagInput';
+import styles from './CreateTask.module.scss';
 
 interface CreateTaskProps {
   dashboardId: number;
   columnId: number;
   isOpen: boolean;
   onClose: () => void;
+  onAddCard: any;
 }
 
 interface Members {
@@ -41,7 +42,7 @@ interface Form {
   imageUrl?: string;
 }
 
-export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: CreateTaskProps) {
+export default function CreateTask({ dashboardId, columnId, isOpen, onClose, onAddCard }: CreateTaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [members, setMembers] = useState<Members[]>([]);
   const [imageFile, setImageFile] = useState<string | undefined>(undefined);
@@ -64,8 +65,9 @@ export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: C
   const handleCreateTask = async () => {
     try {
       const body = { ...form, imageUrl: imageFile };
-      await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards`, 'POST', body);
+      const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards`, 'POST', body);
       Toast.success('카드를 생성했습니다');
+      onAddCard(response);
       onClose();
     } catch (err: any) {
       const errorMessage = err.toString().substr(7);
@@ -140,6 +142,7 @@ export default function CreateTask({ dashboardId, columnId, isOpen, onClose }: C
             취소
           </Button>
           <Button
+            // eslint-disable-next-line no-extra-boolean-cast
             disabled={!Boolean(form.title && form.description)}
             handleClick={handleCreateTask}
             type="button"
