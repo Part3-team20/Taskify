@@ -113,11 +113,13 @@
 }
 
 .logout {
-  align-self: flex-end;
-  color: $gray_9FA6B2;
-  text-decoration-line: underline;
-  text-underline-offset: 0.3rem;
-  margin-top: 2rem;
-  padding-bottom: 0.25rem;
-  cursor: pointer;
+  max-width: 38.75rem;
+  text-align: right;
+  .logoutButton {
+    color: $gray_9FA6B2;
+    text-decoration-line: underline;
+    text-underline-offset: 0.3rem;
+    margin-top: 2rem;
+    padding-bottom: 0.25rem;
+  }
 }

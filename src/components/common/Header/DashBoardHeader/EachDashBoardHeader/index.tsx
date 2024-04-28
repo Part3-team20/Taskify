@@ -3,46 +3,41 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useDashboard } from '@/contexts/dashboardContext';
 import Profile from '@/components/common/Profile';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
 import styles from './EachDashBoardHeader.module.scss';
 
-type User = {
-  id: number;
-  email: string;
+interface Profile {
   nickname: string;
-  profileImageUrl: string | undefined;
-  createdAt: string;
-  updatedAt: string;
-};
+  profileImageUrl?: string;
+}
 
-type Members = {
+interface Members {
   members: {
     id: number;
     userId: number;
     email: string;
     nickname: string;
-    profileImageUrl: string | undefined;
+    profileImageUrl?: string;
     createdAt: string;
     updatedAt: string;
     isOwner: boolean;
   }[];
   totalCount: number;
-};
+}
 
-export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
+// export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
+export default function EachDashBoardHeader() {
   const { fetchWithToken } = useFetchWithToken();
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
-  const [user, setUser] = useState<User>({
-    id: 0,
-    email: '',
+  const [profile, setProfile] = useState<Profile>({
     nickname: '',
-    profileImageUrl: undefined,
-    createdAt: '',
-    updatedAt: '',
+    profileImageUrl: '',
   });
+
   const [dashboard, setDashboard] = useState<Dashboard>({
     id: 0,
     title: '',
@@ -52,10 +47,12 @@ export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
     userId: 0,
     createdByMe: false,
   });
+
   const [members, setMembers] = useState<Members>({
     members: [],
     totalCount: 0,
   });
+  const { dashboardId: boardId } = useDashboard();
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -83,8 +80,8 @@ export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
     const fetchUser = async () => {
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
-        setUser(response);
-      } catch (error) {
+        setProfile({ nickname: profile.nickname, profileImageUrl: profile.profileImageUrl });
+      } catch (error: any) {
         console.error('Failed to fetch user:', error);
       }
     };
@@ -97,7 +94,7 @@ export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`);
         setDashboard(response);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Failed to fetch dashboard:', error);
       }
     };
@@ -112,8 +109,8 @@ export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members?dashboardId=${boardId}`);
         setMembers(response);
-      } catch (error) {
-        console.error('Failed to fetch dashboard mebers:', error);
+      } catch (error: any) {
+        console.error('Failed to fetch dashboard members:', error);
       }
     };
 
@@ -173,8 +170,8 @@ export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
         {/* 내 프로필 */}
         <Link href="/mypage">
           <div className={styles.profile}>
-            <Profile profileImageUrl={user?.profileImageUrl} />
-            <span className={styles.nickname}>{user?.nickname}</span>
+            <Profile profileImageUrl={profile?.profileImageUrl} />
+            <span className={styles.nickname}>{profile?.nickname}</span>
           </div>
         </Link>
       </div>
