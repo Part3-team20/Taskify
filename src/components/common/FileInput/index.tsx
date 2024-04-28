@@ -94,14 +94,14 @@ export default function FileInput({
       </label>
       {usageLocation === 'mypage' ? (
         <div className={styles.clearOnMypage}>
-          <button onClick={handleFileClear} className={styles.clearButton}>
+          <button type="button" onClick={handleFileClear} className={styles.clearButton}>
             초기화
           </button>
         </div>
       ) : (
         <div className={styles.clearOnModal}>
-          <button onClick={handleFileClear} className={styles.clearButton}>
-            <Image src={'/images/remove_icon.svg'} alt="clear" fill style={{ objectFit: 'cover' }} />
+          <button type="button" onClick={handleFileClear} className={styles.clearButton}>
+            <Image src="/images/remove_icon.svg" alt="clear" fill style={{ objectFit: 'cover' }} />
           </button>
         </div>
       )}

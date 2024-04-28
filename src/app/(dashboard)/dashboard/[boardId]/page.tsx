@@ -1,7 +1,7 @@
 'use client';
 
 // 추후 삭제
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dashboard as Column } from '@/types/DashboardTypes';
 import { COLUMNS } from '@/constants/ApiUrl';
 import Toast from '@/util/Toast';
@@ -10,15 +10,13 @@ import AddButton from '@/components/common/Button/AddButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import CreateColumn from '@/components/Modal/CreateColumn';
 import styles from './Dashboard.module.scss';
-import CreateTask from '@/components/Modal/CreateTask';
 
 export default function Dashboard({ params }: { params: { boardId: number } }) {
   const { fetchWithToken } = useFetchWithToken();
   const [columns, setColumns] = useState<Column[]>([]);
   const { boardId } = params;
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
-  const [targetColumnId, setTargetColumnId] = useState(0);
+  // const [targetColumnId, setTargetColumnId] = useState(0);
 
   const handleAddColumn = () => {
     if (columns.length >= 10) {
@@ -32,14 +30,14 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
     setIsCreateModalOpen(false);
   };
 
-  const handleAddTask = (columnId: number) => {
-    setIsCreateTaskModalOpen(true);
-    setTargetColumnId(columnId);
-  };
+  // const handleAddTask = (columnId: number) => {
+  //   setIsCreateTaskModalOpen(true);
+  //   setTargetColumnId(columnId);
+  // };
 
-  const handleCloseAddTaskModal = () => {
-    setIsCreateTaskModalOpen(false);
-  };
+  // const handleCloseAddTaskModal = () => {
+  //   setIsCreateTaskModalOpen(false);
+  // };
 
   useEffect(() => {
     const fetchColumns = async () => {
@@ -100,7 +98,6 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
             key={column.id}
             columnId={column.id}
             title={column.title}
-            onAddCard={handleAddTask}
             onUpdate={handleUpdateColumn}
             onDelete={handleDeleteColumn}
             existingTitles={columns.map((c) => c.title)}
@@ -118,14 +115,6 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
             onClose={handleCloseModal}
             onCreate={handleCreateColumn}
             existingTitles={columns.map((column) => column.title)}
-          />
-        )}
-        {isCreateTaskModalOpen && (
-          <CreateTask
-            dashboardId={Number(boardId)}
-            columnId={targetColumnId}
-            isOpen={isCreateTaskModalOpen}
-            onClose={handleCloseAddTaskModal}
           />
         )}
       </div>

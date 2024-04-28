@@ -10,32 +10,25 @@ import Card from '../Card/Card';
 import NumberChip from '../common/Chip/NumberChip';
 import AddButton from '../common/Button/AddButton';
 import ChangeColumn from '../Modal/ChangeColumn';
+import CreateTask from '../Modal/CreateTask';
 
 interface ColumnProps {
   dashboardId: number;
   columnId: number;
   title: string;
-  onAddCard: (columnId: number) => void;
   existingTitles: string[];
   onUpdate: (columnId: number, newTitle: string) => void;
   onDelete: (columnId: number) => void;
 }
 
-export default function Column({
-  columnId,
-  title,
-  onAddCard,
-  onUpdate,
-  onDelete,
-  existingTitles,
-  dashboardId,
-}: ColumnProps) {
+export default function Column({ columnId, title, onUpdate, onDelete, existingTitles, dashboardId }: ColumnProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [cards, setCards] = useState<CardProps[]>([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [visibleCards, setVisibleCards] = useState<CardProps[]>([]); // 보여지는 카드들의 배열
   const [startIndex, setStartIndex] = useState(0); // 보여지는 카드들의 시작 인덱스
   const cardsPerPage = 3; // 한 페이지당 보여질 카드 수
+  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
 
   const handleOpenEditModal = () => {
     setIsEditModalOpen(true);
@@ -43,6 +36,19 @@ export default function Column({
 
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
+  };
+
+  const handleOpenCreateTaskModal = () => {
+    setIsCreateTaskModalOpen(true);
+  };
+
+  const handleCloseCreateTaskModal = () => {
+    setIsCreateTaskModalOpen(false);
+  };
+
+  const handleAddCard = (newCard: any) => {
+    setCards((prevCards) => [...prevCards, newCard]);
+    handleCloseCreateTaskModal(); // 생성 후 모달 닫기
   };
 
   // 카드 더보기 버튼 클릭 시 호출되는 함수
@@ -98,7 +104,7 @@ export default function Column({
       </div>
       <div className={styles.columnBody}>
         <div className={styles.addBtn}>
-          <AddButton handleClick={() => onAddCard(columnId)} />
+          <AddButton handleClick={handleOpenCreateTaskModal} />
         </div>
         {/* visibleCards 배열을 렌더링하여 보여줌 */}
         {visibleCards.map((card) => (
@@ -121,6 +127,15 @@ export default function Column({
           </button>
         )}
       </div>
+      {isCreateTaskModalOpen && (
+        <CreateTask
+          dashboardId={dashboardId}
+          columnId={columnId}
+          isOpen={isCreateTaskModalOpen}
+          onClose={handleCloseCreateTaskModal}
+          onAddCard={handleAddCard}
+        />
+      )}
       {isEditModalOpen && (
         <ChangeColumn
           isOpen={isEditModalOpen}
