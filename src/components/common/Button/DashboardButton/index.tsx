@@ -1,26 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Dashboard } from '@/types/DashboardTypes';
 import styles from './DashboardButton.module.scss';
 
-// 대시보드 데이터 타입
-// interface DashboardDataProps {
-//   id: number;
-//   title: string;
-//   color: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   createdByMe: boolean;
-//   userId: number;
-// }
-
 interface DashboardButtonProps {
-  id: number;
-  title: string;
-  color: string;
-  createdByMe: boolean;
+  data: Dashboard;
 }
 
-export default function DashboardButton({ id, title, color, createdByMe }: DashboardButtonProps) {
+export default function DashboardButton({ data }: DashboardButtonProps) {
+  const { id, title, color, createdByMe } = data;
   return (
     <Link className={styles.container} href={`/dashboard/${id}`}>
       <span className={styles.color} style={{ backgroundColor: color }} />

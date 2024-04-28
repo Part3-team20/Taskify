@@ -1,70 +1,39 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { DASHBOARDS } from '@/constants/ApiUrl';
-import useFetchWithToken from '@/hooks/useFetchToken';
+import { useState } from 'react';
+import { useDashboard } from '@/contexts/dashboardContext';
 import AddButton from '../common/Button/AddButton';
 import DashboardButton from '../common/Button/DashboardButton';
 import PaginationButton from '../common/Button/PaginationButton';
-import styles from './MyDashboardList.module.scss';
 import CreateDashboard from '../Modal/CreateDashboard';
 import ModalPortal from '../Modal/ModalPortal';
-
-interface Dashboard {
-  id: number;
-  title: string;
-  color: string;
-  createdAt: string;
-  updatedAt: string;
-  createdByMe: boolean;
-  userId: number;
-}
-
-interface Cursor {
-  page: number;
-  totalCount: number;
-}
+import styles from './MyDashboardList.module.scss';
 
 export default function MyDashboardList() {
   const [isOpen, setIsOpen] = useState(false);
-  const [page, setPage] = useState<Cursor>({ page: 1, totalCount: 0 });
-  const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
+  const [page, setPage] = useState(1);
+  const {
+    myDashboards: { dashboards, totalCount },
+    setMyDashboards,
+    getDashboardsData,
+  } = useDashboard();
 
-  const { fetchWithToken: getDashboardList, error } = useFetchWithToken();
-
-  const handlePageChange = (pageNumber: number) => {
-    setPage((prevPage) => ({ ...prevPage, page: pageNumber }));
+  const handlePageChange = async (pageNumber: number) => {
+    setPage(pageNumber);
+    getDashboardsData(5, setMyDashboards, pageNumber);
   };
-
   /**
    * @TODO
    * -로딩 처리
    */
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getDashboardList(
-        `${DASHBOARDS}?navigationMethod=pagination&page=${page.page}&size=5`,
-        'GET'
-      );
-      if (response) {
-        setDashboards(response.dashboards);
-        setPage((prevPage) => ({ ...prevPage, totalCount: response.totalCount }));
-      }
-      if (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [page.page]);
 
   return (
     <div className={styles.container}>
       <ul className={styles.dashboardContainer}>
         {dashboards &&
-          dashboards.map(({ id, title, createdByMe, color }) => (
-            <li key={id} className={styles.item}>
-              <DashboardButton id={id} title={title} createdByMe={createdByMe} color={color} />
+          dashboards.map((data) => (
+            <li key={data.id} className={styles.item}>
+              <DashboardButton data={data} />
             </li>
           ))}
         <li className={styles.item}>
@@ -80,12 +49,12 @@ export default function MyDashboardList() {
       </ul>
       <div className={styles.paginationContainer}>
         <span>
-          {Math.ceil(page.totalCount / 5)} 페이지 중 {page.page}
+          {Math.ceil(totalCount / 5)} 페이지 중 {page}
         </span>
         <PaginationButton
           className={styles.pagination}
-          hasNext={page.totalCount - page.page * 5 > 0}
-          currentPage={page.page}
+          hasNext={totalCount - page * 5 > 0}
+          currentPage={page}
           onPageChange={handlePageChange}
         />
       </div>

@@ -1,17 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Dashboard } from '@/types/DashboardTypes';
 import styles from './SideBarListItem.module.scss';
 
 interface SideBarListItemProps {
-  data: {
-    id: number;
-    title: string;
-    color: string;
-    createdAt: string;
-    updatedAt: string;
-    createdByMe: boolean;
-    userId: number;
-  };
+  data: Dashboard;
 }
 
 // sidebar

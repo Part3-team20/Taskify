@@ -3,6 +3,7 @@
 // 추후 삭제
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { DashboardProvider } from '@/contexts/dashboardContext';
 import SideBar from '@/components/SideBar';
 import DashBoardHeader from '@/components/common/Header/DashBoardHeader';
 import styles from './layout.module.scss';
@@ -19,7 +20,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, []);
 
   return (
-    <>
+    <DashboardProvider>
       <SideBar />
       <div className={styles.rightSide}>
         <div className={styles.header}>
@@ -27,6 +28,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         <main className={styles.main}>{children}</main>
       </div>
-    </>
+    </DashboardProvider>
   );
 }
