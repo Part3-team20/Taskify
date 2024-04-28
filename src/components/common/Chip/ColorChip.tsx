@@ -11,9 +11,10 @@ const COLORS = ['#7ac555', '#760dde', '#ffa500', '#76a5ea', '#e876ea'];
 
 interface ColorChipProps {
   onSelect: (color: string) => void;
+  mode: 'create' | 'edit';
 }
 
-export default function ColorChip({ onSelect }: ColorChipProps): JSX.Element {
+export default function ColorChip({ onSelect, mode }: ColorChipProps): JSX.Element {
   const [selectedColor, setSelectedColor] = useState<string>(COLORS[0]);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +50,7 @@ export default function ColorChip({ onSelect }: ColorChipProps): JSX.Element {
         <button
           key={color}
           type="button"
-          className={`${styles.colorChip} `}
+          className={`${styles.colorChip} ${mode === 'edit' ? styles.mobileEdit : ''}`}
           style={{ backgroundColor: color }}
           onClick={() => handleColorClick(color)}
         >
@@ -59,7 +60,7 @@ export default function ColorChip({ onSelect }: ColorChipProps): JSX.Element {
 
       <button
         type="button"
-        className={`${styles.colorChip} ${selectedColor && !COLORS.includes(selectedColor) ? '' : styles.picker}`}
+        className={`${styles.colorChip} ${selectedColor && !COLORS.includes(selectedColor) ? '' : styles.picker} `}
         onClick={() => setIsPickerOpen(true)}
         style={{ backgroundColor: selectedColor && !COLORS.includes(selectedColor) ? selectedColor : 'transparent' }}
       >
