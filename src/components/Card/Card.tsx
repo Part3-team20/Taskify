@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CardProps } from '@/types/DashboardTypes';
 import Image from 'next/image';
 import LabelChip from '@/components/common/Chip/LabelChip';
 import Profile from '@/components/common/Profile';
@@ -6,7 +7,6 @@ import Task from '@/components/Modal/Task';
 import styles from './Card.module.scss';
 import ModalPortal from '../Modal/ModalPortal';
 import ModifyTask from '../Modal/ModifyTask';
-import { CardProps } from '@/types/DashboardTypes';
 
 interface CardDetail {
   id?: number;
@@ -54,7 +54,7 @@ export default function Card({
 
   return (
     <>
-      <button className={styles.card} onClick={handleCardClick}>
+      <button type="button" className={styles.card} onClick={handleCardClick}>
         {imageUrl && (
           <div className={styles.image}>
             <Image src={imageUrl} alt="카드 대표 이미지" layout="fill" objectFit="cover" />
