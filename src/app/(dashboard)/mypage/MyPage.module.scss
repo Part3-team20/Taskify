@@ -20,30 +20,49 @@
   max-width: 38.75rem;
   background-color: $white_FFFFFF;
 
-  & h1 {
+  h1 {
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
 
-  & .fileInput {
+  .fileInput {
     width: 11.375rem;
     height: 11.375rem;
   }
 
-  & .inputs {
+  .inputs {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.25rem;
   }
 
-  & .textInputs {
+  .textInputs {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+
+    .mypageInput {
+      span {
+        font-size: 1.125rem;
+
+        @include mobile {
+          font-size: 1rem;
+        }
+      }
+
+      input {
+        font-size: 1rem;
+
+        @include mobile {
+          font-size: 0.875rem;
+          padding: 0.8125rem;
+        }
+      }
+    }
   }
 
-  & .button {
+  .button {
     display: flex;
     justify-content: right;
   }
@@ -53,23 +72,23 @@
     margin-bottom: 0.75rem;
     padding: 1.75rem 1.25rem 1.25rem 1.25rem;
 
-    & h1 {
+    h1 {
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
     }
 
-    & .fileInput {
+    .fileInput {
       width: 6.25rem;
       height: 6.25rem;
     }
 
-    & .inputs {
+    .inputs {
       flex-direction: column;
       gap: 1.5rem;
       margin-bottom: 1rem;
     }
 
-    & .textInputs {
+    .textInputs {
       gap: 1rem;
     }
   }
@@ -80,19 +99,38 @@
   max-width: 38.75rem;
   background-color: $white_FFFFFF;
 
-  & h1 {
+  h1 {
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
 
-  & .inputs {
+  .inputs {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     margin-bottom: 1.5rem;
+
+    .mypageInput {
+      span {
+        font-size: 1.125rem;
+
+        @include mobile {
+          font-size: 1rem;
+        }
+      }
+
+      input {
+        font-size: 1rem;
+
+        @include mobile {
+          font-size: 0.875rem;
+          padding: 0.8125rem;
+        }
+      }
+    }
   }
 
-  & .button {
+  .button {
     display: flex;
     justify-content: right;
   }
@@ -100,12 +138,12 @@
   @include mobile {
     padding: 1.75rem 1.25rem 1.25rem 1.25rem;
 
-    & h1 {
+    h1 {
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
     }
 
-    & .inputs {
+    .inputs {
       gap: 1rem;
       margin-bottom: 1rem;
     }

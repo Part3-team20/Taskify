@@ -80,7 +80,7 @@ export default function EachDashBoardHeader() {
     const fetchUser = async () => {
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
-        setProfile({ nickname: profile.nickname, profileImageUrl: profile.profileImageUrl });
+        setProfile({ nickname: response.nickname, profileImageUrl: response.profileImageUrl });
       } catch (error: any) {
         console.error('Failed to fetch user:', error);
       }
