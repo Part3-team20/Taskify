@@ -111,7 +111,7 @@ export default function MyPage() {
           </div>
         </div>
         <div className={styles.button}>
-          <Button color="violet" disabled={Boolean(profile?.nickName)} handleClick={handleProfileSubmit} type="button">
+          <Button color="violet" disabled={!profile?.nickName} handleClick={handleProfileSubmit} type="button">
             저장
           </Button>
         </div>
