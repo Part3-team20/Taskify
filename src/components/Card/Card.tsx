@@ -6,12 +6,14 @@ import Task from '@/components/Modal/Task';
 import styles from './Card.module.scss';
 import ModalPortal from '../Modal/ModalPortal';
 import ModifyTask from '../Modal/ModifyTask';
+import { CardProps } from '@/types/DashboardTypes';
 
 interface CardDetail {
   id?: number;
   title: string;
   tags?: string[];
   dueDate?: string;
+  description?: string;
   assignee: {
     id?: number;
     nickname?: string;
@@ -21,6 +23,7 @@ interface CardDetail {
   dashboardId: number;
   columnId: number;
   onDeleteCard: (cardId: number) => Promise<void>;
+  onModifyCard: (modifiedCard: CardProps) => void;
 }
 
 export default function Card({
@@ -32,7 +35,9 @@ export default function Card({
   dueDate,
   dashboardId,
   columnId,
+  description,
   onDeleteCard,
+  onModifyCard,
 }: CardDetail) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [isModifyTaskModalOpen, setIsModifyTaskModalOpen] = useState(false);
@@ -42,55 +47,64 @@ export default function Card({
     setIsModalOpen(true);
   };
 
+  const handleModifyOpen = () => {
+    setIsModifyTaskModalOpen(true);
+    setIsModalOpen(false);
+  };
+
   return (
-    <button type="button" className={styles.card} onClick={handleCardClick}>
-      {imageUrl && (
-        <div className={styles.image}>
-          <Image src={imageUrl} alt="카드 대표 이미지" layout="fill" objectFit="cover" />
-        </div>
-      )}
-      <div className={styles.body}>
-        <div className={styles.title}>
-          <h2>{title}</h2>
-        </div>
-        <div className={styles.container}>
-          <div className={styles.tags}>{tags?.map((tag) => <LabelChip key={tag} label={tag} type="tag" />)}</div>
-          <div className={styles.bottom}>
-            {dueDate && (
-              <div className={styles.time}>
-                <Image src="/images/calendar_icon.svg" alt="캘린더 아이콘" width={18} height={18} />
-                <time dateTime={dueDate}>{dueDate}</time>
+    <>
+      <button className={styles.card} onClick={handleCardClick}>
+        {imageUrl && (
+          <div className={styles.image}>
+            <Image src={imageUrl} alt="카드 대표 이미지" layout="fill" objectFit="cover" />
+          </div>
+        )}
+        <div className={styles.body}>
+          <div className={styles.title}>
+            <h2>{title}</h2>
+          </div>
+          <div className={styles.container}>
+            <div className={styles.tags}>{tags?.map((tag) => <LabelChip key={tag} label={tag} type="tag" />)}</div>
+            <div className={styles.bottom}>
+              {dueDate && (
+                <div className={styles.time}>
+                  <Image src="/images/calendar_icon.svg" alt="캘린더 아이콘" width={18} height={18} />
+                  <time dateTime={dueDate}>{dueDate}</time>
+                </div>
+              )}
+              <div className={styles.profile}>
+                <Profile profileImageUrl={assignee?.profileImageUrl} />
               </div>
-            )}
-            <div className={styles.profile}>
-              <Profile profileImageUrl={assignee?.profileImageUrl} />
             </div>
           </div>
         </div>
-      </div>
+      </button>
       <ModalPortal>
-        <div>
-          {isModalOpen && id !== undefined ? (
-            <Task
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              cardId={id}
-              dashboardId={dashboardId}
-              columnId={columnId}
-              onDeleteCard={onDeleteCard}
-            />
-          ) : null}
-          {isModifyTaskModalOpen && id !== undefined ? (
-            <ModifyTask
-              isOpen={isModifyTaskModalOpen}
-              onClose={() => setIsModifyTaskModalOpen(false)}
-              dashboardId={Number(dashboardId)}
-              columnId={columnId}
-              defaultCard={}
-            />
-          ) : null}
-        </div>
+        {isModalOpen && id !== undefined ? (
+          <Task
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            cardId={id}
+            dashboardId={dashboardId}
+            columnId={columnId}
+            onDeleteCard={onDeleteCard}
+            handleModifyOpen={handleModifyOpen}
+          />
+        ) : null}
       </ModalPortal>
-    </button>
+      <ModalPortal>
+        {isModifyTaskModalOpen && id !== undefined ? (
+          <ModifyTask
+            isOpen={isModifyTaskModalOpen}
+            onClose={() => setIsModifyTaskModalOpen(false)}
+            dashboardId={Number(dashboardId)}
+            columnId={columnId}
+            defaultCard={{ id, title, description, tags, dueDate, assignee, imageUrl }}
+            onModifyCard={onModifyCard}
+          />
+        ) : null}
+      </ModalPortal>
+    </>
   );
 }
