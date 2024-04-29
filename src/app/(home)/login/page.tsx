@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LOGIN } from '@/constants/ApiUrl';
+import { useUser } from '@/contexts/userContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -15,6 +16,7 @@ import styles from './Login.module.scss';
 
 export default function LoginPage() {
   const { fetchWithToken } = useFetchWithToken();
+  const { setUserId } = useUser();
 
   const router = useRouter();
 
@@ -45,6 +47,8 @@ export default function LoginPage() {
         email,
         password,
       });
+      setUserId(responseData.user.id);
+
       localStorage.setItem('accessToken', responseData.accessToken);
       router.push('/mydashboard');
     } catch (err: any) {

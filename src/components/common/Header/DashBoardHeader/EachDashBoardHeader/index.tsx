@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useDashboard } from '@/contexts/dashboardContext';
-import { useUser } from '@/contexts/userContext';
 import Profile from '@/components/common/Profile';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
@@ -33,8 +32,6 @@ interface Members {
 // export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
 export default function EachDashBoardHeader() {
   const { fetchWithToken } = useFetchWithToken();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { user, setUser } = useUser();
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
   const [profile, setProfile] = useState<ProfileProps>({
@@ -88,18 +85,13 @@ export default function EachDashBoardHeader() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
         setProfile({ nickname: response.nickname, profileImageUrl: response.profileImageUrl });
-        setUser({
-          id: response.id,
-          nickname: response.nickname,
-          profileImageUrl: response.profileImageUrl,
-        });
       } catch (error: any) {
         console.error('Failed to fetch user:', error);
       }
     };
 
     fetchUser();
-  }, [fetchWithToken, setUser]);
+  }, [fetchWithToken]);
 
   useEffect(() => {
     const fetchDashboard = async () => {

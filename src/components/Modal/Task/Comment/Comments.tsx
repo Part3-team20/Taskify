@@ -44,7 +44,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [size, setSize] = useState<number>(5);
   const [loading, setLoading] = useState(false);
-  const { user } = useUser();
+  const { userId } = useUser();
 
   const fetchMoreComments = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -83,6 +83,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
       setComments((prev) => [...prev, ...newComments]);
       setCursorId(typeof result.cursorId === 'number' ? result.cursorId : null);
       setHasMore(result.cursorId != null);
+      console.log(userId);
     } finally {
       setLoading(false);
     }
@@ -177,7 +178,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
             ) : (
               <div className={styles.commentBody}>
                 <p className={styles.commentText}>{comment.content}</p>
-                {comment.author.id === user.id && (
+                {comment.author.id === userId && (
                   <div className={styles.btnBox}>
                     <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                       수정
