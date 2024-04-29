@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import styles from './Profile.module.scss';
 
-const BASE_PROFILE_IMG = '/images/profileImg.svg';
+const BASE_PROFILE_IMG = '/images/ProfileImg.svg';
 
 interface ProfileProps {
   profileImageUrl?: string;

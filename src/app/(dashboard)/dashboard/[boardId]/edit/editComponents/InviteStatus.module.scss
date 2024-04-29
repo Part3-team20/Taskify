@@ -10,11 +10,11 @@
   margin: 0.75rem 0;
   padding: 2.0938rem 1.75rem;
   @include tablet {
-    width: 34rem;
+    max-width: 100%;
     padding: 1.875rem 1.25rem;
   }
   @include mobile {
-    width: 17.75rem;
+    max-width: 100%;
     height: 24.6875rem;
   }
   .header {
