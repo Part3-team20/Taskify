@@ -201,16 +201,15 @@
         }
         .contents {
           // max-width: 600px;
-          // width: auto;
+          width: auto;
           margin-top: 16px;
           font-size: 12px;
           line-height: 22px;
         }
 
         .imgBox {
-          height: 300px;
-          width: auto;
-          min-width: 300px;
+          max-width: 100%;
+          overflow: hidden;
         }
       }
     }
