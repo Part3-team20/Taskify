@@ -18,7 +18,6 @@ function formatDate(date: Date) {
   return formattedDateTime;
 }
 
-// dueDate
 export default function DeadLineInput({
   onChange,
   defaultValue = null,

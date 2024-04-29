@@ -27,6 +27,10 @@
     @include tablet {
       grid-template-columns: 1.65fr 1fr 1.55fr;
       gap: 1rem;
+
+      span:last-child {
+        min-width: 11.125rem;
+      }
     }
 
     @include mobile {

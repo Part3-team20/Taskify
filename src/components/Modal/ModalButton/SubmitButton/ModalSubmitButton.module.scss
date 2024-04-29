@@ -2,7 +2,6 @@
 @import '@/styles/_mixins.scss';
 @import '@/styles/_responsive-styles.scss';
 
-// button
 .container {
   @include flex-center;
   width: 7.5rem;
@@ -19,7 +18,7 @@
   }
 
   @include mobile {
-    width: 8.625rem;
+    width: 7rem;
     height: 2.625rem;
     font-size: 0.875rem;
   }

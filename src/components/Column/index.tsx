@@ -51,13 +51,21 @@ export default function Column({ columnId, title, onUpdate, onDelete, existingTi
     handleCloseCreateTaskModal(); // 생성 후 모달 닫기
   };
 
-  const handleModifyCard = (modifiedCard: any) => {
-    const indexOfCard = cards.findIndex((card) => card.id === modifiedCard);
+  const handleModifyCard = (modifiedCard: CardProps) => {
+    const indexOfCard = cards.findIndex((card) => card.id === modifiedCard.id);
 
     if (indexOfCard !== -1) {
       const updatedCards = [...cards];
       updatedCards[indexOfCard] = modifiedCard;
       setCards(updatedCards);
+
+      // visibleCards도 업데이트
+      const indexOfVisibleCard = visibleCards.findIndex((card) => card.id === modifiedCard.id);
+      if (indexOfVisibleCard !== -1) {
+        const updatedVisibleCards = [...visibleCards];
+        updatedVisibleCards[indexOfVisibleCard] = modifiedCard;
+        setVisibleCards(updatedVisibleCards);
+      }
     }
   };
 

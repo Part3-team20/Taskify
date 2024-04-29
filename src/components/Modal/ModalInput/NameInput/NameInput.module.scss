@@ -4,11 +4,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 0.625rem;
 
   .title {
     color: $black_333236;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -20,7 +20,7 @@
 
   .error {
     color: $red_D6173A;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 400;
   }
 }
