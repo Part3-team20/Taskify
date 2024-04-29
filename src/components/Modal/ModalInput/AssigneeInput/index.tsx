@@ -73,6 +73,7 @@ export default function AssigneeInput({ members, onChange, defaultMember }: Assi
       {isOpen && <ul className={styles.selectList}>{options}</ul>}
       <div className={styles.clearButton}>
         <div
+          role="button"
           onClick={() => {
             setSelectedValue({ nickname: '', profileImageUrl: '' });
             onChange('assigneeUserId', undefined);

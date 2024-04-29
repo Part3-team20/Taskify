@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
@@ -11,7 +12,6 @@ import Toast from '@/util/Toast';
 import LogoutModal from '@/components/Modal/LogoutModal';
 import Button from '@/components/common/Button/Button';
 import styles from './MyPage.module.scss';
-import Image from 'next/image';
 
 export default function MyPage() {
   const router = useRouter();
