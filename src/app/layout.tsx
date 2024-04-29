@@ -5,7 +5,20 @@ import '@/styles/globals.scss';
 
 export const metadata = {
   title: 'Taskify',
-  description: 'Taskify 할일 관리',
+  description: '새로운 일정 관리, Taskify',
+  icons: {
+    icon: '/images/mainLogo.svg',
+  },
+  openGraph: {
+    title: 'Taskify',
+    description: '새로운 일정 관리, Taskify',
+    locale: 'ko_KR',
+    type: 'website',
+    url: 'https://taskify-4-20.vercel.app/',
+    images: {
+      url: '/images/og.png',
+    },
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
