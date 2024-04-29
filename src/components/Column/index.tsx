@@ -144,7 +144,7 @@ export default function Column({ columnId, title, onUpdate, onDelete, existingTi
         ))}
         {cards.length > startIndex + cardsPerPage && (
           <button type="button" onClick={handleShowMoreCards} className={styles.showMoreButton}>
-            더보기
+            + 더보기
           </button>
         )}
       </div>
