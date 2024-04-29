@@ -72,7 +72,7 @@ export default function AssigneeInput({ members, onChange, defaultMember }: Assi
       <Image src={arrowDown} alt="arrow" width={26} height={26} className={styles.arrow} onClick={handleToggle} />
       {isOpen && <ul className={styles.selectList}>{options}</ul>}
       <div className={styles.clearButton}>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions*/}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div
           onClick={() => {
             setSelectedValue({ nickname: '', profileImageUrl: '' });
