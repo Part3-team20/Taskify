@@ -16,12 +16,6 @@ interface CreateDashboardProps {
 }
 
 export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProps) {
-  /**
-   *  @TODOS
-   * -error 처리
-   * -POST 후 대시보드 목록 다시 받아오기
-   * */
-
   const initialValues = { title: '', color: '#7ac555' };
   const [values, setValues] = useState(initialValues);
   const [isActive, setIsActive] = useState(false);
@@ -44,7 +38,7 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
       setValues(() => initialValues);
       Toast.success('대시보드 생성!');
     } catch (error) {
-      Toast.error(error);
+      Toast.error('대시보드 생성에 실패했어요.');
     } finally {
       onClose();
       reloadDashboard(myDashboardsPage, sideDashboardsPage);

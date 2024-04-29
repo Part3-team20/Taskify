@@ -1,6 +1,7 @@
 'use client';
 
 import { useInvite } from '@/contexts/inviteContext';
+import Toast from '@/util/Toast';
 import { INVITATIONS } from '@/constants/ApiUrl';
 import { useDashboard } from '@/contexts/dashboardContext';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -38,6 +39,7 @@ export default function InviteListItem({ title, id, nickname }: InviteListItemPr
     } catch (error) {
       setInvitationData(temp);
       console.log(error);
+      Toast.error('초대 응답에 실패했어요.');
     }
   };
 

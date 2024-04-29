@@ -3,6 +3,7 @@
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { INVITATIONS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
+import Toast from '@/util/Toast';
 
 interface InviteProviderProps {
   children: ReactNode;
@@ -84,6 +85,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
       setInvitationData((prevData) => [...prevData, ...newData]);
     } catch (error) {
       console.log(error);
+      Toast.error('정보를 불러오는데 실패했어요.');
     }
   };
 
@@ -97,6 +99,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
         setInvitationData(formatInviteData(response?.invitations));
       } catch (error) {
         console.log(error);
+        Toast.error('정보를 불러오는데 실패했어요.');
       }
       return;
     }
@@ -108,6 +111,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
       setInvitationData(formatInviteData(response?.invitations));
     } catch (error) {
       console.log(error);
+      Toast.error('정보를 불러오는데 실패했어요.');
     }
   };
 
@@ -121,6 +125,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
         }
       } catch (error) {
         console.log(error);
+        Toast.error('정보를 불러오는데 실패했어요.');
       }
     };
     fetchData();
