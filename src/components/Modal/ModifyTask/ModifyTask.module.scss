@@ -4,7 +4,19 @@
 
 .modal {
   width: 31.625rem !important;
-  height: 80vh !important;
+  height: auto !important;
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: block;
+  }
+  &::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
 
   @include mobile {
     width: 23rem !important;
@@ -19,16 +31,6 @@
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: block;
-  }
-  &::-webkit-scrollbar-track,
-  ::-webkit-scrollbar-button,
-  ::-webkit-scrollbar-thumb {
-    display: none;
-  }
 
   .title {
     font-size: 1.5rem;
@@ -88,7 +90,6 @@
   align-items: flex-end;
   justify-content: right;
   gap: 0.75rem;
-  flex-grow: 1;
 
   .cancelButton {
     border: 0.0625rem solid $gray_D9D9D9;
