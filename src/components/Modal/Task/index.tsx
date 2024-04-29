@@ -20,6 +20,7 @@ interface TaskProps {
   isOpen: boolean;
   onDeleteCard: (cardId: number) => Promise<void>;
   handleModifyOpen: () => void;
+  columnName: string;
 }
 
 export default function Task({
@@ -30,6 +31,7 @@ export default function Task({
   isOpen,
   onDeleteCard,
   handleModifyOpen,
+  columnName,
 }: TaskProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [cardDetails, setCardDetails] = useState<CardProps | null>(null);
@@ -86,7 +88,7 @@ export default function Task({
             <article className={styles.modalContainer}>
               <div className={styles.contentArea}>
                 <div className={styles.labels}>
-                  <LabelChip type="columns" label="progress" />
+                  <LabelChip type="columns" label={columnName} />
                   {/* eslint-disable-next-line react/self-closing-comp */}
                   <span className={styles.divide}></span>
                   {/* 컬럼은 다른 props와 달리 컬럼 id로 find를 해야해서 임의로 값 생성 */}

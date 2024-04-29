@@ -139,6 +139,7 @@ export default function Column({ columnId, title, onUpdate, onDelete, existingTi
             description={card.description}
             onDeleteCard={handleDeleteCard}
             onModifyCard={handleModifyCard}
+            columnName={title}
           />
         ))}
         {cards.length > startIndex + cardsPerPage && (

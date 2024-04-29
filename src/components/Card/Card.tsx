@@ -24,6 +24,7 @@ interface CardDetail {
   columnId: number;
   onDeleteCard: (cardId: number) => Promise<void>;
   onModifyCard: (modifiedCard: CardProps) => void;
+  columnName: string;
 }
 
 export default function Card({
@@ -38,6 +39,7 @@ export default function Card({
   description,
   onDeleteCard,
   onModifyCard,
+  columnName,
 }: CardDetail) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [isModifyTaskModalOpen, setIsModifyTaskModalOpen] = useState(false);
@@ -90,6 +92,7 @@ export default function Card({
             columnId={columnId}
             onDeleteCard={onDeleteCard}
             handleModifyOpen={handleModifyOpen}
+            columnName={columnName}
           />
         ) : null}
       </ModalPortal>
