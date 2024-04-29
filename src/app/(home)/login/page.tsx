@@ -1,6 +1,5 @@
 'use client';
 
-// 추후 삭제
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LOGIN } from '@/constants/ApiUrl';
@@ -16,7 +15,7 @@ import styles from './Login.module.scss';
 
 export default function LoginPage() {
   const { fetchWithToken } = useFetchWithToken();
-  // loading, error 삭제
+
   const router = useRouter();
 
   const [values, setValues] = useState({
