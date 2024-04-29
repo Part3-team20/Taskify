@@ -48,7 +48,7 @@ export default function MyDashboardList() {
         </li>
       </ul>
       <div className={styles.paginationContainer}>
-        <span>
+        <span className={styles.paginationText}>
           {Math.ceil(totalCount / 5)} 페이지 중 {page}
         </span>
         <PaginationButton

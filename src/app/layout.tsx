@@ -16,7 +16,7 @@ export const metadata = {
     type: 'website',
     url: 'https://taskify-4-20.vercel.app/',
     images: {
-      url: '/images/og.png',
+      url: 'https://postfiles.pstatic.net/MjAyNDA0MjlfMjkz/MDAxNzE0Mzc2NjMyNjI4.3uktxL7yoG3-VyqamCWsOstkkbjBxLDLI3v8tiCN4a0g.HLJuM3CI_z9WFrmq5QknFK2AWTbkZihRLi1vU353ZBkg.PNG/og.png?type=w966',
     },
   },
 };

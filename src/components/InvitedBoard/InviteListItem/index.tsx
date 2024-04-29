@@ -60,7 +60,7 @@ export default function InviteListItem({ title, id, nickname }: InviteListItemPr
       </div>
       <div>
         <span className={styles.label}>초대자</span>
-        {nickname}
+        <span className={styles.nickname}>{nickname}</span>
       </div>
       <div className={styles.buttonBox}>
         <Button color="violet" handleClick={onAcceptClick} maxWidth>

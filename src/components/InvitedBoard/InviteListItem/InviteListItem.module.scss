@@ -16,6 +16,16 @@
     padding-left: 2.25rem;
   }
 
+  .dashboardTitle,
+  .nickname {
+    display: inline-block;
+    white-space: nowrap;
+    width: 11.875rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   .label {
     display: none;
 
@@ -33,6 +43,10 @@
 
     .dashboardTitle {
       padding-left: 1.875rem;
+      width: 9.375rem;
+    }
+    .nickname {
+      width: 5.9375rem;
     }
   }
 
@@ -51,6 +65,11 @@
 
     .dashboardTitle {
       padding-left: 0;
+    }
+
+    .dashboardTitle,
+    .nickname {
+      width: 85%;
     }
 
     .buttonBox {
