@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { UserProvider } from '@/contexts/userContext';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -14,5 +15,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
   }, []);
 
-  return <div>{children}</div>;
+  return (
+    <UserProvider>
+      <div>{children}</div>
+    </UserProvider>
+  );
 }

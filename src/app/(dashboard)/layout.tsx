@@ -2,13 +2,12 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { DashboardProvider } from '@/contexts/dashboardContext';
 import { UserProvider } from '@/contexts/userContext';
+import { DashboardProvider } from '@/contexts/dashboardContext';
 import SideBar from '@/components/SideBar';
 import DashBoardHeader from '@/components/common/Header/DashBoardHeader';
 import EachDashBoardHeader from '@/components/common/Header/DashBoardHeader/EachDashBoardHeader';
 import styles from './layout.module.scss';
-
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();

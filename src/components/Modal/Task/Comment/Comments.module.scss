@@ -10,22 +10,22 @@
   display: flex;
   .commentTitle {
     color: $black_333236;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
   }
 
   .commentContainer {
-    margin-top: 20px;
+    margin-top: 1.25rem;
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;
     width: 100%;
     flex-shrink: 0;
 
     .profile {
-      min-width: 26px;
+      min-width: 1.625rem;
       flex-shrink: 0;
     }
 
@@ -36,17 +36,17 @@
 
       .commentHeader {
         display: flex;
-        gap: 8px;
+        gap: 0.5rem;
 
         .nickname {
           color: $black_333236;
-          font-size: 14px;
+          font-size: 0.875rem;
           font-style: normal;
           font-weight: 600;
           line-height: normal;
         }
         .createdAt {
-          font-size: 12px;
+          font-size: 0.75rem;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
@@ -56,9 +56,9 @@
 
       .commentBody {
         display: flex;
-        gap: 12px;
+        gap: 0.75rem;
         flex-direction: column;
-        margin-top: 12px;
+        margin-top: 0.75rem;
         width: 100%;
 
         .editing {
@@ -66,7 +66,7 @@
         }
 
         .commentText {
-          font-size: 14px;
+          font-size: 0.875rem;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
@@ -74,15 +74,15 @@
           white-space: normal;
           word-wrap: break-word;
           overflow-wrap: break-word;
-          width: 400px;
+          width: 25rem;
         }
 
         .btnBox {
           display: flex;
-          gap: 12px;
+          gap: 0.75rem;
 
           .commentBtn {
-            font-size: 12px;
+            font-size: 0.75rem;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
@@ -97,7 +97,7 @@
   .modalSubText {
     color: $black_333236;
     text-align: center;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -106,12 +106,12 @@
   .moreBtn {
     color: $gray_9FA6B2;
     text-decoration-line: underline;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     align-self: center;
-    padding: 10px;
+    padding: 0.625rem;
   }
 }
 

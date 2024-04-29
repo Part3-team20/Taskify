@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CardProps } from '@/types/DashboardTypes';
+import { CardObject } from '@/types/DashboardTypes';
 import Image from 'next/image';
 import LabelChip from '@/components/common/Chip/LabelChip';
 import Profile from '@/components/common/Profile';
@@ -23,7 +23,8 @@ interface CardDetail {
   dashboardId: number;
   columnId: number;
   onDeleteCard: (cardId: number) => Promise<void>;
-  onModifyCard: (modifiedCard: CardProps) => void;
+  onModifyCard: (modifiedCard: CardObject) => void;
+  columnName: string;
 }
 
 export default function Card({
@@ -38,6 +39,7 @@ export default function Card({
   description,
   onDeleteCard,
   onModifyCard,
+  columnName,
 }: CardDetail) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [isModifyTaskModalOpen, setIsModifyTaskModalOpen] = useState(false);
@@ -90,6 +92,7 @@ export default function Card({
             columnId={columnId}
             onDeleteCard={onDeleteCard}
             handleModifyOpen={handleModifyOpen}
+            columnName={columnName}
           />
         ) : null}
       </ModalPortal>

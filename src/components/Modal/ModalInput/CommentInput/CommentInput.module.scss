@@ -10,13 +10,14 @@
     .textarea {
       width: 100%;
       display: flex;
-      height: 110px;
-      padding: 16px;
+      height: 6.875rem;
+      padding: 1rem;
       align-items: flex-start;
       flex-shrink: 0;
-      border-radius: 6px;
+      border-radius: 0.375rem;
       border: 1px solid $gray_D9D9D9;
       background: $white_FFFFFF;
+      resize: none;
 
       &:focus {
         outline: none;
@@ -50,7 +51,7 @@
     .postForm {
       .textarea {
         width: 100%;
-        height: 70px;
+        height: 4.375rem;
       }
     }
   }
