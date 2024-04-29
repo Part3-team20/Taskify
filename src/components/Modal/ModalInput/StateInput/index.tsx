@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import arrowDown from '@/../public/images/dropdown_icon.svg';
 import check from '@/../public/images/check.svg';
@@ -22,6 +22,7 @@ interface StateInputProps {
 export default function StateInput({ columns, defaultColumnId, onChange }: StateInputProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
+  const divRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
@@ -31,6 +32,24 @@ export default function StateInput({ columns, defaultColumnId, onChange }: State
     const defaultColumn = columns.find((column) => column.id === defaultColumnId);
     setSelectedValue(defaultColumn ? defaultColumn.title : '미정');
   }, [columns]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (divRef.current && !divRef.current.contains(e.target as Node)) {
+        handleToggle();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const options = columns.map((item) => (
     <li className={styles.selectItem} key={item.id}>
@@ -52,8 +71,13 @@ export default function StateInput({ columns, defaultColumnId, onChange }: State
   ));
 
   return (
-    <div className={styles.container}>
-      <input className={styles.input} value="" disabled style={{ borderColor: `${isOpen ? '#5534DA' : '#D9D9D9'}` }} />
+    <div className={styles.container} ref={divRef}>
+      <input
+        className={styles.input}
+        style={{ borderColor: `${isOpen ? '#5534DA' : '#D9D9D9'}` }}
+        readOnly
+        onClick={handleToggle}
+      />
       <div className={styles.chip}>
         <LabelChip type="columns" label={selectedValue} />
       </div>

@@ -79,7 +79,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
   const fetchMoreData = async (keyword?: string) => {
     const query = isSearched ? `${cursorId}&title=${keyword}` : cursorId;
     try {
-      const response = await getInvitations(`${INVITATIONS}?size=10&cursorId=${query}`);
+      const response = await getInvitations(`${INVITATIONS}?size=5&cursorId=${query}`);
       const newData: InvitationData[] = formatInviteData(response?.invitations);
       setCursorId(response?.cursorId);
       setInvitationData((prevData) => [...prevData, ...newData]);
@@ -94,7 +94,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
       setIsSearched(false);
 
       try {
-        const response = await getInvitations(`${INVITATIONS}?size=10`);
+        const response = await getInvitations(`${INVITATIONS}?size=5`);
         setCursorId(response.cursorId);
         setInvitationData(formatInviteData(response?.invitations));
       } catch (error) {
@@ -106,7 +106,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
 
     try {
       setIsSearched(true);
-      const response = await getInvitations(`${INVITATIONS}?size=10&title=${keyword}`);
+      const response = await getInvitations(`${INVITATIONS}?size=5&title=${keyword}`);
       setCursorId(response.cursorId);
       setInvitationData(formatInviteData(response?.invitations));
     } catch (error) {
@@ -118,7 +118,7 @@ export function InviteProvider({ children }: InviteProviderProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getInvitations(`${INVITATIONS}?size=10`);
+        const response = await getInvitations(`${INVITATIONS}?size=5`);
         if (response) {
           setCursorId(response.cursorId);
           setInvitationData(formatInviteData(response.invitations));

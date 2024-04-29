@@ -79,8 +79,6 @@ export default function EachDashBoardHeader() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (!boardId) return;
-
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
