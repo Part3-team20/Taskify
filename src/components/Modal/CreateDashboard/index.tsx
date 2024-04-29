@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DASHBOARDS } from '@/constants/ApiUrl';
+import { useDashboard } from '@/contexts/dashboardContext';
+import Toast from '@/util/Toast';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import Modal from '@/components/Modal';
 import ModalInput from '@/components/Modal/ModalInput/index';
@@ -14,31 +16,33 @@ interface CreateDashboardProps {
 }
 
 export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProps) {
-  /**
-   *  @TODOS
-   * -error 처리
-   * -POST 후 대시보드 목록 다시 받아오기
-   * */
-
   const initialValues = { title: '', color: '#7ac555' };
   const [values, setValues] = useState(initialValues);
   const [isActive, setIsActive] = useState(false);
+  const {
+    reloadDashboard,
+    myDashboards: { page: myDashboardsPage },
+    sideDashboards: { page: sideDashboardsPage },
+  } = useDashboard();
 
-  const { fetchWithToken: postDashboard, loading, error } = useFetchWithToken();
+  const { fetchWithToken: postDashboard, loading } = useFetchWithToken();
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (values.title.trim() === '') return;
 
-    await postDashboard(DASHBOARDS, 'POST', values);
+    try {
+      await postDashboard(DASHBOARDS, 'POST', values);
 
-    if (error) {
-      console.log(error);
+      setValues(() => initialValues);
+      Toast.success('대시보드 생성!');
+    } catch (error) {
+      Toast.error('대시보드 생성에 실패했어요.');
+    } finally {
+      onClose();
+      reloadDashboard(myDashboardsPage, sideDashboardsPage);
     }
-
-    setValues(() => initialValues);
-    onClose();
   };
 
   const handleClose = () => {
@@ -67,7 +71,10 @@ export default function CreateDashboard({ isOpen, onClose }: CreateDashboardProp
             <span className={styles.label}>대시보드 이름</span>
             <ModalInput placeholder="새로운 대시보드" value={values.title} onChange={onChangeInput} />
           </div>
-          <ColorChip onSelect={(newColor) => setValues((prevValues) => ({ ...prevValues, color: newColor }))} />
+          <ColorChip
+            mode="create"
+            onSelect={(newColor) => setValues((prevValues) => ({ ...prevValues, color: newColor }))}
+          />
           <div className={styles.buttonBox}>
             <ModalButton color="white" handleClick={handleClose}>
               취소

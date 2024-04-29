@@ -21,6 +21,9 @@
   &.violet {
     background-color: $violet_5534DA;
     color: $white_FFFFFF;
+    &:disabled {
+      background-color: $gray_9FA6B2;
+    }
   }
 
   @include mobile {
@@ -43,6 +46,12 @@
       width: 3.25rem;
       height: 1.75rem;
       padding: 0.5625rem 0.4375rem;
+    }
+  }
+
+  &.maxWidth {
+    @include mobile {
+      width: 100%;
     }
   }
 }

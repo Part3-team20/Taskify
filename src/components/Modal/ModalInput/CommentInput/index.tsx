@@ -34,7 +34,7 @@ export default function CommentInput({ onCommentSubmit, initialContent = '' }: C
           onChange={handleChange}
           rows={3}
         />
-        <button type="button" className={styles.postComment} onClick={handleSubmit}>
+        <button type="button" className={styles.postComment} onClick={handleSubmit} disabled={!comment.trim()}>
           입력
         </button>
       </form>

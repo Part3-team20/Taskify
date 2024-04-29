@@ -1,4 +1,3 @@
-// 추후 삭제
 @import '@/styles/color.scss';
 @import '@/styles/_mixins.scss';
 @import '@/styles/_responsive-styles.scss';
@@ -19,31 +18,51 @@
   padding: 2rem 1.75rem 1.75rem 1.75rem;
   max-width: 38.75rem;
   background-color: $white_FFFFFF;
+  border-radius: 0.5rem;
 
-  & h1 {
+  h1 {
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
 
-  & .fileInput {
+  .fileInput {
     width: 11.375rem;
     height: 11.375rem;
   }
 
-  & .inputs {
+  .inputs {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.25rem;
   }
 
-  & .textInputs {
+  .textInputs {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+
+    .mypageInput {
+      span {
+        font-size: 1.125rem;
+
+        @include mobile {
+          font-size: 1rem;
+        }
+      }
+
+      input {
+        font-size: 1rem;
+
+        @include mobile {
+          font-size: 0.875rem;
+          padding: 0.8125rem;
+        }
+      }
+    }
   }
 
-  & .button {
+  .button {
     display: flex;
     justify-content: right;
   }
@@ -53,23 +72,23 @@
     margin-bottom: 0.75rem;
     padding: 1.75rem 1.25rem 1.25rem 1.25rem;
 
-    & h1 {
+    h1 {
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
     }
 
-    & .fileInput {
+    .fileInput {
       width: 6.25rem;
       height: 6.25rem;
     }
 
-    & .inputs {
+    .inputs {
       flex-direction: column;
       gap: 1.5rem;
       margin-bottom: 1rem;
     }
 
-    & .textInputs {
+    .textInputs {
       gap: 1rem;
     }
   }
@@ -79,20 +98,60 @@
   padding: 2rem 1.75rem 1.75rem 1.75rem;
   max-width: 38.75rem;
   background-color: $white_FFFFFF;
+  border-radius: 0.5rem;
 
-  & h1 {
+  h1 {
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
 
-  & .inputs {
+  .inputs {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     margin-bottom: 1.5rem;
+    position: relative;
+
+    .mypageInput {
+      span {
+        font-size: 1.125rem;
+
+        @include mobile {
+          font-size: 1rem;
+        }
+      }
+
+      input {
+        font-size: 1rem;
+
+        @include mobile {
+          font-size: 0.875rem;
+          padding: 0.8125rem;
+        }
+      }
+    }
   }
 
-  & .button {
+  .passwordVisible {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    cursor: pointer;
+    @include mobile {
+      top: 35px;
+    }
+  }
+  .newPasswordVisible {
+    position: absolute;
+    right: 10px;
+    top: 138px;
+    cursor: pointer;
+    @include mobile {
+      top: 120px;
+    }
+  }
+
+  .button {
     display: flex;
     justify-content: right;
   }
@@ -100,12 +159,12 @@
   @include mobile {
     padding: 1.75rem 1.25rem 1.25rem 1.25rem;
 
-    & h1 {
+    h1 {
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
     }
 
-    & .inputs {
+    .inputs {
       gap: 1rem;
       margin-bottom: 1rem;
     }
@@ -113,11 +172,13 @@
 }
 
 .logout {
-  align-self: flex-end;
-  color: $gray_9FA6B2;
-  text-decoration-line: underline;
-  text-underline-offset: 0.3rem;
-  margin-top: 2rem;
-  padding-bottom: 0.25rem;
-  cursor: pointer;
+  max-width: 38.75rem;
+  text-align: right;
+  .logoutButton {
+    color: $gray_9FA6B2;
+    text-decoration-line: underline;
+    text-underline-offset: 0.3rem;
+    margin-top: 2rem;
+    padding-bottom: 0.25rem;
+  }
 }

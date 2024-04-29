@@ -3,6 +3,11 @@
 
 // comments
 .comments {
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  display: flex;
   .commentTitle {
     color: $black_333236;
     font-size: 16px;
@@ -17,6 +22,12 @@
     display: flex;
     gap: 10px;
     width: 100%;
+    flex-shrink: 0;
+
+    .profile {
+      min-width: 26px;
+      flex-shrink: 0;
+    }
 
     .commentBox {
       display: flex;
@@ -82,13 +93,43 @@
       }
     }
   }
+
+  .modalSubText {
+    color: $black_333236;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  .moreBtn {
+    color: $gray_9FA6B2;
+    text-decoration-line: underline;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    align-self: center;
+    padding: 10px;
+  }
 }
 
-.modalSubText {
-  color: $black_333236;
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+@include mobile {
+  .comments {
+    .commentContainer {
+      width: 100%;
+      .commentBox {
+        width: 100%;
+        .commentHeader {
+          width: 100%;
+        }
+        .commentBody {
+          .commentText {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
 }

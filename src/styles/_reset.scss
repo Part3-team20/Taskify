@@ -132,7 +132,6 @@ table {
 * {
   box-sizing: border-box;
   word-break: keep-all;
-  font-family: 'Pretendard', sans-serif;
 }
 a {
   color: inherit;
@@ -154,4 +153,11 @@ button {
   &:disabled {
     cursor: default;
   }
+}
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }

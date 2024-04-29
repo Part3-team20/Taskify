@@ -3,47 +3,45 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useDashboard } from '@/contexts/dashboardContext';
+import { useUser } from '@/contexts/userContext';
 import Profile from '@/components/common/Profile';
-import styles from './EachDashBoardHeader.module.scss';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { Dashboard } from '@/types/DashboardTypes';
+import ModalInvite from '@/components/Modal/ModalInvite';
+import styles from './EachDashBoardHeader.module.scss';
 
-type User = {
-  id: number;
-  email: string;
+interface ProfileProps {
   nickname: string;
-  profileImageUrl: string | undefined;
-  createdAt: string;
-  updatedAt: string;
-};
+  profileImageUrl?: string;
+}
 
-type Members = {
+interface Members {
   members: {
     id: number;
     userId: number;
     email: string;
     nickname: string;
-    profileImageUrl: string | undefined;
+    profileImageUrl?: string;
     createdAt: string;
     updatedAt: string;
     isOwner: boolean;
   }[];
   totalCount: number;
-};
+}
 
-export default function EachDashBoardHeader({ params }: { params: { boardId: number } }) {
+// export default function EachDashBoardHeader({ boardId }: { boardId: number }) {
+export default function EachDashBoardHeader() {
   const { fetchWithToken } = useFetchWithToken();
-  const { boardId } = params;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { user, setUser } = useUser();
   // 디바이스(PC, Tablet, Mobile) 감지용. hook 으로 만들기도 가능.
   const [deviceType, setDeviceType] = useState('');
-  const [user, setUser] = useState<User>({
-    id: 0,
-    email: '',
+  const [profile, setProfile] = useState<ProfileProps>({
     nickname: '',
-    profileImageUrl: undefined,
-    createdAt: '',
-    updatedAt: '',
+    profileImageUrl: '',
   });
+
   const [dashboard, setDashboard] = useState<Dashboard>({
     id: 0,
     title: '',
@@ -53,10 +51,12 @@ export default function EachDashBoardHeader({ params }: { params: { boardId: num
     userId: 0,
     createdByMe: false,
   });
+
   const [members, setMembers] = useState<Members>({
     members: [],
     totalCount: 0,
   });
+  const { dashboardId: boardId } = useDashboard();
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -82,10 +82,18 @@ export default function EachDashBoardHeader({ params }: { params: { boardId: num
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!boardId) return;
+
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
-        setUser(response);
-      } catch (error) {
+        setProfile({ nickname: response.nickname, profileImageUrl: response.profileImageUrl });
+        setUser({
+          id: response.id,
+          nickname: response.nickname,
+          profileImageUrl: response.profileImageUrl,
+        }); // Context에 사용자 정보 설정
+      } catch (error: any) {
         console.error('Failed to fetch user:', error);
       }
     };
@@ -95,32 +103,32 @@ export default function EachDashBoardHeader({ params }: { params: { boardId: num
 
   useEffect(() => {
     const fetchDashboard = async () => {
+      if (!boardId) return;
+
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`);
         setDashboard(response);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Failed to fetch dashboard:', error);
       }
     };
 
-    if (boardId) {
-      fetchDashboard();
-    }
+    fetchDashboard();
   }, [boardId, fetchWithToken]);
 
   useEffect(() => {
     const fetchMembers = async () => {
+      if (!boardId) return;
+
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members?dashboardId=${boardId}`);
         setMembers(response);
-      } catch (error) {
-        console.error('Failed to fetch dashboard mebers:', error);
+      } catch (error: any) {
+        console.error('Failed to fetch dashboard members:', error);
       }
     };
 
-    if (boardId) {
-      fetchMembers();
-    }
+    fetchMembers();
   }, [boardId, fetchWithToken]);
 
   return (
@@ -139,10 +147,7 @@ export default function EachDashBoardHeader({ params }: { params: { boardId: num
               <Image src="/images/settings_icon.svg" alt="dashboard-setting" width={20} height={20} />
               관리
             </Link>
-            <div className={styles.button}>
-              <Image src="/images/add_box.svg" alt="dashboard-invitation" width={20} height={20} />
-              초대하기
-            </div>
+            <ModalInvite btnColor="white" boardId={boardId} />
           </div>
         )}
 
@@ -151,8 +156,10 @@ export default function EachDashBoardHeader({ params }: { params: { boardId: num
           className={styles.members}
           style={
             deviceType === 'PC'
-              ? { width: `${members?.totalCount > 4 ? 162 : 31 * members?.totalCount + 7}px` }
-              : { width: `${members?.totalCount > 2 ? 100 : 31 * members?.totalCount + 7}px` }
+              ? // eslint-disable-next-line no-unsafe-optional-chaining
+                { width: `${members?.totalCount > 4 ? 162 : 31 * members?.totalCount + 7}px` }
+              : // eslint-disable-next-line no-unsafe-optional-chaining
+                { width: `${members?.totalCount > 2 ? 100 : 31 * members?.totalCount + 7}px` }
           }
         >
           {members?.members.slice(0, 4).map((member, index) => (
@@ -165,17 +172,19 @@ export default function EachDashBoardHeader({ params }: { params: { boardId: num
             </li>
           ))}
           {deviceType === 'PC'
-            ? members?.totalCount > 4 && <li className={styles.excess}>{`+${members?.totalCount - 4}`}</li>
-            : members?.totalCount > 2 && <li className={styles.excess}>{`+${members?.totalCount - 2}`}</li>}
+            ? // eslint-disable-next-line no-unsafe-optional-chaining
+              members?.totalCount > 4 && <li className={styles.excess}>{`+${members?.totalCount - 4}`}</li>
+            : // eslint-disable-next-line no-unsafe-optional-chaining
+              members?.totalCount > 2 && <li className={styles.excess}>{`+${members?.totalCount - 2}`}</li>}
         </ul>
 
         <hr className={styles.boundary} />
 
         {/* 내 프로필 */}
-        <Link href={'/mypage'}>
+        <Link href="/mypage">
           <div className={styles.profile}>
-            <Profile profileImageUrl={user?.profileImageUrl} />
-            <span className={styles.nickname}>{user?.nickname}</span>
+            <Profile profileImageUrl={profile?.profileImageUrl} />
+            <span className={styles.nickname}>{profile?.nickname}</span>
           </div>
         </Link>
       </div>

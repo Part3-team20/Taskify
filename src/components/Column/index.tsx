@@ -10,29 +10,25 @@ import Card from '../Card/Card';
 import NumberChip from '../common/Chip/NumberChip';
 import AddButton from '../common/Button/AddButton';
 import ChangeColumn from '../Modal/ChangeColumn';
+import CreateTask from '../Modal/CreateTask';
 
 interface ColumnProps {
   dashboardId: number;
   columnId: number;
   title: string;
-  onAddCard: () => void;
   existingTitles: string[];
   onUpdate: (columnId: number, newTitle: string) => void;
   onDelete: (columnId: number) => void;
 }
 
-export default function Column({
-  columnId,
-  title,
-  onAddCard,
-  onUpdate,
-  onDelete,
-  existingTitles,
-  dashboardId,
-}: ColumnProps) {
+export default function Column({ columnId, title, onUpdate, onDelete, existingTitles, dashboardId }: ColumnProps) {
   const { fetchWithToken } = useFetchWithToken();
   const [cards, setCards] = useState<CardProps[]>([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<CardProps[]>([]); // 보여지는 카드들의 배열
+  const [startIndex, setStartIndex] = useState(0); // 보여지는 카드들의 시작 인덱스
+  const cardsPerPage = 3; // 한 페이지당 보여질 카드 수
+  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
 
   const handleOpenEditModal = () => {
     setIsEditModalOpen(true);
@@ -42,6 +38,43 @@ export default function Column({
     setIsEditModalOpen(false);
   };
 
+  const handleOpenCreateTaskModal = () => {
+    setIsCreateTaskModalOpen(true);
+  };
+
+  const handleCloseCreateTaskModal = () => {
+    setIsCreateTaskModalOpen(false);
+  };
+
+  const handleAddCard = (newCard: any) => {
+    setCards((prevCards) => [...prevCards, newCard]);
+    handleCloseCreateTaskModal(); // 생성 후 모달 닫기
+  };
+
+  const handleModifyCard = (modifiedCard: CardProps) => {
+    const indexOfCard = cards.findIndex((card) => card.id === modifiedCard.id);
+
+    if (indexOfCard !== -1) {
+      const updatedCards = [...cards];
+      updatedCards[indexOfCard] = modifiedCard;
+      setCards(updatedCards);
+
+      // visibleCards도 업데이트
+      const indexOfVisibleCard = visibleCards.findIndex((card) => card.id === modifiedCard.id);
+      if (indexOfVisibleCard !== -1) {
+        const updatedVisibleCards = [...visibleCards];
+        updatedVisibleCards[indexOfVisibleCard] = modifiedCard;
+        setVisibleCards(updatedVisibleCards);
+      }
+    }
+  };
+
+  // 카드 더보기 버튼 클릭 시 호출되는 함수
+  const handleShowMoreCards = () => {
+    const endSliceIndex = Math.min(startIndex + cardsPerPage, cards.length);
+    setVisibleCards((prevVisibleCards) => [...prevVisibleCards, ...cards.slice(startIndex, endSliceIndex)]);
+    setStartIndex(startIndex + cardsPerPage);
+  };
   const handleDeleteCard = async (cardId: number) => {
     try {
       await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/cards/${cardId}`, 'DELETE');
@@ -65,6 +98,14 @@ export default function Column({
     fetchCards();
   }, [columnId, fetchWithToken]);
 
+  useEffect(() => {
+    // 기존의 useEffect 코드는 그대로 사용
+
+    // 보여지는 카드들을 업데이트하기 위해 startIndex와 cardsPerPage를 이용하여 슬라이싱
+    const endSliceIndex = Math.min(startIndex + cardsPerPage, cards.length);
+    setVisibleCards(cards.slice(startIndex, endSliceIndex));
+  }, [cards, startIndex]);
+
   return (
     <div className={styles.column}>
       <div className={styles.columnHeader}>
@@ -81,24 +122,40 @@ export default function Column({
       </div>
       <div className={styles.columnBody}>
         <div className={styles.addBtn}>
-          <AddButton handleClick={onAddCard} />
+          <AddButton handleClick={handleOpenCreateTaskModal} />
         </div>
-        {cards.length > 0 &&
-          cards.map((card) => (
-            <Card
-              key={card.id}
-              id={card.id}
-              title={card.title}
-              tags={card.tags}
-              assignee={card.assignee}
-              imageUrl={card.imageUrl}
-              dueDate={card.dueDate}
-              dashboardId={dashboardId}
-              columnId={columnId}
-              onDeleteCard={handleDeleteCard}
-            />
-          ))}
+        {/* visibleCards 배열을 렌더링하여 보여줌 */}
+        {visibleCards.map((card) => (
+          <Card
+            key={card.id}
+            id={card.id}
+            title={card.title}
+            tags={card.tags}
+            assignee={card.assignee}
+            imageUrl={card.imageUrl}
+            dueDate={card.dueDate}
+            dashboardId={dashboardId}
+            columnId={columnId}
+            description={card.description}
+            onDeleteCard={handleDeleteCard}
+            onModifyCard={handleModifyCard}
+          />
+        ))}
+        {cards.length > startIndex + cardsPerPage && (
+          <button type="button" onClick={handleShowMoreCards} className={styles.showMoreButton}>
+            더보기
+          </button>
+        )}
       </div>
+      {isCreateTaskModalOpen && (
+        <CreateTask
+          dashboardId={dashboardId}
+          columnId={columnId}
+          isOpen={isCreateTaskModalOpen}
+          onClose={handleCloseCreateTaskModal}
+          onAddCard={handleAddCard}
+        />
+      )}
       {isEditModalOpen && (
         <ChangeColumn
           isOpen={isEditModalOpen}
@@ -106,6 +163,7 @@ export default function Column({
           existingTitles={existingTitles}
           onChange={(newTitle) => onUpdate(columnId, newTitle)}
           onDelete={() => onDelete(columnId)}
+          columnTitle={title}
         />
       )}
     </div>

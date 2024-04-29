@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import styles from './AssigneeInput.module.scss';
 import arrowDown from '@/../public/images/dropdown_icon.svg';
 import check from '@/../public/images/check.svg';
+import Profile from '@/components/common/Profile';
+import styles from './AssigneeInput.module.scss';
 
 interface AssigneeInputProps {
   members: {
@@ -12,25 +13,24 @@ interface AssigneeInputProps {
     userId: number;
     email: string;
     nickname: string;
-    profileImageUrl: string | null;
+    profileImageUrl?: string | null;
     createdAt: Date | string;
     updatedAt: Date | string;
     isOwner: boolean;
   }[];
-  onChange: (key: string, value: number) => void;
+  onChange: (key: string, value: number | undefined) => void;
+  defaultMember?: { id?: number; nickname?: string; profileImageUrl?: string };
 }
 
-export default function AssigneeInput({ members, onChange }: AssigneeInputProps) {
+export default function AssigneeInput({ members, onChange, defaultMember }: AssigneeInputProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState({
+    nickname: defaultMember?.nickname,
+    profileImageUrl: defaultMember?.profileImageUrl,
+  });
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
-  };
-
-  const handleSelect: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    const target = e.target as HTMLElement;
-    setSelectedValue(target.innerText);
   };
 
   const options = members.map((item) => (
@@ -38,27 +38,50 @@ export default function AssigneeInput({ members, onChange }: AssigneeInputProps)
       <button
         className={styles.itemBtn}
         type="button"
-        onClick={(e) => {
-          handleSelect(e);
+        onClick={() => {
+          setSelectedValue({ nickname: item.nickname, profileImageUrl: item.profileImageUrl || '' });
           onChange('assigneeUserId', item.userId);
+          setIsOpen(false);
         }}
       >
-        {selectedValue === item.nickname ? <Image className={styles.checkIcon} src={check} alt="checked" /> : null}
-        <span className={styles.btnText}>{item.nickname}</span>
+        {selectedValue.nickname === item.nickname ? (
+          <Image className={styles.checkIcon} src={check} alt="checked" />
+        ) : null}
+        <div className={styles.profile}>
+          <Profile profileImageUrl={item.profileImageUrl ? item.profileImageUrl : ''} />
+          <span className={styles.btnText}>{item.nickname}</span>
+        </div>
       </button>
     </li>
   ));
 
   return (
     <div className={styles.container}>
+      {selectedValue.nickname && (
+        <div className={styles.inputProfile}>
+          <Profile profileImageUrl={selectedValue.profileImageUrl} />
+        </div>
+      )}
       <input
-        className={styles.input}
-        value={selectedValue}
-        placeholder="이름을 입력해주세요"
-        onFocus={handleToggle}
-        onChange={handleToggle}
+        className={`${styles.input} ${selectedValue.nickname || styles.noValueInput}`}
+        value={selectedValue.nickname}
+        placeholder="담당자를 선택해주세요"
+        disabled
+        style={{ borderColor: `${isOpen ? '#5534DA' : '#D9D9D9'}` }}
       />
+      <Image src={arrowDown} alt="arrow" width={26} height={26} className={styles.arrow} onClick={handleToggle} />
       {isOpen && <ul className={styles.selectList}>{options}</ul>}
+      <div className={styles.clearButton}>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+        <div
+          onClick={() => {
+            setSelectedValue({ nickname: '', profileImageUrl: '' });
+            onChange('assigneeUserId', undefined);
+          }}
+        >
+          <Image src="/images/remove_icon.svg" alt="clear" fill style={{ objectFit: 'cover' }} />
+        </div>
+      </div>
     </div>
   );
 }

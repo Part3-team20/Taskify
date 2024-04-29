@@ -3,6 +3,7 @@
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { INVITATIONS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
+import Toast from '@/util/Toast';
 
 interface InviteProviderProps {
   children: ReactNode;
@@ -69,24 +70,22 @@ export function InviteProvider({ children }: InviteProviderProps) {
   /**
    * @TODO
    * -로딩 관련 처리?
-   * -url env
    */
 
   const {
-    fetchWithToken: getInvitations,
-    error: getInvitationError,
-    // loading: getInvitatioLoading,
+    fetchWithToken: getInvitations, // loading: getInvitatioLoading,
   } = useFetchWithToken();
 
   const fetchMoreData = async (keyword?: string) => {
     const query = isSearched ? `${cursorId}&title=${keyword}` : cursorId;
     try {
-      const response = await getInvitations(`${INVITATIONS}?size=2&cursorId=${query}`);
+      const response = await getInvitations(`${INVITATIONS}?size=10&cursorId=${query}`);
       const newData: InvitationData[] = formatInviteData(response?.invitations);
       setCursorId(response?.cursorId);
       setInvitationData((prevData) => [...prevData, ...newData]);
     } catch (error) {
       console.log(error);
+      Toast.error('정보를 불러오는데 실패했어요.');
     }
   };
 
@@ -95,35 +94,38 @@ export function InviteProvider({ children }: InviteProviderProps) {
       setIsSearched(false);
 
       try {
-        const response = await getInvitations(`${INVITATIONS}?size=2`);
+        const response = await getInvitations(`${INVITATIONS}?size=10`);
         setCursorId(response.cursorId);
         setInvitationData(formatInviteData(response?.invitations));
       } catch (error) {
         console.log(error);
+        Toast.error('정보를 불러오는데 실패했어요.');
       }
       return;
     }
 
     try {
       setIsSearched(true);
-      const response = await getInvitations(`${INVITATIONS}?size=2&title=${keyword}`);
+      const response = await getInvitations(`${INVITATIONS}?size=10&title=${keyword}`);
       setCursorId(response.cursorId);
       setInvitationData(formatInviteData(response?.invitations));
     } catch (error) {
       console.log(error);
+      Toast.error('정보를 불러오는데 실패했어요.');
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getInvitations(`${INVITATIONS}?size=2`);
+        const response = await getInvitations(`${INVITATIONS}?size=10`);
         if (response) {
           setCursorId(response.cursorId);
           setInvitationData(formatInviteData(response.invitations));
         }
       } catch (error) {
-        console.log(getInvitationError);
+        console.log(error);
+        Toast.error('정보를 불러오는데 실패했어요.');
       }
     };
     fetchData();

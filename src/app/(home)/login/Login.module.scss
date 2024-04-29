@@ -1,12 +1,11 @@
 @import '@/styles/color.scss';
 
-// 추후 삭제
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 100px auto 0;
+  margin: 100px auto;
   gap: 30px;
 
   .form {
@@ -33,6 +32,16 @@
       color: $violet_5534DA;
       text-decoration: underline;
       padding-left: 10px;
+    }
+  }
+}
+
+@media (max-width: 655px) {
+  .container {
+    width: 100vw;
+
+    .form {
+      width: 80%;
     }
   }
 }

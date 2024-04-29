@@ -2,31 +2,62 @@
 @import '@/styles/_mixins.scss';
 @import '@/styles/_responsive-styles.scss';
 
+.container {
+  position: relative;
+}
+
+.inputProfile {
+  position: absolute;
+  top: 0.4rem;
+  left: 1rem;
+
+  @include mobile {
+    top: 0.7rem;
+  }
+}
+
 .input {
-  width: 13.5625rem;
+  width: 13.09375rem;
   height: 3rem;
   border-radius: 0.375rem;
   border: 0.0625rem solid $gray_D9D9D9;
   background: $white_FFFFFF;
-  padding: 0.9375rem 4.25rem 0.875rem 1rem;
+  padding: 0.92rem 4rem 0.875rem 3.5rem;
   font-size: 0.875rem;
 
-  &:focus {
-    border-color: $violet_5534DA;
+  @include mobile {
+    padding-left: 3rem;
   }
 }
 
+.noValueInput {
+  padding-left: 1rem;
+}
+
+.arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 0.6rem;
+  left: 10.5rem;
+}
+
 .selectList {
-  width: 13.5625rem;
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  width: 13.09375rem;
   border-radius: 0.375rem;
-  border: 1px solid #d9d9d9;
+  border: 0.0625rem solid #d9d9d9;
   box-shadow: 0rem 0.25rem 1.25rem 0rem #00000014;
+  z-index: 1;
+  background-color: white;
 
   .selectItem {
     padding-left: 1.25rem;
     .itemBtn {
       width: 100%;
-      padding: 1.25rem;
+      border-radius: 0.375rem;
+      padding: 0.6rem;
       padding-left: 1.5625rem;
       background-color: white;
       border: none;
@@ -34,13 +65,39 @@
       position: relative;
 
       :hover {
-        background-color: lightgray;
+        color: $violet_5534DA;
       }
 
       .checkIcon {
         position: absolute;
         left: 0rem;
+        top: 1.3rem;
+        @include mobile {
+          top: 1.1rem;
+        }
+      }
+
+      .profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
       }
     }
+  }
+}
+
+.clearButton {
+  cursor: pointer;
+  position: absolute;
+  left: 3.2rem;
+  top: -1.78rem;
+  width: 1.125rem;
+  height: 1.125rem;
+
+  @include mobile {
+    width: 1rem;
+    height: 1rem;
+    left: 3.125rem;
+    top: -1.7rem;
   }
 }

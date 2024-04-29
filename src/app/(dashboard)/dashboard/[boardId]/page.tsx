@@ -1,9 +1,9 @@
 'use client';
 
-// 추후 삭제
 import { useEffect, useState } from 'react';
 import { Dashboard as Column } from '@/types/DashboardTypes';
 import { COLUMNS } from '@/constants/ApiUrl';
+import Toast from '@/util/Toast';
 import ColumnComponent from '@/components/Column';
 import AddButton from '@/components/common/Button/AddButton';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -15,14 +15,28 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
   const [columns, setColumns] = useState<Column[]>([]);
   const { boardId } = params;
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  // const [targetColumnId, setTargetColumnId] = useState(0);
 
   const handleAddColumn = () => {
-    setIsCreateModalOpen(true);
+    if (columns.length >= 10) {
+      Toast.error('컬럼을 더 이상 추가할 수 없습니다.');
+    } else {
+      setIsCreateModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {
     setIsCreateModalOpen(false);
   };
+
+  // const handleAddTask = (columnId: number) => {
+  //   setIsCreateTaskModalOpen(true);
+  //   setTargetColumnId(columnId);
+  // };
+
+  // const handleCloseAddTaskModal = () => {
+  //   setIsCreateTaskModalOpen(false);
+  // };
 
   useEffect(() => {
     const fetchColumns = async () => {
@@ -83,7 +97,6 @@ export default function Dashboard({ params }: { params: { boardId: number } }) {
             key={column.id}
             columnId={column.id}
             title={column.title}
-            onAddCard={() => console.log('Add card button clicked!')}
             onUpdate={handleUpdateColumn}
             onDelete={handleDeleteColumn}
             existingTitles={columns.map((c) => c.title)}

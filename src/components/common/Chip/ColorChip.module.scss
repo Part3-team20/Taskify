@@ -1,7 +1,6 @@
 @import '@/styles/color.scss';
 @import '@/styles/responsive-styles.scss';
 
-// ColorChip
 .colorChipContainer {
   position: relative;
   display: inline-flex;
@@ -30,6 +29,7 @@
     //추후 사용하는 곳에 따라서 right 값 수정
     right: -11.25rem;
     transform: translateX(0%);
+    margin-top: 5px;
   }
 }
 
@@ -38,6 +38,19 @@
     .colorChip {
       width: 1.75rem;
       height: 1.75rem;
+    }
+
+    .mobileEdit {
+      display: none;
+    }
+
+    .colorPicker {
+      position: absolute;
+      z-index: 10;
+      top: 100%;
+      right: 0;
+      margin-top: 5px;
+      transform: translateX(0%);
     }
   }
 }

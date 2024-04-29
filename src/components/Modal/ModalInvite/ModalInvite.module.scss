@@ -1,9 +1,46 @@
 // invite
 @import '@/styles/color.scss';
 @import '@/styles/responsive-styles.scss';
-
-.inviteIcon {
-  fill: #ffffff;
+.inviteBtn {
+  border-radius: 8px;
+  border: 1px solid var(--gray-gray_D9D9D9, #d9d9d9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inviteBtn.white {
+  width: 116px;
+  height: 40px;
+  background: var(--white-white_FFFFFF, #fff);
+  font-size: 16px;
+  font-weight: 500;
+  gap: 8px;
+  color: var(--gray-gray_787486, #787486);
+  .inviteIcon {
+    fill: #ffffff;
+    @include mobile {
+      display: none;
+    }
+  }
+  @include tablet {
+    width: 109px;
+    height: 36px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  @include mobile {
+    width: 73px;
+    height: 30px;
+  }
+}
+.inviteBtn.violet {
+  width: 105px;
+  height: 32px;
+  background: var(--violet-violet_5534DA, #5534da);
+  color: white;
+  font-size: 14px;
+  gap: 6px;
+  border-radius: 4px;
 }
 
 .modalContainer {

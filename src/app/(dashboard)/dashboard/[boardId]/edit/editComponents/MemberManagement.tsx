@@ -4,10 +4,12 @@
 import { useEffect, useState } from 'react';
 import { useBoardId } from '@/contexts/idContext';
 import { MEMBERS } from '@/constants/ApiUrl';
+import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import PaginationButton from '@/components/common/Button/PaginationButton';
 import Profile from '@/components/common/Profile';
 import Button from '@/components/common/Button/Button';
+import Toast from '@/util/Toast';
 import styles from './MemberManagement.module.scss';
 
 interface Member {
@@ -15,12 +17,12 @@ interface Member {
   nickname: string;
   userId: number;
   memberId: number;
+  profileImageUrl: string;
 }
-export default function MemberManagement() {
+export default function MemberManagement({ createUserId }: { createUserId: number }) {
   const boardId = useBoardId();
   const { fetchWithToken } = useFetchWithToken();
   const [memberData, setMemberData] = useState<Member[]>([]);
-  console.log(boardId);
 
   const [currentPage, setCurrentPage] = useState(1);
   const PAGESIZE = 4;
@@ -36,22 +38,21 @@ export default function MemberManagement() {
   const handleDeleteMember = async (memberId: number) => {
     try {
       await fetchWithToken(`${MEMBERS}/${memberId}`, 'DELETE');
-      // const updatedMemberData = memberData.filter((member) => member.userId !== userId);
-      // setMemberData(updatedMemberData);
-
-      setMemberData((prevMember) => prevMember.filter((member) => member.memberId !== memberId));
-    } catch (e) {
-      console.error(e);
+      setMemberData((prevMember) => prevMember.filter((member) => member.id !== memberId));
+      Toast.success('해당 멤버가 삭제되었습니다');
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const responseData = await fetchWithToken(`${MEMBERS}?page=1&size=20&dashboardId=${boardId}`, 'GET');
-        console.log(responseData);
         setMemberData(responseData.members);
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
+        const errorMessage = err.toString().substr(7);
+        Toast.error(errorMessage);
       }
     };
     fetchData();
@@ -75,19 +76,24 @@ export default function MemberManagement() {
       </div>
       <p className={styles.name}>이름</p>
       <div className={styles.member}>
-        {memberList.map((member) => (
+        {memberList.map((member, index) => (
           <div className={styles.memberSection} key={member.id}>
             <div className={styles.memberList}>
               <div className={styles.profile}>
-                {/* <Profile profileImageUrl={member.profileImageUrl} /> */}
-                <Profile />
+                <Profile profileImageUrl={member.profileImageUrl} />
                 <p className={styles.memberNickname}>{member.nickname}</p>
               </div>
-              <Button color="white" handleClick={() => handleDeleteMember(member.id)}>
-                삭제
-              </Button>
+              {member.userId !== createUserId ? (
+                <Button color="white" handleClick={() => handleDeleteMember(member.id)} cancel>
+                  삭제
+                </Button>
+              ) : (
+                <div className={styles.crownIcon}>
+                  <Image src="/images/crown_icon.svg" alt="왕관 이미지" width={20} height={20} />
+                </div>
+              )}
             </div>
-            <hr className={styles.contour} />
+            {index !== memberList.length - 1 && <hr className={styles.contour} />}
           </div>
         ))}
       </div>

@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import styles from './ChangeColumn.module.scss';
 import ModalButton from '../ModalButton/Button/index';
 import NameInput from '../ModalInput/NameInput';
 import ConfirmModal from '../ConfirmModal';
+import ModalSubmitButton from '../ModalButton/SubmitButton';
 
 type ChangeColumnProps = {
   isOpen: boolean;
@@ -13,29 +14,50 @@ type ChangeColumnProps = {
   onChange: (newTitle: string) => void;
   onDelete: () => void;
   existingTitles: string[];
+  columnTitle: string;
 };
 
-export default function ChangeColumn({ isOpen, onClose, onChange, onDelete, existingTitles }: ChangeColumnProps) {
-  const [title, setTitle] = useState('');
+export default function ChangeColumn({
+  columnTitle,
+  isOpen,
+  onClose,
+  onChange,
+  onDelete,
+  existingTitles,
+}: ChangeColumnProps) {
+  const [title, setTitle] = useState(columnTitle);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
   const handleChange = () => {
     onChange(title);
-    onClose(); // 모달 닫기 추가
+    onClose();
   };
 
   const handleDelete = () => {
-    setIsConfirmOpen(true); // ConfirmModal을 띄움
+    setIsConfirmOpen(true);
   };
 
   const handleConfirmDelete = () => {
     onDelete();
-    setIsConfirmOpen(false); // ConfirmModal을 닫음
+    setIsConfirmOpen(false);
   };
 
-  // 중복 검사에 실패하면 토스트
+  useEffect(() => {
+    const isTitleValid = title.trim() !== '' && !existingTitles.includes(title);
+    setIsValid(isTitleValid);
+  }, [title, existingTitles]);
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} style={{ width: '540px', height: '301px' }}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      style={{
+        width: 'auto',
+        height: '301px',
+        margin: '20px',
+      }}
+    >
       <div className={styles.container}>
         <div className={styles.text}>
           <span>컬럼 관리</span>
@@ -50,9 +72,9 @@ export default function ChangeColumn({ isOpen, onClose, onChange, onDelete, exis
           <ModalButton color="white" handleClick={onClose}>
             취소
           </ModalButton>
-          <ModalButton color="violet" handleClick={handleChange}>
+          <ModalSubmitButton isActive={isValid} onClick={handleChange}>
             변경
-          </ModalButton>
+          </ModalSubmitButton>
         </div>
       </div>
       <ConfirmModal isOpen={isConfirmOpen} onClose={() => setIsConfirmOpen(false)} onConfirm={handleConfirmDelete}>

@@ -31,3 +31,33 @@
 .fileInput {
   display: none;
 }
+
+.clearOnMypage {
+  text-align: left;
+  margin-top: 0.3rem;
+
+  .clearButton {
+    border: 0.0825rem solid #d9d9d9;
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+  }
+}
+
+.clearOnModal {
+  position: relative;
+
+  .clearButton {
+    width: 1.125rem;
+    height: 1.125rem;
+    position: absolute;
+    left: 3.2rem;
+    top: -6.5rem;
+
+    @include mobile {
+      width: 1rem;
+      height: 1rem;
+      left: 3.125rem;
+      top: -5.35rem;
+    }
+  }
+}

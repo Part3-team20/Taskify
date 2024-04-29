@@ -6,13 +6,33 @@ import Image from 'next/image';
 import styles from './DeadlineInput.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
-// dueDate
-export default function DeadLineInput({ onChange }: { onChange: (key: string, value: string) => void }) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+function formatDate(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}`;
+
+  return formattedDateTime;
+}
+
+export default function DeadLineInput({
+  onChange,
+  defaultValue = null,
+}: {
+  onChange: (key: string, value: string) => void;
+  defaultValue?: Date | string | null;
+}) {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    // eslint-disable-next-line no-nested-ternary
+    typeof defaultValue === 'object' ? defaultValue : typeof defaultValue === 'string' ? new Date(defaultValue) : null
+  );
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
-    onChange('dueDate', date ? date.toISOString() : '');
+    onChange('dueDate', date ? formatDate(date) : '');
   };
 
   return (

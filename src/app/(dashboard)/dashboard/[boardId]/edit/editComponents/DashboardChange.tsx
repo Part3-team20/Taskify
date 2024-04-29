@@ -7,6 +7,7 @@ import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import ColorChip from '@/components/common/Chip/ColorChip';
 import BasicSubmitButton from '@/components/common/Button/BasicSubmitButton';
+import Toast from '@/util/Toast';
 import styles from './DashboardChange.module.scss';
 
 export default function DashboaradChange() {
@@ -18,9 +19,8 @@ export default function DashboaradChange() {
   const [pendingInput, setPendingInput] = useState(''); // 입력중인 값
   const { fetchWithToken } = useFetchWithToken();
 
-  const handleSelectColor = (color: any) => {
+  const handleSelectColor = (color: string) => {
     setSelectedColor(color);
-    console.log(selectedColor);
   };
 
   const handleChangeDashboardName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,15 +31,16 @@ export default function DashboaradChange() {
 
   /* PUT 대시보드 정보 변경 */
   const handlePutDashboard = async () => {
-    console.log('전송 값 : ', boardId, selectedColor, dashboardName);
     try {
       await fetchWithToken(`${DASHBOARDS}/${boardId}`, 'PUT', {
         title: pendingInput,
         color: selectedColor,
       });
+
       window.location.reload();
-    } catch (e) {
-      console.error(e);
+    } catch (err: any) {
+      const errorMessage = err.toString().substr(7);
+      Toast.error(errorMessage);
     }
   };
 
@@ -47,11 +48,11 @@ export default function DashboaradChange() {
     const fetchData = async () => {
       try {
         const responseData = await fetchWithToken(`${DASHBOARDS}/${boardId}`, 'GET');
-        console.log(responseData);
         setDashboardName(responseData.title);
         setSelectedColor(responseData.color);
-      } catch (e) {
-        console.error(e);
+      } catch (err: any) {
+        const errorMessage = err.toString().substr(7);
+        Toast.error(errorMessage);
       }
     };
     fetchData();
@@ -62,7 +63,7 @@ export default function DashboaradChange() {
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.title}>{dashboardName}</p>
-        <ColorChip onSelect={handleSelectColor} />
+        <ColorChip mode="edit" onSelect={handleSelectColor} />
       </div>
       <p className={styles.dashboardName}>대시보드 이름</p>
       <input
