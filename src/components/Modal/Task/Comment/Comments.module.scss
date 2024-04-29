@@ -114,3 +114,22 @@
     padding: 10px;
   }
 }
+
+@include mobile {
+  .comments {
+    .commentContainer {
+      width: 100%;
+      .commentBox {
+        width: 100%;
+        .commentHeader {
+          width: 100%;
+        }
+        .commentBody {
+          .commentText {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
