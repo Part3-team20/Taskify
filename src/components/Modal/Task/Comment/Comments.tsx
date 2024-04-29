@@ -149,7 +149,6 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
     <div className={styles.comments}>
       <p className={styles.commentTitle}>댓글</p>
       <CommentInput onCommentSubmit={handlePostComment} initialContent="" />
-
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
           <div className={styles.profile}>

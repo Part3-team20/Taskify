@@ -92,14 +92,14 @@ export default function EachDashBoardHeader() {
           id: response.id,
           nickname: response.nickname,
           profileImageUrl: response.profileImageUrl,
-        }); // Context에 사용자 정보 설정
+        });
       } catch (error: any) {
         console.error('Failed to fetch user:', error);
       }
     };
 
     fetchUser();
-  }, [fetchWithToken]);
+  }, [fetchWithToken, setUser]);
 
   useEffect(() => {
     const fetchDashboard = async () => {
