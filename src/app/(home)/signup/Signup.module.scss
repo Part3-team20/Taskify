@@ -50,3 +50,13 @@
     }
   }
 }
+
+@media (max-width: 655px) {
+  .container {
+    width: 100vw;
+
+    .form {
+      width: 80%;
+    }
+  }
+}
