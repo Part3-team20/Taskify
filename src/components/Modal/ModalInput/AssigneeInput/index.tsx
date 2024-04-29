@@ -66,19 +66,21 @@ export default function AssigneeInput({ members, onChange, defaultMember }: Assi
         className={`${styles.input} ${selectedValue.nickname || styles.noValueInput}`}
         value={selectedValue.nickname}
         placeholder="담당자를 선택해주세요"
+        disabled
+        style={{ borderColor: `${isOpen ? '#5534DA' : '#D9D9D9'}` }}
       />
       <Image src={arrowDown} alt="arrow" width={26} height={26} className={styles.arrow} onClick={handleToggle} />
       {isOpen && <ul className={styles.selectList}>{options}</ul>}
       <div className={styles.clearButton}>
-        {/* eslint-disable-next-line react/button-has-type */}
-        <button
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+        <div
           onClick={() => {
             setSelectedValue({ nickname: '', profileImageUrl: '' });
             onChange('assigneeUserId', undefined);
           }}
         >
           <Image src="/images/remove_icon.svg" alt="clear" fill style={{ objectFit: 'cover' }} />
-        </button>
+        </div>
       </div>
     </div>
   );

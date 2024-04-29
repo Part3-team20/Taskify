@@ -53,7 +53,7 @@ export default function StateInput({ columns, defaultColumnId, onChange }: State
 
   return (
     <div className={styles.container}>
-      <input className={styles.input} value="" />
+      <input className={styles.input} value="" disabled style={{ borderColor: `${isOpen ? '#5534DA' : '#D9D9D9'}` }} />
       <div className={styles.chip}>
         <LabelChip type="columns" label={selectedValue} />
       </div>

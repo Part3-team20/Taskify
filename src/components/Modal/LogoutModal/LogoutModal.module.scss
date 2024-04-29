@@ -21,13 +21,9 @@
   }
   .buttons {
     display: flex;
-    gap: 8rem;
+    gap: 1rem;
     position: absolute;
     bottom: 16px;
     right: 16px;
-
-    @include mobile {
-      gap: 5.8rem;
-    }
   }
 }
