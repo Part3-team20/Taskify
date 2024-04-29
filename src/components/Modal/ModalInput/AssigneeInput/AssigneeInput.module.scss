@@ -24,6 +24,7 @@
   background: $white_FFFFFF;
   padding: 0.92rem 4rem 0.875rem 3.5rem;
   font-size: 0.875rem;
+  cursor: pointer;
 
   @include mobile {
     padding-left: 3rem;

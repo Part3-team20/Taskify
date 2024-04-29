@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import arrowDown from '@/../public/images/dropdown_icon.svg';
 import check from '@/../public/images/check.svg';
@@ -28,6 +28,7 @@ export default function AssigneeInput({ members, onChange, defaultMember }: Assi
     nickname: defaultMember?.nickname,
     profileImageUrl: defaultMember?.profileImageUrl,
   });
+  const divRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
@@ -55,8 +56,26 @@ export default function AssigneeInput({ members, onChange, defaultMember }: Assi
     </li>
   ));
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (divRef.current && !divRef.current.contains(e.target as Node)) {
+        handleToggle();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={divRef}>
       {selectedValue.nickname && (
         <div className={styles.inputProfile}>
           <Profile profileImageUrl={selectedValue.profileImageUrl} />
@@ -66,7 +85,8 @@ export default function AssigneeInput({ members, onChange, defaultMember }: Assi
         className={`${styles.input} ${selectedValue.nickname || styles.noValueInput}`}
         value={selectedValue.nickname}
         placeholder="담당자를 선택해주세요"
-        disabled
+        readOnly
+        onClick={handleToggle}
         style={{ borderColor: `${isOpen ? '#5534DA' : '#D9D9D9'}` }}
       />
       <Image src={arrowDown} alt="arrow" width={26} height={26} className={styles.arrow} onClick={handleToggle} />
