@@ -97,10 +97,10 @@ export default function CreateTask({ dashboardId, columnId, isOpen, onClose, onA
       <form className={styles.container} onSubmit={(e) => e.preventDefault()}>
         <h1 className={styles.title}>할 일 생성</h1>
 
-        <label className={styles.formSection}>
+        <div className={styles.formSection}>
           <div className={styles.labelName}>담당자</div>
           <AssigneeInput members={members} onChange={handleNotInputChange} />
-        </label>
+        </div>
 
         <label className={styles.formSection}>
           <div className={styles.labelName}>

@@ -139,14 +139,14 @@ export default function ModifyTask({
         <h1 className={styles.title}>할 일 수정</h1>
 
         <div className={styles.topSection}>
-          <label className={styles.formSection}>
+          <div className={styles.formSection}>
             <div className={styles.labelName}>상태</div>
             <StateInput defaultColumnId={columnId} columns={columns} onChange={handleNotInputChange} />
-          </label>
-          <label className={styles.formSection}>
+          </div>
+          <div className={styles.formSection}>
             <div className={styles.labelName}>담당자</div>
             <AssigneeInput defaultMember={defaultCard.assignee} members={members} onChange={handleNotInputChange} />
-          </label>
+          </div>
         </div>
 
         <label className={styles.formSection}>

@@ -56,7 +56,7 @@ export default function MyPage() {
       };
       await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`, 'PUT', body);
       Toast.success('프로필을 변경했습니다');
-      router.refresh();
+      window.location.reload();
     } catch (err: any) {
       const errorMessage = err.toString().substr(7);
       Toast.error(errorMessage);
@@ -72,7 +72,7 @@ export default function MyPage() {
         newPassword,
       });
       Toast.success('비밀번호를 변경했습니다');
-      router.refresh();
+      setPasswords({ password: '', newPassword: '', passwordCheck: '' });
     } catch (err: any) {
       // Error 객체에서 Message만 추출
       const errorMessage = err.toString().substr(7);
@@ -128,6 +128,7 @@ export default function MyPage() {
             name="password"
             placeholder="현재 비밀번호 입력"
             onChange={handlePasswordChange}
+            value={passwords.password}
             type={visiblePassword ? 'text' : 'password'}
             required
           />
@@ -137,6 +138,7 @@ export default function MyPage() {
             name="newPassword"
             placeholder="새 비밀번호 입력"
             onChange={handlePasswordChange}
+            value={passwords.newPassword}
             type={visibleNewPassword ? 'text' : 'password'}
             required
           />
@@ -146,6 +148,7 @@ export default function MyPage() {
             name="passwordCheck"
             placeholder="새 비밀번호 입력"
             onChange={handlePasswordChange}
+            value={passwords.passwordCheck}
             type="password"
             required
           />
