@@ -194,7 +194,7 @@ export default function ModifyTask({
             취소
           </ModalButton>
           <ModalButton color="violet" handleClick={handleModifyTask} disabled={!form.title || !form.description}>
-            생성
+            수정
           </ModalButton>
         </div>
       </form>
