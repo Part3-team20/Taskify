@@ -24,6 +24,7 @@ export default function LoginPage() {
     password: '',
   });
   const [isBtnActive, setIsBtnActive] = useState(false);
+  const [isEmailError, setIsEmailError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
 
   const handleChange = (e: any) => {
@@ -63,6 +64,21 @@ export default function LoginPage() {
       setIsPasswordError(false);
     }
     setIsBtnActive(isLoginValid);
+
+    // 이메일 형식 확인
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    if (!emailRegex.test(email) && email.trim().length > 0) {
+      setIsEmailError(true);
+    } else {
+      setIsEmailError(false);
+    }
+
+    // 비밀번호 8자 이하 확인
+    if (password.trim().length < 8 && password.trim().length > 0) {
+      setIsPasswordError(true);
+    } else {
+      setIsPasswordError(false);
+    }
   }, [values]);
 
   return (
@@ -78,6 +94,8 @@ export default function LoginPage() {
           placeholder="이메일을 입력해주세요"
           name="email"
           onChange={handleChange}
+          error={isEmailError}
+          errorMessage="이메일 형식으로 작성해주세요."
           required
         />
         <PasswordInput
