@@ -1,6 +1,5 @@
 'use client';
 
-// 추후 삭제
 import React, { FormEvent, useEffect, useState } from 'react';
 import { SIGNIN } from '@/constants/ApiUrl';
 import Image from 'next/image';
