@@ -63,7 +63,12 @@ export default function ChangeColumn({
           <span>컬럼 관리</span>
         </div>
         <div className={styles.input}>
-          <NameInput value={title} onChange={(e) => setTitle(e.target.value)} existingTitles={existingTitles} />
+          <NameInput
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onSubmit={handleChange}
+            existingTitles={existingTitles}
+          />
         </div>
         <button className={styles.delete} type="button" onClick={handleDelete}>
           삭제하기
