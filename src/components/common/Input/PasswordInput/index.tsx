@@ -2,7 +2,6 @@ import { InputHTMLAttributes, useState } from 'react';
 import Image from 'next/image';
 import styles from './PasswordInput.module.scss';
 
-// label
 interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
   errorMessage?: string;

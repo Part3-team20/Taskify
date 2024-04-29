@@ -27,6 +27,10 @@ function useFetchWithToken() {
     const responseData = await response.json();
 
     if (!response.ok) {
+      if (response.status === 500) {
+        throw new Error('서버 에러가 발생했습니다.');
+      }
+
       const errorMessage = responseData.message;
       throw new Error(errorMessage);
     }

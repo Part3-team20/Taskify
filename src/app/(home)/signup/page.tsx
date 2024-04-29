@@ -1,6 +1,5 @@
 'use client';
 
-// 추후 삭제
 import React, { FormEvent, useEffect, useState } from 'react';
 import { SIGNIN } from '@/constants/ApiUrl';
 import Image from 'next/image';
@@ -86,7 +85,7 @@ export default function SignUpPage() {
           type="email"
           placeholder="이메일을 입력해주세요"
           name="email"
-          onChange={() => handleChange}
+          onChange={handleChange}
           required
         />
         <Input
@@ -94,7 +93,7 @@ export default function SignUpPage() {
           type="text"
           placeholder="닉네임을 입력해주세요"
           name="nickname"
-          onChange={() => handleChange}
+          onChange={handleChange}
           required
         />
         <PasswordInput

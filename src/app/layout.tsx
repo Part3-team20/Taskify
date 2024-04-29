@@ -1,4 +1,3 @@
-// 추후 삭제
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';

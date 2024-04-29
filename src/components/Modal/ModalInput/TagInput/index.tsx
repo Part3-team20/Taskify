@@ -4,7 +4,6 @@ import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
 import LabelChip from '@/components/common/Chip/LabelChip';
 import styles from './TagInput.module.scss';
 
-// tag input
 export default function TagInput({
   onChange,
   defaultValue = [],

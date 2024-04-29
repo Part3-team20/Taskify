@@ -1,6 +1,7 @@
 'use client';
 
 import { useInvite } from '@/contexts/inviteContext';
+import Toast from '@/util/Toast';
 import { INVITATIONS } from '@/constants/ApiUrl';
 import { useDashboard } from '@/contexts/dashboardContext';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -38,6 +39,7 @@ export default function InviteListItem({ title, id, nickname }: InviteListItemPr
     } catch (error) {
       setInvitationData(temp);
       console.log(error);
+      Toast.error('초대 응답에 실패했어요.');
     }
   };
 
@@ -61,10 +63,10 @@ export default function InviteListItem({ title, id, nickname }: InviteListItemPr
         {nickname}
       </div>
       <div className={styles.buttonBox}>
-        <Button color="violet" handleClick={onAcceptClick}>
+        <Button color="violet" handleClick={onAcceptClick} maxWidth>
           수락
         </Button>
-        <Button color="white" handleClick={onRejectClick}>
+        <Button color="white" handleClick={onRejectClick} maxWidth>
           거절
         </Button>
       </div>

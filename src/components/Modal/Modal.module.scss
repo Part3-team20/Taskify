@@ -1,6 +1,6 @@
 @import '@/styles/_variables.scss';
+@import '@/styles/color.scss';
 
-// modal
 .container {
   z-index: $z-2;
   position: fixed;
@@ -12,10 +12,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 
   .modal {
     z-index: $z-1;
-    background-color: white;
+    background-color: $white_FFFFFF;
     display: flex;
     justify-content: center;
     border-radius: 0.5rem;

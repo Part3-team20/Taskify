@@ -1,5 +1,6 @@
 import useFetchWithToken from '@/hooks/useFetchToken';
 import { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import Toast from '@/util/Toast';
 import { DASHBOARDS } from '@/constants/ApiUrl';
 import { Dashboard } from '@/types/DashboardTypes';
 import { useParams } from 'next/navigation';
@@ -59,6 +60,7 @@ export function DashboardProvider({ children }: DashboardContextProps) {
         }
       } catch (error) {
         console.log(error);
+        Toast.error('대시보드 정보를 불러오는데 실패했어요.');
       }
     },
     []

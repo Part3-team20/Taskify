@@ -53,8 +53,7 @@ export default function EachDashBoardHeader() {
     members: [],
     totalCount: 0,
   });
-  const { dashboardId: dashId } = useDashboard();
-  const boardId = Number(dashId);
+  const { dashboardId: boardId } = useDashboard();
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -80,6 +79,8 @@ export default function EachDashBoardHeader() {
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!boardId) return;
+
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/users/me`);
@@ -94,6 +95,8 @@ export default function EachDashBoardHeader() {
 
   useEffect(() => {
     const fetchDashboard = async () => {
+      if (!boardId) return;
+
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/dashboards/${boardId}`);
         setDashboard(response);
@@ -107,6 +110,8 @@ export default function EachDashBoardHeader() {
 
   useEffect(() => {
     const fetchMembers = async () => {
+      if (!boardId) return;
+
       try {
         const response = await fetchWithToken(`https://sp-taskify-api.vercel.app/4-20/members?dashboardId=${boardId}`);
         setMembers(response);
