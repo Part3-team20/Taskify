@@ -4,10 +4,11 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 // import { useBoardId } from '@/contexts/idContext';
 import { DASHBOARDS } from '@/constants/ApiUrl';
 import useFetchWithToken from '@/hooks/useFetchToken';
-import Button from '@/components/common/Button/Button';
 import Image from 'next/image';
 import Modal from '@/components/Modal';
 import Toast from '@/util/Toast';
+import ModalSubmitButton from '../ModalButton/SubmitButton';
+import ModalButton from '../ModalButton/Button';
 import styles from './ModalInvite.module.scss';
 
 interface ModalInviteProps {
@@ -71,7 +72,7 @@ export default function ModalInvite({ btnColor, boardId }: ModalInviteProps) {
         초대하기
       </button>
       <Modal isOpen={isOpen} onClose={handleClickCancel} style={{ width: 'auto', height: 'auto' }}>
-        <div className={styles.modalContainer}>
+        <form className={styles.modalContainer} onSubmit={handlePostInvite}>
           <p className={styles.invite}>초대하기</p>
           <p className={styles.email}>이메일</p>
           <input
@@ -82,14 +83,12 @@ export default function ModalInvite({ btnColor, boardId }: ModalInviteProps) {
             onKeyDown={handleKeyDown}
           />
           <div className={styles.btnContainer}>
-            <Button color="white" cancel handleClick={handleClickCancel}>
+            <ModalButton color="white" handleClick={handleClickCancel}>
               취소
-            </Button>
-            <Button color="violet" invite handleClick={handlePostInvite}>
-              초대
-            </Button>
+            </ModalButton>
+            <ModalSubmitButton isActive={!!emailValue.trim()}>초대</ModalSubmitButton>
           </div>
-        </div>
+        </form>
       </Modal>
     </div>
   );
