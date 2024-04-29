@@ -9,6 +9,7 @@
   width: 100%;
   padding: 28px;
   max-height: 730px;
+  overflow: hidden;
 
   .modalHeader {
     display: flex;
@@ -38,6 +39,13 @@
     justify-content: space-between;
     height: 450px;
     overflow-y: auto;
+    padding-bottom: 8px;
+    /* 스크롤바 노출 삭제 */
+    -ms-overflow-style: none; // 익스플로러
+    scrollbar-width: none; // 파이어폭스
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .contentArea {
       .labels {
@@ -141,7 +149,7 @@
 @include mobile {
   .taskModal {
     padding: 20px;
-    width: 90vh;
+    width: calc(100vw - 48px);
     max-height: 90vh;
     max-width: 95vw;
 
