@@ -104,13 +104,6 @@ export default function SignUpPage() {
     } else {
       setIsPasswordError(false);
     }
-
-    // // 동일한 비밀번호 확인
-    // if (password === confirmPassword) {
-    //   setIsConfirmPasswordError(false);
-    // } else {
-    //   setIsConfirmPasswordError(true);
-    // }
   }, [values]);
 
   return (
