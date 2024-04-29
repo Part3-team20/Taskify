@@ -49,7 +49,7 @@ interface Form {
   description?: string;
   dueDate?: string;
   tags?: string[];
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export default function ModifyTask({
@@ -63,7 +63,7 @@ export default function ModifyTask({
   const { fetchWithToken } = useFetchWithToken();
   const [members, setMembers] = useState<Members[]>([]);
   const [columns, setColumns] = useState<Columns[]>([]);
-  const [imageFile, setImageFile] = useState<string | undefined>(undefined);
+  const [imageFile, setImageFile] = useState<string | null | undefined>(undefined);
   const [form, setForm] = useState<Form>({
     columnId,
     assigneeUserId: defaultCard.assignee?.id,

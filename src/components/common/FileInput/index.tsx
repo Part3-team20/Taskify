@@ -5,14 +5,14 @@ import Image from 'next/image';
 import styles from './FileInput.module.scss';
 
 interface FileInputPropsInModal extends InputHTMLAttributes<HTMLInputElement> {
-  setFile: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setFile: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   defaultImage: string | null | undefined;
   usageLocation: 'modal';
   columnId: number;
 }
 
 interface FileInputPropsInMypage extends InputHTMLAttributes<HTMLInputElement> {
-  setFile: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setFile: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   defaultImage: string | null | undefined;
   usageLocation: 'mypage';
   columnId?: number;
@@ -56,7 +56,7 @@ export default function FileInput({
       }
     } else {
       setPreview(null);
-      setFile(undefined);
+      setFile(null);
     }
   };
 
@@ -64,7 +64,7 @@ export default function FileInput({
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
       setPreview(null);
-      setFile(undefined);
+      setFile(null);
     }
   };
 

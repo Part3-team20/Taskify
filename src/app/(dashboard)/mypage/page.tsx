@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import GoBackButton from '@/components/common/Button/GoBackButton';
 import FileInput from '@/components/common/FileInput';
 import Input from '@/components/common/Input';
@@ -19,10 +20,12 @@ export default function MyPage() {
     nickName: '',
     profileImageUrl: '',
   });
-  const [imageFile, setImageFile] = useState<string | undefined>(undefined);
+  const [imageFile, setImageFile] = useState<string | null | undefined>(undefined);
   const [passwords, setPasswords] = useState({ password: '', newPassword: '', passwordCheck: '' });
   const [email, setEmail] = useState<string | undefined>('');
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [visiblePassword, setVisiblePassword] = useState(false);
+  const [visibleNewPassword, setVisibleNewPassword] = useState(false);
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -125,7 +128,7 @@ export default function MyPage() {
             name="password"
             placeholder="현재 비밀번호 입력"
             onChange={handlePasswordChange}
-            type="password"
+            type={visiblePassword ? 'text' : 'password'}
             required
           />
           <Input
@@ -134,7 +137,7 @@ export default function MyPage() {
             name="newPassword"
             placeholder="새 비밀번호 입력"
             onChange={handlePasswordChange}
-            type="password"
+            type={visibleNewPassword ? 'text' : 'password'}
             required
           />
           <Input
@@ -145,6 +148,22 @@ export default function MyPage() {
             onChange={handlePasswordChange}
             type="password"
             required
+          />
+          <Image
+            src={visiblePassword ? '/images/eye-on.svg' : '/images/eye-off.svg'}
+            alt="password-visibility"
+            width={24}
+            height={24}
+            className={styles.passwordVisible}
+            onClick={() => setVisiblePassword((prev) => !prev)}
+          />
+          <Image
+            src={visibleNewPassword ? '/images/eye-on.svg' : '/images/eye-off.svg'}
+            alt="newPassword-visibility"
+            width={24}
+            height={24}
+            className={styles.newPasswordVisible}
+            onClick={() => setVisibleNewPassword((prev) => !prev)}
           />
         </div>
         <div className={styles.button}>
