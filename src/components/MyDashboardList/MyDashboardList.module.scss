@@ -19,14 +19,24 @@
     justify-content: flex-end;
     align-items: center;
     gap: 1rem;
+
+    .paginationText {
+      font-size: 0.875rem;
+    }
   }
 
   @include tablet {
-    gap: 0.625rem;
+    gap: 10px;
 
     .dashboardContainer {
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.625rem;
+      gap: 10px;
+    }
+
+    .paginationContainer {
+      .paginationText {
+        font-size: 0.75rem;
+      }
     }
   }
 
