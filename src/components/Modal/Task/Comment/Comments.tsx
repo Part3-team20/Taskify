@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import useFetchWithToken from '@/hooks/useFetchToken';
+import { useUser } from '@/contexts/userContext';
 import { CommentProps } from '@/types/DashboardTypes';
 import { COMMENTS } from '@/constants/ApiUrl';
 import CommentInput from '@/components/Modal/ModalInput/CommentInput';
@@ -12,7 +13,6 @@ interface Comment {
   cardId: number;
   columnId: number;
   dashboardId: number;
-  currentUserId?: number;
 }
 
 function formatDateTime(dateString: string) {
@@ -33,7 +33,7 @@ function formatDateTime(dateString: string) {
   return `${year}.${paddedMonth}.${paddedDay} ${paddedHours}:${paddedMinutes}`;
 }
 
-export default function Comments({ cardId, columnId, dashboardId, currentUserId }: Comment) {
+export default function Comments({ cardId, columnId, dashboardId }: Comment) {
   const { fetchWithToken } = useFetchWithToken();
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
@@ -44,6 +44,7 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [size, setSize] = useState<number>(5);
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   const fetchMoreComments = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -151,7 +152,9 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
 
       {comments.map((comment) => (
         <div className={styles.commentContainer} key={comment.id}>
-          <Profile profileImageUrl={comment.author.profileImageUrl || undefined} />
+          <div className={styles.profile}>
+            <Profile profileImageUrl={comment.author.profileImageUrl || undefined} />
+          </div>
           <div className={styles.commentBox}>
             <div className={styles.commentHeader}>
               <span className={styles.nickname}>{comment.author.nickname}</span>
@@ -175,7 +178,7 @@ export default function Comments({ cardId, columnId, dashboardId, currentUserId 
             ) : (
               <div className={styles.commentBody}>
                 <p className={styles.commentText}>{comment.content}</p>
-                {comment.author.id === currentUserId && (
+                {comment.author.id === user.id && (
                   <div className={styles.btnBox}>
                     <button className={styles.commentBtn} type="button" onClick={() => setEditingCommentId(comment.id)}>
                       수정

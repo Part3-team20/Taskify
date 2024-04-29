@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Modal from '@/components/Modal';
 
-// example
 export default function ExampleModal() {
   const [isOpen, setIsOpen] = useState(false);
 

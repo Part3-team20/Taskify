@@ -6,7 +6,6 @@ import Image from 'next/image';
 import styles from './ColorChip.module.scss';
 
 // ColorChip
-// Image
 const COLORS = ['#7ac555', '#760dde', '#ffa500', '#76a5ea', '#e876ea'];
 
 interface ColorChipProps {

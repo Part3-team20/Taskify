@@ -12,7 +12,7 @@ import styles from './ModalInvite.module.scss';
 
 interface ModalInviteProps {
   btnColor: 'violet' | 'white';
-  boardId: number;
+  boardId: number | null;
 }
 
 export default function ModalInvite({ btnColor, boardId }: ModalInviteProps) {
@@ -31,6 +31,8 @@ export default function ModalInvite({ btnColor, boardId }: ModalInviteProps) {
   };
 
   const handlePostInvite = async () => {
+    if (!boardId) return;
+
     try {
       const responseInviteData = await fetchWithToken(`${DASHBOARDS}/${boardId}/invitations`);
 

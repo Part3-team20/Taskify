@@ -1,6 +1,7 @@
 @import '@/styles/_responsive-styles.scss';
 
 .profile {
+  position: relative;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -8,12 +9,15 @@
   width: 2.125rem;
   height: 2.125rem;
   overflow: hidden;
-  position: relative;
+
+  image {
+    object-fit: 'contain';
+  }
 }
 
 @include mobile {
   .profile {
-    width: 26px;
-    height: 26px;
+    width: 1.625rem;
+    height: 1.625rem;
   }
 }

@@ -49,7 +49,15 @@ export default function ChangeColumn({
   }, [title, existingTitles]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} style={{ width: '540px', height: '301px' }}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      style={{
+        width: 'auto',
+        height: '301px',
+        margin: '20px',
+      }}
+    >
       <div className={styles.container}>
         <div className={styles.text}>
           <span>컬럼 관리</span>

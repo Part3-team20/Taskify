@@ -141,7 +141,6 @@
 @include mobile {
   .taskModal {
     padding: 20px;
-    width: 90vh;
     max-height: 90vh;
     max-width: 95vw;
 
@@ -201,8 +200,8 @@
           gap: 12px;
         }
         .contents {
-          max-width: 600px;
-          width: auto;
+          // max-width: 600px;
+          // width: auto;
           margin-top: 16px;
           font-size: 12px;
           line-height: 22px;

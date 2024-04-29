@@ -1,5 +1,5 @@
 @import '@/styles/color.scss';
-// tag input
+
 .container {
   .tagText {
     font-size: 1.125rem;
@@ -10,8 +10,8 @@
     position: relative;
     height: 3rem;
     border-radius: 0.375rem;
-    border: 0.0625rem solid var(--gray-gray_D9D9D9, $gray_D9D9D9);
-    background: var(--white-white_FFFFFF, $white_FFFFFF);
+    border: 0.0625rem solid $gray_D9D9D9;
+    background: $white_FFFFFF;
     display: flex;
     align-items: center;
 

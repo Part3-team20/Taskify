@@ -12,7 +12,13 @@ export default function Profile({ profileImageUrl }: ProfileProps) {
   const imgSrc = profileImageUrl || BASE_PROFILE_IMG;
   return (
     <div className={styles.profile}>
-      <Image src={imgSrc} alt="profileImg" layout="fill" objectFit="cover" />
+      <Image
+        src={imgSrc}
+        alt="profileImg"
+        fill
+        loading="lazy"
+        sizes="(max-width: 768px) 1.625rem, (max-width: 1200px) 2.125rem, 33vw"
+      />
     </div>
   );
 }

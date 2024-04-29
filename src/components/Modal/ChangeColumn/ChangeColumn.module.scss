@@ -1,12 +1,15 @@
 @import '@/styles/_color.scss';
+@import '@/styles/_responsive-styles.scss';
 
 .container {
   display: flex;
+  position: relative;
   flex-direction: column;
   position: relative;
   margin: 2rem;
   gap: 2rem;
   width: 100%;
+  overflow: hidden;
 
   .text {
     color: $black_333236;
@@ -59,4 +62,14 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+@include mobile {
+  .container {
+    max-width: 95vw;
+
+    .input {
+      width: 70vw;
+    }
+  }
 }

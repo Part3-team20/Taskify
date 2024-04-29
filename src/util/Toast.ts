@@ -14,7 +14,10 @@ const Toast = {
     toast.success(message, { ...defaultToastOption, ...options });
   },
   error: (message: any, options: ToastOptions = {}) => {
-    toast.error(message, { ...defaultToastOption, ...options });
+    toast.error(message === 'Internal Server Error' ? '서버 에러가 발생했습니다.' : message, {
+      ...defaultToastOption,
+      ...options,
+    });
   },
 };
 
