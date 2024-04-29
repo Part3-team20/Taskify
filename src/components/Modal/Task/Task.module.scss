@@ -211,7 +211,18 @@
           max-width: 100%;
           overflow: hidden;
         }
+
+        .noImage {
+          min-width: 465px;
+          height: 0;
+          width: auto;
+        }
       }
     }
+  }
+
+  .noImageContainer {
+    height: auto !important;
+    justify-content: stretch !important;
   }
 }

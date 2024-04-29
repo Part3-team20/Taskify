@@ -85,7 +85,7 @@ export default function Task({
             </div>
           </div>
           <div>
-            <article className={styles.modalContainer}>
+            <article className={`${styles.modalContainer} ${!cardDetails.imageUrl ? styles.noImageContainer : ''}`}>
               <div className={styles.contentArea}>
                 <div className={styles.labels}>
                   <LabelChip type="columns" label={columnName} />
@@ -97,10 +97,12 @@ export default function Task({
                   </div>
                 </div>
                 <div className={styles.contents}>{cardDetails.description}</div>
-                {cardDetails.imageUrl && (
+                {cardDetails.imageUrl ? (
                   <div className={styles.imgBox}>
                     <Image src={cardDetails.imageUrl} alt="본문 첨부 이미지" layout="fill" objectFit="cover" />
                   </div>
+                ) : (
+                  <div className={` ${styles.noImage}`} />
                 )}
                 <div className={styles.comments}>
                   <Comments cardId={cardId} columnId={columnId} dashboardId={dashboardId} />
