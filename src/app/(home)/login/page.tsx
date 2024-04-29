@@ -48,7 +48,8 @@ export default function LoginPage() {
         password,
       });
       setUserId(responseData.user.id);
-
+      console.log('로그인 후 받은 유저 ID:', responseData.user.id);
+      localStorage.setItem('userId', responseData.user.id);
       localStorage.setItem('accessToken', responseData.accessToken);
       router.push('/mydashboard');
     } catch (err: any) {

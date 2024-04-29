@@ -63,6 +63,7 @@ export default function Comments({ cardId, columnId, dashboardId }: Comment) {
       });
       setCursorId(typeof result.cursorId === 'number' ? result.cursorId : null);
       setHasMore(result.cursorId != null);
+      console.log(userId);
     } catch (error) {
       console.error('Failed to load more comments:', error);
     } finally {
