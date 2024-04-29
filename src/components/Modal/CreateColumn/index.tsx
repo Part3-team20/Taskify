@@ -25,6 +25,7 @@ export default function CreateColumn({ isOpen, onClose, onCreate, existingTitles
 
   const handleCreate = () => {
     onCreate(title);
+    onClose();
   };
 
   // 중복 검사에 실패하면 토스트
@@ -35,7 +36,12 @@ export default function CreateColumn({ isOpen, onClose, onCreate, existingTitles
           <span>새 컬럼 생성</span>
         </div>
         <div className={styles.input}>
-          <NameInput value={title} onChange={(e) => setTitle(e.target.value)} existingTitles={existingTitles} />
+          <NameInput
+            value={title}
+            onSubmit={handleCreate}
+            onChange={(e) => setTitle(e.target.value)}
+            existingTitles={existingTitles}
+          />
         </div>
         <div className={styles.buttons}>
           <ModalButton color="white" handleClick={onClose}>
