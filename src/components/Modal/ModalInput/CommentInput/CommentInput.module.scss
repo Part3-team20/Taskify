@@ -35,6 +35,12 @@
       width: 5.25rem;
       height: 1.75rem;
       color: $violet_5534DA;
+
+      &:disabled {
+        cursor: default;
+        color: $gray_9FA6B2;
+        border-color: $gray_9FA6B2;
+      }
     }
   }
 }
@@ -45,6 +51,7 @@
     .postForm {
       .textarea {
         width: 100%;
+        height: 70px;
       }
     }
   }

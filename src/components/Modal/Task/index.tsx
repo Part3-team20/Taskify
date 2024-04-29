@@ -65,7 +65,11 @@ export default function Task({
 
   return (
     <div>
-      <Modal isOpen={isOpen} onClose={onClose} style={{ width: 'auto', height: 'auto', maxHeight: '730px' }}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        style={{ width: 'auto', height: 'auto', maxHeight: '730px', overflow: 'hidden', margin: '20px' }}
+      >
         <div className={styles.taskModal} ref={scrollRef}>
           <div className={styles.modalHeader}>
             <h2>{cardDetails.title}</h2>
@@ -97,12 +101,7 @@ export default function Task({
                   </div>
                 )}
                 <div className={styles.comments}>
-                  <Comments
-                    cardId={cardId}
-                    columnId={columnId}
-                    dashboardId={dashboardId}
-                    currentUserId={cardDetails.assignee?.id}
-                  />
+                  <Comments cardId={cardId} columnId={columnId} dashboardId={dashboardId} />
                 </div>
               </div>
               <div className={styles.information}>
