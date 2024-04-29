@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
-import { CardProps } from '@/types/DashboardTypes';
+import { CardObject } from '@/types/DashboardTypes';
 import FileInput from '@/components/common/FileInput';
 import Toast from '@/util/Toast';
 import useFetchWithToken from '@/hooks/useFetchToken';
@@ -15,12 +15,12 @@ import ModalButton from '../ModalButton/Button';
 import styles from './ModifyTask.module.scss';
 
 interface ModifyTaskProps {
-  defaultCard: CardProps;
+  defaultCard: CardObject;
   columnId: number;
   dashboardId: number;
   isOpen: boolean;
   onClose: () => void;
-  onModifyCard: (modifiedCard: CardProps) => void;
+  onModifyCard: (modifiedCard: CardObject) => void;
 }
 
 interface Members {

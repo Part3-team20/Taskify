@@ -15,10 +15,11 @@ export interface Column {
   dashboardId: number;
   createdAt: string;
   updatedAt: string;
-  cards?: CardProps[];
+  cards?: CardObject[];
 }
 
-export interface CardProps {
+export interface CardObject {
+  totalCount?: number;
   id?: number;
   title: string;
   description?: string;

@@ -17,7 +17,9 @@ export default function NameInput({ value, onChange, existingTitles, onSubmit }:
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setIsDuplicate(existingTitles.includes(newValue));
-    onChange(e);
+    if (newValue.length <= 18) {
+      onChange(e);
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

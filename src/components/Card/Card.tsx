@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CardProps } from '@/types/DashboardTypes';
+import { CardObject } from '@/types/DashboardTypes';
 import Image from 'next/image';
 import LabelChip from '@/components/common/Chip/LabelChip';
 import Profile from '@/components/common/Profile';
@@ -23,7 +23,7 @@ interface CardDetail {
   dashboardId: number;
   columnId: number;
   onDeleteCard: (cardId: number) => Promise<void>;
-  onModifyCard: (modifiedCard: CardProps) => void;
+  onModifyCard: (modifiedCard: CardObject) => void;
   columnName: string;
 }
 

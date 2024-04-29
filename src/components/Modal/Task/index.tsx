@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import useFetchWithToken from '@/hooks/useFetchToken';
 import Modal from '@/components/Modal';
-import { CardProps } from '@/types/DashboardTypes';
+import { CardObject } from '@/types/DashboardTypes';
 import { CARDS } from '@/constants/ApiUrl';
 import LabelChip from '@/components/common/Chip/LabelChip';
 import Profile from '@/components/common/Profile';
@@ -34,7 +34,7 @@ export default function Task({
   columnName,
 }: TaskProps) {
   const { fetchWithToken } = useFetchWithToken();
-  const [cardDetails, setCardDetails] = useState<CardProps | null>(null);
+  const [cardDetails, setCardDetails] = useState<CardObject | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleButtonClose = (event: { stopPropagation: () => void }) => {
